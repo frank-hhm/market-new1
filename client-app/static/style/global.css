@@ -1,0 +1,205 @@
+page {
+	height: 100%;
+	/* 	font-family: "PingFang", sans-serif;
+	font-weight: 500; */
+	font-size:28rpx;
+	--base-default:#F1C934;
+	--base-grey: #A8A8A8;
+	--base-green:#00B42A;
+	--base-blue:#165DFF;
+	--base-yellow:#FADC19;
+	--base-red:#F53F3F;
+	--base-purple:#722ED1;
+	--base-pink:#D91AD9;
+	--base-orange:#FF7D00;
+	--base-cyan:#14C9C9;
+	
+	--base-default-linear-bg: linear-gradient(to bottom, #2648B3, #4C70E2);
+}
+
+.container {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.container-bg {
+	background: #f5f5f5;
+}
+
+/* 文本 */
+.text-default {
+    color: var(--base-default);
+}
+.text-blue {
+    color: var(--base-blue);
+}
+
+.text-green {
+    color: var(--base-green);
+}
+
+.text-grey {
+    color: var(--base-grey);
+}
+
+.text-yellow {
+    color: var(--base-yellow);
+}
+
+.text-red {
+    color: var(--base-red);
+}
+
+.text-purple {
+    color: var(--base-purple);
+}
+
+.text-pink {
+    color: var(--base-pink);
+}
+
+.text-orange {
+    color: var(--base-orange);
+}
+
+.text-cyan {
+    color: var(--base-cyan);
+}
+
+
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.align-start {
+	align-items: flex-start;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.align-end {
+	align-items: flex-end;
+}
+
+.mt-10 {
+	margin-top: 10rpx;
+}
+
+.mt-30 {
+	margin-top: 30rpx;
+}
+
+.container-page {
+	position: relative;
+	z-index: 1;
+}
+
+.container-page-bg {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	z-index: -1;
+	background-size: 100% 100%;
+}
+
+.common-btn {
+	transition:opacity 0.1s ease;
+}
+
+.common-btn:active {
+	opacity: 0.8;
+	/* transform: scale(0.95) translate(5rpx, 5rpx); */
+}
+
+/* 状态栏高度 */
+.status_bar {
+	height: var(--status-bar-height);
+	width: 100%;
+	box-sizing: border-box;
+}
+.status_bar::after {
+	content: " ";
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: var(--status-bar-height);
+	width: 100%;
+	background-color: #fff;
+	z-index: 10000;
+}
+
+.empty-wrapper {
+	padding: 100rpx 196rpx 0;
+}
+
+.empty-icon {
+	width: 336rpx;
+	height: 248rpx;
+	background: url("~@/static/images-new1/common/none-data.png");
+	background-size:auto 100%;
+}
+
+.market-none-open {
+	background: var(--base-grey) !important;
+}
+
+.market-none-open-color {
+	color: var(--base-grey) !important;
+}
+
+@keyframes expend {
+	0% {
+		height: 0;
+	}
+
+	100% {
+		height: 126rpx;
+	}
+}
+
+.tabs-custom-active {
+	position: absolute;
+	width: 120rpx;
+	bottom: -60rpx;
+	left: calc(50% - 60rpx);
+}
+
+
+.editor-content img {
+	display: block;
+	max-width: 100%;
+}
+
+/* 定义关键帧动画 */
+@keyframes marqueeAnim {
+	0% {
+		transform: translateX(0%);
+	}
+
+	20% {
+		transform: translateX(0%);
+	}
+
+	100% {
+		transform: translateX(-100%);
+	}
+}

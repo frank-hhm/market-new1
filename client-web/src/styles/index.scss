@@ -1,0 +1,211 @@
+@use './common.scss' as *;
+@use './icon.css' as *;
+@use './theme/style.scss' as *;
+@use './theme/editor.scss' as *;
+:root {
+    --base-size-small: 12px;
+
+    --base-size-default: 14px;
+
+    --base-size-large: 18px;
+
+    --base-size-large-x: 20px;
+
+    --base-size-large-xx: 32px;
+
+    --base-size-large-xxx: 36px;
+
+    --base-radius-default: 4px;
+
+    --base-radius-small: 2px;
+
+    --base-radius-large: 6px;
+
+    --base-radius-large-x: 10px;
+
+    --base-grey-btn-bg: #F3F4F6;
+
+    --base-shadow: 0 5px 10px #dddddd;
+
+    --base-grey-bg: #dcdcdc;
+
+    --base-margin: 10px;
+
+    --base-padding: 10px;
+
+    --base-min-padding: 4px
+}
+
+* {
+    font-family: PingFangSC-Medium;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    font-size: var(--base-size-default);
+    background-color: #f5f5f5;
+}
+
+@media screen and (max-height: 1060px) , screen and (max-width: 1199px) {
+    :root {
+        --base-size-default: 12px;
+    }
+    body,
+    html {
+        font-size: var(--base-size-default);
+        background-color: #f5f5f5;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-fill-1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-fill-3);
+}
+
+
+.body-box {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.fw {
+    font-weight: 550;
+}
+
+.flex {
+    display: flex
+}
+
+.grid {
+    display: grid
+}
+
+.flex.between {
+    justify-content: space-between
+}
+
+.flex.around {
+    justify-content: space-around
+}
+
+.flex.start {
+    justify-content: start
+}
+
+.flex.end {
+    justify-content: end
+}
+
+.grid.end {
+    justify-content: end
+}
+
+.flex.center {
+    justify-content: center
+}
+
+.items-center {
+    align-items: center
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.pointer {
+    user-select: none;
+    cursor: pointer;
+}
+
+
+/* 文本 */
+.text-default {
+    color: rgba(var(--primary-6));
+}
+
+.text-blue {
+    color: rgba(var(--blue-6));
+}
+
+.text-green {
+    color: rgba(var(--green-6));
+}
+
+.text-grey {
+    color: rgba(var(--gray-5));
+}
+
+.text-yellow {
+    color: rgba(var(--yellow-6));
+}
+
+.text-red {
+    color: rgba(var(--red-6));
+}
+
+.text-indigo {
+    color: rgba(var(--green-6));
+}
+
+.text-purple {
+    color: rgba(var(--purple-6));
+}
+
+.text-pink {
+    color: rgba(var(--pinkpurple-6));
+}
+
+.text-orange {
+    color: rgba(var(--orange-6));
+}
+
+.text-cyan {
+    color: rgba(var(--cyan-6));
+}
+
+.text-black {
+    color: rgba(var(--color-black));
+}
+
+.text-gray {
+    color: rgb(var(--gray-6));
+}
+
+
+.market-none-open {
+    color: rgb(var(--gray-6)) !important;
+}
+
+.wrap-row {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width:1199px) {
+    .wrap-row {
+        margin: 0 10px;
+        width: calc(100% - 24px - 20px);
+        padding: 0 12px;
+    }
+}
+
+@media screen and (max-width:999px) {}

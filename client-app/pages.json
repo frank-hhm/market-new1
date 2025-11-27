@@ -1,0 +1,620 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			},
+			"app-plus": {
+				"bounce": "none", // 将回弹属性关掉
+				"statusbar": {
+					"immersed": true
+				}
+			}
+		}, {
+			"path": "pages/market/index",
+			"name": "market",
+			"meta": {},
+			"style": {
+				"navigationBarTitleText": "行情",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "pages/market/detail",
+			"name": "marketDetail",
+			"meta": {
+				// "auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "详细",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "pages/member/index",
+			"meta": {},
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			},
+			"app-plus": {
+				"bounce": "none" // 将回弹属性关掉
+			}
+		}, {
+			"path": "otherpages/member/bindCard",
+			"name": "bindCard",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "实名认证",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/member/info",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"name": "info",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		}, {
+			"path": "otherpages/member/updateNickName",
+			"name": "updateNickName",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "修改昵称"
+			}
+		}, {
+			"path": "otherpages/member/bindBankCard",
+			"name": "bankCard",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "绑定银行卡",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/member/bankCardDetail",
+			"name": "bankCardDetail",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "绑定银行卡"
+			}
+		}, {
+			"path": "otherpages/member/bindUsdt",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "USDT地址",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "otherpages/member/usdtDetail",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "USDT地址",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/login/register",
+			"name": "register",
+			"style": {
+				"navigationBarTitleText": "开户",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"name": "login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/other/kefu",
+			"style": {
+				"navigationBarTitleText": "客服"
+			}
+		}, {
+			"path": "otherpages/know/index",
+			"style": {
+				"navigationBarTitleText": "用户需知",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/member/setting",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "系统设置"
+			}
+		}, {
+			"path": "otherpages/member/updatePassword",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		}, {
+			"path": "otherpages/member/forgetPassword",
+			"name": "forgetPassword",
+			"style": {
+				"navigationBarTitleText": "找回密码"
+			}
+		}, {
+			"path": "otherpages/memberCoin/recharge",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"name": "deposit",
+			"style": {
+				"navigationBarTitleText": "入金",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/memberCoin/bankCardCharge",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"name": "bankCardCharge",
+			"style": {
+				"navigationBarTitleText": "入金-银行卡",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/memberCoin/alipayTransfer",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"name": "alipayTransfer",
+			"style": {
+				"navigationBarTitleText": "入金-支付宝",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/memberCoin/usdtTransfer",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "入金-USDT",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "otherpages/order/createSuccess",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "开仓结果",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/charge/index",
+			"meta": {
+			},
+			"style": {
+				"navigationBarTitleText": "交易",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/help/index",
+			"style": {
+				"navigationBarTitleText": "帮助中心",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/help/coin",
+			"style": {
+				"navigationBarTitleText": "出入金",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/help/open",
+			"style": {
+				"navigationBarTitleText": "开户",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/help/rick",
+			"style": {
+				"navigationBarTitleText": "风控",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/help/transaction",
+			"style": {
+				"navigationBarTitleText": "交易",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/help/type",
+			"style": {
+				"navigationBarTitleText": "产品类型",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/agreement/artical",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "otherpages/about/index",
+			"name": "otherAbout",
+			"style": {
+				"navigationBarTitleText": "公司介绍",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/about/follow",
+			"name": "otherAbout",
+			"style": {
+				"navigationBarTitleText": "跟单规则",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/about/role",
+			"name": "otherAbout",
+			"style": {
+				"navigationBarTitleText": "交易细则",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/activity/index",
+			"meta": {},
+			"style": {
+				"navigationBarTitleText": "活动",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/activity/deliver-list",
+			"meta": {},
+			"style": {
+				"navigationBarTitleText": "礼品清单",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},{
+			"path": "otherpages/activity/turntable",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "入金抽现金",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/activity/turntable-record",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "中奖记录",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/order/set-robot",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "设置止盈止损",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/memberCoin/withdraw",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"name": "withdraw",
+			"style": {
+				"navigationBarTitleText": "出金申请",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "otherpages/memberCoin/water",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "资金明细",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/order/historyRecord",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "交易查询",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/order/complateDetail",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "盈亏记录",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/market/contract",
+			"name": "marketContract",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "属性",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "otherpages/activity/moniCompetition",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "模拟风云榜",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/share/index",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "otherpages/share/detail",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "佣金中心",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "otherpages/share/team",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "我的团队",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "otherpages/share/withd",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "佣金提现",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "otherpages/share/withdRecord",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "佣金提现记录",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "otherpages/article/list",
+			"name": "articleList",
+			"style": {
+				"navigationBarTitleText": "新闻列表",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/article/detail",
+			"name": "articleDetail",
+			"style": {
+				"navigationBarTitleText": "新闻详细",
+				"navigationStyle": "custom"
+				// "navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "otherpages/activity/deliver",
+			"meta": {
+				"auth": true
+			},
+			"style": {
+				"navigationBarTitleText": "下单送豪礼",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/other/download",
+			"meta": {
+				"auth": false
+			},
+			"style": {
+				"navigationBarTitleText": "亮点国际下载",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/other/notice-list",
+			"style": {
+				"navigationBarTitleText": "公告",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/other/notice-detail",
+			"style": {
+				"navigationBarTitleText": "公告详细",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "otherpages/member/harvest",
+			"meta": {
+				"auth": false
+			},
+			"style" : 
+			{
+				"navigationBarTitleText": "收款帐户"
+			}
+		},
+		{
+			"path" : "otherpages/follow/index",
+			"meta": {
+				"auth": true,
+				"forbidenMock": false
+			},
+			"style" : 
+			{
+				"navigationBarTitleText": "理财跟单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "otherpages/follow/person",
+			"meta": {
+				"auth": true,
+				"forbidenMock": false
+			},
+			"style" : 
+			{
+				"navigationBarTitleText": "跟单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "otherpages/member/history",
+			"meta": {
+				"auth": true,
+				"forbidenMock": false
+			},
+			"style": {
+				"navigationBarTitleText": "历史资金明细",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "otherpages/follow/member",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "我的跟单",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		// "navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F5f5f5"
+	},
+	"tabBar": {
+		"color": "#808080",
+		"selectedColor": "#F4CF4A",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/images-new1/tab/index.png",
+			"selectedIconPath": "static/images-new1/tab/index_cur.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/market/index",
+			"iconPath": "static/images-new1/tab/market.png",
+			"selectedIconPath": "static/images-new1/tab/market_cur.png",
+			"text": "行情"
+		}, 
+		{
+			"pagePath": "pages/charge/index",
+			"iconPath": "static/images-new1/tab/charge.png",
+			"selectedIconPath": "static/images-new1/tab/charge_cur.png",
+			"text": "持仓"
+		}, {
+			"pagePath": "pages/member/index",
+			"iconPath": "static/images-new1/tab/member.png",
+			"selectedIconPath": "static/images-new1/tab/member_cur.png",
+			"text": "我的"
+		}]
+	}
+}

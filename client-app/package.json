@@ -1,0 +1,24 @@
+{
+  "id": "qiun-data-charts",
+  "name": "uchart",
+  "version": "1.0.0",
+  "description": "插件包",
+  "keywords": [
+    "插件包"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "qs": "^6.10.1",
+    "tki-qrcode": "^0.1.6",
+    "uni-read-pages": "^1.0.5",
+    "uni-simple-router": "^2.0.6",
+    "vuex": "^3.6.2"
+  },
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,233 @@
+<?php
+/**
+ * @Date: 2025/3/28 0:22
+ */
+declare(strict_types=1);
+namespace app\common\services;
+
+use app\common\constants\CacheKeyConstant;
+use app\common\dao\MarketKLineDao;
+use app\common\services\common\CacheService;
+use app\common\services\common\ConsoleLogService;
+use think\facade\Db;
+use think\facade\Queue;
+
+/**
+ * 产品K线数据
+ * Class MarketKLineService
+ */
+class MarketKLineService extends BaseService
+{
+    /**
+     * MarketKLineService constructor.
+     * @param MarketKLineDao $dao
+     */
+    public function __construct(MarketKLineDao $dao)
+    {
+        $this->dao = $dao;
+    }
+
+
+    public function getKLineData($pid,string | int $type = 1,$limit = 10): array
+    {
+        if ($type == 'd'){
+            $type = 1440;
+        }
+        $data = $this->dao->model->where('pid',$pid)->where('type',$type)->order(['ktime'=>'DESC'])
+            ->limit($limit)
+            ->select()->toArray();
+        if(count($data) > 0){
+            $sort = array_column($data, 'ktime');
+            array_multisort($sort , SORT_ASC, $data);
+        }
+//        $chartData = [];
+//        foreach ($data as $k1 => $item){
+//            $arr = [];
+//            $arr = [
+//                $item['ktime'],
+//                (float)$item['open_price'],
+//                (float)$item['low_price'],
+//                (float)$item['height_price'],
+//                (float)$item['close_price'],
+//                $item['volume']
+//            ];
+//            $chartData[$k1] = $arr;
+//        }
+        $chartData = array_map(function($item) {
+            return [
+                $item['ktime'] ?? null,
+                (float)$item['open_price']??0,
+               (float)$item['low_price']  ?? 0,
+               (float)$item['height_price'] ?? 0,
+               (float)$item['close_price']?? 0,
+                $item['volume'] ?? 0
+            ];
+        }, $data);
+        //$klineCacheKey = CacheKeyConstant::PRODUCT_K_LINE . ':' . $product['id'] . ':' . $type . ':' . $dataTime;
+        return $chartData;
+    }
+
+
+
+    public function createKData($price,$product,$nowTime,$dataTime = 0): void
+    {
+        if($dataTime === 0){
+            $dataTime = strtotime(date('Y-m-d H:i', $nowTime) . ':00');
+        }
+        //存储k线值
+        $min = date('i');
+        //1min
+        $type = 1;
+        $this->setKData($price,$product, $type,$dataTime);
+
+
+        //5min
+        $hour = floor($min / 5) * 5;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 5;
+        $this->setKData($price,$product, $type, $dataTime);
+
+        //15min
+        $hour = floor($min / 15) * 15;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 15;
+        $this->setKData($price,$product, $type, $dataTime);
+
+        //30min
+        $hour = floor($min / 30) * 30;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 30;
+        $this->setKData($price,$product, $type, $dataTime);
+
+        //60min
+        $minute = date('Y-m-d H', $nowTime) . ':00:00';
+        $dataTime = strtotime($minute);
+        $type = 60;
+        $this->setKData($price,$product, $type, $dataTime);
+
+        //240min
+        $hour = date('H');
+        $hour = floor($hour / 4) * 4; // 计算当前时间所在的4小时间隔
+        $minute = date('Y-m-d H', strtotime(date('Y-m-d ' . $hour . ':00:00', $nowTime))).':00:00'; // 构造时间字符串
+        $dataTime = strtotime($minute); // 转换为时间戳
+        $type = 240;
+        $this->setKData($price,$product, $type, $dataTime);
+
+        // 日K线 (1-day)
+        $minute = date('Y-m-d', $nowTime) . ' 00:00:00'; // 当天的零点时间
+        $dataTime = strtotime($minute); // 转换为时间戳
+        $type = 1440; // 1天 = 1440分钟
+        $this->setKData($price,$product, $type, $dataTime);
+    }
+
+    public function setKData($price,$product,$type,$dataTime)
+    {
+        try {
+
+            $kLineMap['pid'] = $product['id'];
+            $kLineMap['type'] = $type;
+            $kLineMap['ktime'] = $dataTime;
+
+
+            $klineCacheKey = CacheKeyConstant::PRODUCT_K_LINE.':' . $kLineMap['pid'] . ':' . $type . ':' . $dataTime;
+
+            $cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
+            //产品小数点
+            $productDecimal = $product['decimal'] ?? 2;
+
+
+            $typeTime = [
+                1 => 60,
+                5 => 300,
+                15 => 900,
+                30 => 1800,
+                60 => 3600,
+                240 => 14400,
+                1440 => 86400,
+            ];
+            $cacheTime = $typeTime[$type];
+
+            $marketKLineService = app(MarketKLineService::class);
+
+            if ($cacheService->has($klineCacheKey) && !empty( $issetkline = $marketKLineService->dao->model->where('pid', $kLineMap['pid'])
+                    ->where('type', $type)
+                    ->where('ktime', $dataTime)
+                    ->limit(1)
+                    ->order('id', 'desc')->find())) {
+
+                $updateKLineMap['id'] = $issetkline['id'];
+
+                $updateKLineMap['volume'] = $product['volume'] ?? 0;
+                $updateKLineMap['type'] = $issetkline['type'];
+                $updateKLineMap['ktime'] = $issetkline['ktime'];
+                $updateKLineMap['close_price'] = sprintf("%.".$productDecimal."f", $price);
+
+                if ($issetkline['height_price'] < $price) {
+                    $updateKLineMap['height_price'] = sprintf("%.".$productDecimal."f", $price);
+                } else {
+                    $updateKLineMap['height_price'] = sprintf("%.".$productDecimal."f", $issetkline['height_price']);
+                }
+                if  ($issetkline['low_price'] > $price) {
+                    $updateKLineMap['low_price'] = sprintf("%." . $productDecimal . "f", $price);
+                } else {
+                    $updateKLineMap['low_price'] = sprintf("%." . $productDecimal . "f", $issetkline['low_price']);
+                }
+
+                $cacheService->set($klineCacheKey, $updateKLineMap, $cacheTime + 60);
+                Db::name('market_k_line')->where('id', $updateKLineMap['id'])->update($updateKLineMap);
+
+                if($type === 1){
+                    app(ProductDataService::class)->dao->model->where('pid',$product['id'])->update([
+                        'price' =>sprintf("%.".$productDecimal."f", $price),
+                    ]);
+                }
+
+                //修改当天最高最低
+                if ($type == 1440) {
+                    $pro_data = array();
+                    $pro_data['height_price'] = sprintf("%.".$productDecimal."f", $issetkline['height_price']);
+                    $pro_data['low_price'] =  sprintf("%.".$productDecimal."f", $issetkline['low_price']);
+                    $pro_data['price'] = sprintf("%.".$productDecimal."f",$price);
+                    $pro_data['close_price'] = sprintf("%.".$productDecimal."f", $price);
+                    app(ProductDataService::class)->dao->model->where('pid', $product['id'])->update($pro_data);
+                }
+            }elseif (!$cacheService->has($klineCacheKey) ){
+                $kLineMap['low_price'] = sprintf("%.".$productDecimal."f",$price);
+                $kLineMap['height_price'] = sprintf("%.".$productDecimal."f", $price);
+                $kLineMap['open_price'] = sprintf("%.".$productDecimal."f", $price);
+                $kLineMap['close_price'] = sprintf("%.".$productDecimal."f", $price);
+
+                $cacheService->set($klineCacheKey, $kLineMap, $cacheTime + 60);
+
+                $id = Db::name('market_k_line')->insertGetId($kLineMap);
+
+                $queueData = [
+                    'pid' => $kLineMap['pid'],
+                    'decimal' => $productDecimal,
+                    'price' => sprintf("%.".$productDecimal."f", $price),
+                    'data' => $kLineMap
+                ];
+                $res = Queue::push("app\common\jobs\SetKDataJob", $queueData, 'SetKDataJob');
+//                app(ConsoleLogService::class)->create('SetKDataJob:'.$res,true);
+                if($type === 1){
+                    app(ProductDataService::class)->dao->model->where('pid',$product['id'])->update([
+                        'price' =>sprintf("%.".$productDecimal."f", $price),
+                    ]);
+                }elseif ($type === 1440){
+                    app(ProductDataService::class)->dao->model->where('pid',$product['id'])->update([
+                        'open_price' =>sprintf("%.".$productDecimal."f", $price),
+                        'height_price' =>sprintf("%.".$productDecimal."f", $price),
+                        'low_price' =>sprintf("%.".$productDecimal."f", $price),
+                        'close_price' =>sprintf("%.".$productDecimal."f", $price),
+                    ]);
+                }
+            }
+
+        }catch (\Exception $e){
+            app(ConsoleLogService::class)->create('CheckOrderTask setKData Error' . $e->getMessage(),true);
+        }
+    }
+}
