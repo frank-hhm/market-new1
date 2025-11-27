@@ -125,7 +125,7 @@ class WaterService extends BaseService
     }
 
 
-    public function getListApi(array $param = [],$source = []): array
+    public function getListApi(array $param = [],$source = [],$payType = []): array
     {
         [$page, $limit] = $this->dao->getPageValue();
         $filter = [];
@@ -156,7 +156,9 @@ class WaterService extends BaseService
             ->page($page)->paginate($limit)->toArray();
         foreach ($source as $sourceItem){
             $list[$sourceItem] =  $this->dao->model->where($filter)
-                ->where("source",'=',$sourceItem)->sum('money');
+                ->where([
+                    "source"=>$sourceItem
+                ])->whereIn("pay_type",$payType)->sum('money');
         }
         return $list;
     }

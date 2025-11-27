@@ -4,6 +4,7 @@
  */
 declare(strict_types=1);
 namespace app\api\controller\finance;
+use app\common\enum\finance\RechargePayTypeEnum;
 use app\common\enum\finance\SourceEnum;
 use think\facade\App;
 use app\common\services\finance\WaterService;
@@ -44,7 +45,9 @@ class FinanceLog extends \app\api\controller\Base
             "end_date"
         ]);
         $data['member_id'] = $this->uid;
-        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::RECHARGE,SourceEnum::MEMBER_WITHDRAWAL]));
+        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::RECHARGE,SourceEnum::MEMBER_WITHDRAWAL],[
+            RechargePayTypeEnum::BALANCE
+        ]));
     }
 
     public function getCommissionWaterList(){
@@ -53,7 +56,9 @@ class FinanceLog extends \app\api\controller\Base
             "end_date"
         ]);
 //        $data['member_id'] = $this->uid;
-        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::COMMISSION_FEE,SourceEnum::MEMBER_COMMISSION_WITHDRAWAL]));
+        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::COMMISSION_FEE,SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],[
+            RechargePayTypeEnum::COMMISSION_BALANCE
+        ]));
     }
 
     public function getFollowWaterList(){
@@ -62,7 +67,10 @@ class FinanceLog extends \app\api\controller\Base
             "end_date"
         ]);
 //        $data['member_id'] = $this->uid;
-        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::FOLLOW_REVENUE,SourceEnum::FOLLOW,SourceEnum::FOLLOW_CLOSE]));
+        $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::FOLLOW_REVENUE,SourceEnum::FOLLOW,SourceEnum::FOLLOW_CLOSE],[
+            RechargePayTypeEnum::COMMISSION_BALANCE,
+            RechargePayTypeEnum::FOLLOW_BALANCE
+        ]));
     }
 
 
