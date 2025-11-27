@@ -127,6 +127,7 @@ class Product extends \app\api\controller\Base
         $data['geye_baozhengjin_rate'] = $productParams['geye_baozhengjin_rate'] ?? "";
         $data['dian_cha'] = $productDetail['spread'] ?? "";
         $data['opentimetext'] = $productParams['open_time'] ?? "";
+        $data['ptitle'] = $productDetail['name'] ?? "";
         $this->success('获取成功',$data);
     }
 

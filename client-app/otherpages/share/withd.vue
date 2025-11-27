@@ -1,13 +1,11 @@
 <template>
 	<view class="container container-page">
-		<customNav leftColor="#000" bg="#D7EEFF" title="提现">
+		<customNav leftColor="#000" bg="#F4CF4A" title="提现">
 			<template slot='right'>
 				<router-link class="" to="/otherpages/member/history?type=share">提现记录</router-link>
 			</template>
 		</customNav>
 		<view class="share-mian">
-			<image class="share-mian-bg" src="@/static/images/20250227/share-detail-bg.png" mode="widthFix" />
-
 		</view>
 		<view class="commission-box">
 			<view class="commission-title">
@@ -24,7 +22,7 @@
 				<view class="title">提取金额</view>
 				<view class="transfer-input-wrapper flex align-end">
 					<text class="unit">$</text>
-					<u-input class="input" v-model="value" dis type="digit" />
+					<u-input class="input" v-model="value" dis type="digit" placeholder="请输入金额"/>
 				</view>
 				<view class="tip">
 					满1.00可提现
@@ -34,12 +32,7 @@
 
 				<view class="card-cell-main-title">提现至</text></view>
 				<view class="card-cell">
-					<u-image width="60" height="60" border-radius="60" class="avatar" :src="member.avatar">
-						<view slot="error">
-							<u-image width="60" height="60" border-radius="60" class="avatar"
-								src="/static/images/member-default-icon.png"></u-image>
-						</view>
-					</u-image>
+					<view class="card-cell-main-icon"></view>
 					<view class="card-cell-main-desc">{{member.username || ''}}</view>
 				</view>
 			</view>
@@ -156,9 +149,9 @@
 
 
 <style lang="scss" scoped>
-	page {
+	.container-page {
 		background-color: #f1f1f1;
-
+		color: #000;
 	}
 
 
@@ -167,23 +160,33 @@
 		width: 100%;
 		position: absolute;
 		z-index: -1;
-		min-height: 600rpx;
-
+		height:400rpx;
+		background-color: #F4CF4A;
 		.share-mian-bg {
 			width: 100%;
+		}
+		&::after{
+			position: absolute;
+			content: "";
+			height: 260rpx;
+			width: 260rpx;
+			right: 0;
+			bottom: 0;
+			background: url("~@/static/images-new1/share/icon-1.png");
+			background-size: 100% 100%;
+			z-index: 1;
 		}
 	}
 
 	.commission-box {
 		margin-top: 40rpx;
-		text-align: center;
-
+		text-align: left;
+		padding:0 30rpx ;
 		.commission-title {}
-
 		.commission-number {
 			font-weight: bold;
 			font-size: 50rpx;
-			margin-top: 60rpx;
+			margin-top:20rpx;
 			margin-bottom: 60rpx;
 		}
 	}
@@ -191,28 +194,46 @@
 
 
 	.withdraw-main {
-		margin: 30rpx 24rpx;
+		padding: 30rpx;
+		background-color: #fff;
+		border-top-right-radius: 20rpx;
+		border-top-left-radius: 20rpx;
+		min-height: calc(100vh - 320rpx);
 	}
 
 	.withdraw-form {
-		padding: 30rpx;
-		background-color: #fff;
-		border-radius: 20rpx;
 
 		.title {
-			font-size: $baseFontSizeSm;
+			font-size: $baseFontSize;
+			position: relative;
+			padding-left: 30rpx;
+			font-weight: bold;
+			line-height: 30rpx;
+			&::after{
+				position: absolute;
+				content: "";
+				width: 6rpx;
+				height: 30rpx;
+				left: 0;
+				top: 0;
+				border-radius:3rpx;
+				background: #F4CF4A;
+			}
 		}
 
 		.transfer-input-wrapper {
-
-			padding: 30rpx 0 18rpx 0;
+			margin-top:40rpx;
+			padding: 20rpx 30rpx;
 			border-bottom: 2rpx solid #F0F8FF;
+			border-radius:30rpx;
+			background: #F5F5F5;
 
 			.unit {
 				margin-right: 10rpx;
 				color: #333333;
 				line-height: 70rpx;
 				font-weight: bold;
+				font-size: $baseFontSizeLg;
 			}
 
 			.input {
@@ -302,9 +323,9 @@
 	}
 
 	.card-cell-main {
-		background-color: #fff;
+		background-color: #F5F5F5;
 		border-radius: 20rpx;
-		padding: 20rpx 30rpx;
+		padding: 30rpx 30rpx;
 		margin-top: 30rpx;
 		display: flex;
 		justify-content: space-between;
@@ -318,18 +339,23 @@
 			.card-cell-main-desc {
 				margin-left: 10rpx;
 			}
+			.card-cell-main-icon{
+				width: 26rpx;
+				height: 32rpx;
+				background: url("~@/static/images-new1/share/icon-2.png");
+				background-size: 100% 100%;
+			}
 		}
 	}
 
 	.common-btn {
 
-		background: linear-gradient(93deg, #56D5FF 0%, #7BA2FF 100%);
-		box-shadow: inset -3px -2px 4px 0px rgba(58, 3, 208, 0.12), inset 0px 4px 4px 0px rgba(255, 250, 250, 0.25);
+		background:#F4CF4A;
 		border-radius: 100rpx;
 		text-align: center;
 		line-height: 100rpx;
 		height: 100rpx;
-		color: #fff;
+		color: #000;
 		font-weight: bold;
 		font-size: $baseFontSize;
 		margin: 60rpx 0;

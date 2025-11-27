@@ -3,27 +3,38 @@
 		<customNav title="合约属性"  leftColor="#000"></customNav>
 		<view class="page-main">
 			<!-- <view class="page1"> -->
-			<view class="main-item">
-				<view class="title">合约单位</view>
+			<view class="main-item-box">
+				<view class="title">{{info.ptitle}}</view>
 				<view class="desc">{{info.heyue_danwei || '无配置'}}</view>
+				<view class="item-box-list">
+					<view class="item-box-items">
+						<view class="box-title">货币单位</view>
+						<view class="box-desc">{{info.money_danwei || '无配置'}}</view>
+					</view>
+					<view class="item-box-items">
+						<view class="box-title">点差</view>
+						<view class="box-desc">{{info.dian_cha || '无配置'}}</view>
+					</view>
+					<view class="item-box-items">
+						<view class="box-title">单笔交易数</view>
+						<view class="box-desc">{{info.buy_min || '无配置'}}手~{{info.buy_max || '无配置'}}手</view>
+					</view>
+				</view>
 			</view>
-			<view class="main-item2">
-				<view class="main-items">
-					<view class="title">货币单位</view>
-					<view class="desc">{{info.money_danwei || '无配置'}}</view>
+			<view class="main-item time">
+				<view class="title">
+					<view class="text">交易时间 GMT+0</view>
 				</view>
-				<view class="main-items">
-					<view class="title">点差</view>
-					<view class="desc">{{info.dian_cha || '无配置'}}</view>
-				</view>
-				<view class="main-items">
-					<view class="title">单笔交易数</view>
-					<view class="desc">{{info.buy_min || '无配置'}}手~{{info.buy_max || '无配置'}}手</view>
-				</view>
+				<view class="desc"><rich-text :nodes="info.opentimetext|| '无配置'"></rich-text></view>
 			</view>
 			<view class="main-item">
-				<view class="title">报价小数点</view>
-				<view class="desc">{{info.decimal || '无配置'}}</view>
+				<view class="title">结算时间
+				</view>
+				<view class="desc">{{info.selldate || '无配置'}}(GMT+0)</view>
+			</view>
+			<view class="main-item">
+				<view class="title">单手保证金</view>
+				<view class="desc">{{info.pay_choose || '无配置'}}USD/手</view>
 			</view>
 			<view class="main-item-tips">注：例如数值为2，表示报价为2位小数点，即{{Number(2).toFixed(info.xiaoshu)}}。</view>
 	
@@ -38,10 +49,6 @@
 						<text class="num2 lettSpace">注：当您进行交易时，可在挂单区间看到范围提示。</text>
 					</view>
 				</view> -->
-			<view class="main-item">
-				<view class="title">单手保证金</view>
-				<view class="desc">{{info.pay_choose || '无配置'}}USD/手</view>
-			</view>
 			<view class="main-item-tips">注：建仓时，您所付出作为买卖双方确保履约的担保费用;该产品为固定保证金。</view>
 			<view class="main-item">
 				<view class="title">强制保证金</view>
@@ -53,17 +60,9 @@
 				<view class="desc">{{info.geye_baozhengjin_rate || '无配置'}}%</view>
 			</view>
 			<view class="main-item-tips">注：当时间至结算时间你的保证金比例低于该数值，会平仓亏损最大的持仓订单。</view>
-			<view class="main-item time">
-				<view class="title">
-					<view class="text">交易时间</view>
-					<view class="text">GMT+0</view>
-				</view>
-				<view class="desc"><rich-text :nodes="info.opentimetext|| '无配置'"></rich-text></view>
-			</view>
 			<view class="main-item">
-				<view class="title">结算时间
-				</view>
-				<view class="desc">{{info.selldate || '无配置'}}(GMT+0)</view>
+				<view class="title">报价小数点</view>
+				<view class="desc">{{info.decimal || '无配置'}}</view>
 			</view>
 			<view class="main-item-tips red">注：本公司保留对以上数据可因市场情况而调整的权利</view>
 			<!-- </view> -->
@@ -107,6 +106,45 @@
 		background: none;
 		margin-top: 16rpx;
 	}
+	
+	.main-item-box{
+		margin: 20rpx;
+		padding: 20rpx;
+			background: #F4CF4A;
+			border-radius: 20rpx;
+			position: relative;
+			text-align: center;
+			.title{
+				font-weight: bold;
+				font-size: $baseFontSizeLg;
+			}
+			.desc{
+			margin-top:10rpx;
+				color: #7D6200;
+			}
+		.item-box-list{
+			margin-top: 20rpx;
+			display: flex;
+			justify-content: space-between;
+			.item-box-items{
+				width: calc(33.333% - 10rpx);
+				background: rgba(255, 255, 255, 0.3);
+				border-radius: 12rpx;
+				padding: 20rpx 0;
+				.box-title{
+					font-size: $baseFontSizeSm;
+					color: #7D6200;
+				}
+				.box-desc{
+				font-weight: bold;
+				color: #000000;
+					
+						margin-top: 10rpx;
+						font-size: $baseFontSize;
+				}
+			}
+		}
+	}
 
 	.main-item {
 		margin: 24rpx 24rpx 0;
@@ -119,19 +157,28 @@
 		border-radius: $baseRadius;
 		padding: 24rpx;
 
-		&.time {
-			align-items: normal;
-			height: auto;
-		}
-
 		.title {
 			font-size: $baseFontSize;
-			width: 160rpx;
+			// width: 160rpx;
 		}
 
 		.desc {
-			font-size: $baseFontSizeSm;
+			font-size: $baseFontSize;
+			font-weight: bold;
+			margin-left: 20rpx;
 		}
+		&.time {
+			align-items: normal;
+			height: auto;
+			display: block;
+			.title {
+				// width: auto;
+			}
+			.desc {
+				margin-left: 0;
+			}
+		}
+
 	}
 
 	.main-item-tips {
@@ -141,7 +188,8 @@
 		margin-top: 12rpx;
 
 		&.red {
-			color: var(--base-red)
+			color:#FF5733;
+			margin-bottom: 40rpx;
 		}
 	}
 

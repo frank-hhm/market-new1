@@ -33,7 +33,8 @@
 
 					<view class="follow-members">
 						<text class="follow-members-icon"></text>
-						<text class="follow-members-text">{{(parseInt(detail.follow_count_text) + parseInt(detail.member_count))  || 0}}</text>
+						<text
+							class="follow-members-text">{{(parseInt(detail.follow_count_text) + parseInt(detail.member_count))  || 0}}</text>
 					</view>
 				</view>
 				<view class="follow-members-box-right">
@@ -64,7 +65,9 @@
 					</view>
 					<view class="follow-person-items center">
 						<view class="title">当前跟随人数</view>
-						<view class="desc">{{(parseInt(detail.follow_count_text) + parseInt(detail.member_count))  || 0}}</view>
+						<view class="desc">
+							{{(parseInt(detail.follow_count_text) + parseInt(detail.member_count))  || 0}}
+						</view>
 					</view>
 					<view class="follow-person-items right">
 						<view class="title">交易员保证金(usd)</view>
@@ -102,9 +105,61 @@
 			</view>
 
 			<view v-if="!isLoading && list.length == 0" class="empty-list">
-				{{ detail.is_show_order == 0?'该交易员已隐藏持单':'暂无持仓单'}}</view>
+				{{ detail.is_show_order == 0?'该交易员已隐藏持单':'暂无持仓单'}}
+			</view>
 			<view v-else class="trading-list">
-				<view class="trading-item" v-for="(item,index) in list" :key="index">
+				<view v-if="tabIndex == 0  || true" class="trading-item" v-for="(item,index) in list" :key="index">
+					<view class="flex justify-between holder-item-content">
+						<view class="left-wrapper flex flex-column justify-between">
+							<view class="holder-item-top">
+								<text class="name">{{item.ptitle}}</text>
+								<text class="right-text">{{item.ostyle.name}}</text>
+								<text class="right-text">/{{item.onumber}}手</text>
+							</view>
+							<view class="price flex align-center">
+								<text class="order-price">{{item.buyprice}}</text>
+								<text class="arrow-right" style="padding: 0 15rpx;"> → </text>
+								<view class="order-item-market-price" v-if="tabIndex == 0">
+									{{ getMarketPrice(item.pid) }}
+								</view>
+								<view class="order-item-market-price" v-if="tabIndex == 1">
+									{{ item.sellprice }}
+								</view>
+							</view>
+							<view class="flex">
+								<view class="flex mr-10">
+									<text class="label mr-10">止损 :</text>
+									<text class="value">{{item.loss?item.loss:'--'}}</text>
+								</view>
+								<view class="flex">
+									<text class="label mr-10">止赢 :</text>
+									<text class="value">{{item.surplus?item.surplus:'--'}}</text>
+								</view>
+							</view>
+							<view class="flex" v-if="item.mark_price && item.mark_price != '' && item.mark_price != 0">
+								<view class="flex mr-10">
+									<text class="label mr-10">触发：</text>
+									<text
+										class="value">{{item.mark_price > item.trigger_price ? '>=':'<='}}{{item.mark_price}}</text>
+								</view>
+							</view>
+						</view>
+						<view class="right-wrapper flex flex-column justify-between">
+							<view class="flex justify-end">
+								<text class="right-text mr-10">#{{item.orderno}}</text>
+							</view>
+
+							<view class="ying-kui" v-if="tabIndex == 1" :style="{
+									color:parseFloat(item.ploss)>0?getUpColor:getDownColor
+								}">
+								{{item.ploss > 0 ?"+":''}}{{item.ploss}}
+							</view>
+							<orderItemYingKui :order="item" v-if="tabIndex == 0"></orderItemYingKui>
+							<view class="time">{{item.buytime}}</view>
+						</view>
+					</view>
+				</view>
+				<view v-if="false  && tabIndex == 1" class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="trading-header">
 						<view class="trading-header-name">
 							{{item.ptitle}}
@@ -203,12 +258,15 @@
 
 <script>
 	import customNav from '@/components/custom-nav/index.vue';
+	import orderItemYingKui from '@/components/order/order-item-yingkui.vue';
 	import {
+		mapState,
 		mapGetters
 	} from "vuex"
 	export default {
 		components: {
-			customNav
+			customNav,
+			orderItemYingKui
 		},
 		data() {
 			return {
@@ -226,6 +284,9 @@
 		},
 		computed: {
 			...mapGetters("app", ["getConfig"]),
+			...mapState("market", ["getMarketPrice"]),
+			...mapGetters("market", ["getMarketPrice"]),
+			...mapGetters("member", [ "getDownColor", "getUpColor"]),
 			getRevenue() {
 				if (this.detail) {
 					if (this.detail.revenue_type == "lock" && this.detail.revenue_lock) {
@@ -244,6 +305,7 @@
 				this.tabIndex = index
 				this.currentPage = 0;
 				this.isFinish = false;
+				this.list = []
 				this.requestList(true);
 			},
 			onFollow() {
@@ -566,6 +628,12 @@
 					border-bottom: 1rpx solid #F7F7F7;
 					padding: 30rpx 0;
 
+		.ying-kui{
+			
+				font-size: $baseFontSizeLg;
+				font-weight: bold;
+				text-align: right;
+		}
 					.trading-header {
 						display: flex;
 						align-items: center;
@@ -619,6 +687,105 @@
 					.trading-time {
 						margin-top: 20rpx;
 						color: var(--base-grey);
+					}
+				}
+
+				.holder-item-top {
+					display: flex;
+					align-items: center;
+
+					.tag {
+						margin-left: 20rpx;
+						font-size: $baseFontSizeSm;
+						color: $baseColor;
+					}
+
+					.name {
+						margin-right: 20rpx;
+						font-weight: bold;
+					}
+
+					.right-text {
+						font-size: $baseFontSizeSm;
+					}
+
+				}
+
+				.order-item-market-price {
+					font-size: $baseFontSizeSm;
+					color: var(--base-red);
+
+				}
+
+				.holder-item-content {
+					min-height: 120rpx;
+				}
+
+				.left-wrapper {
+					.name {
+						// font-size: 28rpx;
+						// font-weight: 550;
+					}
+
+					.order-price {
+						font-size: $baseFontSizeSm;
+						// font-weight: bold;
+					}
+
+					.now-price {
+						font-size: $baseFontSizeSm;
+						// font-weight: bold;
+					}
+
+					.label {
+						font-size: $baseFontSizeSmX;
+						;
+						color: #999;
+					}
+
+					.value {
+						font-size: $baseFontSizeSmX;
+						;
+						color: #999;
+					}
+
+				}
+
+				.right-wrapper {
+					.ying-kui {
+						font-size: $baseFontSizeLg;
+						text-align: right;
+					}
+
+					.time {
+						font-size: $baseFontSizeSmX;
+						color: var(--base-grey);
+						text-align: right;
+					}
+
+					.right-text {
+						font-size: $baseFontSizeSmX;
+					}
+				}
+
+				.mr-10 {
+					margin-right: 10rpx;
+				}
+
+				.bottom-box {
+					margin-top: 40rpx;
+					margin-bottom: 20rpx;
+					display: flex;
+					justify-content: space-between;
+
+					.bottom-btn {
+						padding: 0 30rpx;
+						background: #f0f0f0;
+						font-size: $baseFontSizeSm;
+						text-align: center;
+						color: #000;
+						line-height: 48rpx;
+						border-radius: $baseRadius;
 					}
 				}
 			}
@@ -786,5 +953,6 @@
 			line-height: 90rpx;
 			text-align: center;
 		}
+		
 	}
 </style>

@@ -3,7 +3,7 @@
     <text :style="{
 		color:yingkuiClass
 	}">
-      {{ yingkuiSign }}{{ yingkuiAmount }}
+      {{ yingkuiSign }}{{ yingkuiAmount || 0.00}}
     </text>
   </view>
 </template>
@@ -25,10 +25,10 @@ export default {
       return this.getYingKui(this.order);
     },
     yingkuiAmount() {
-      return this.yingkuiData.amount;
+      return ( this.yingkuiData.amount == NaN? 0.00 : this.yingkuiData.amount);
     },
     yingkuiSign() {
-      return this.yingkuiData.sign;
+      return this.yingkuiData.sign || '';
     },
     yingkuiClass() {
       return this.yingkuiData.className;

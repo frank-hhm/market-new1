@@ -69,8 +69,16 @@ class Person extends \app\api\controller\Base
         if (!in_array($params["ostaus"],[0,1])){
             $this->error("参数错误");
         }
-
-        $list = $this->service->getTradingList($params['id'],$params["ostaus"]);
+        if($params["ostaus"] == 0){
+            $detail = $this->service->getDetail($params['id']);
+             $data = app(MemberOrderService::class)->getChiCangOrdersByMemberId($detail['member_id']);
+            $list = [
+                "total" => count($data),
+                "data"=>$data
+            ];
+        }else{
+            $list = $this->service->getTradingList($params['id'],$params["ostaus"]);
+        }
         $this->success('获取成功', $list);
     }
 
