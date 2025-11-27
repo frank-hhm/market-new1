@@ -55,7 +55,7 @@
 				isFinish: false,
 				isLoading: false,
 				commission: 0.00,
-				recharge: 0.00
+				withdrawal: 0.00
 			};
 		},
 		methods: {
@@ -86,7 +86,7 @@
 							t.list = [...t.list, ...res.data.data]
 						}
 						t.commission = res.data.commission_fee || 0.00
-						t.recharge = res.data.recharge || 0.00
+						t.withdrawal = res.data.member_commission_withdrawal || 0.00
 						t.isLoading = false;
 						if (res.data.data.length < t.pageSize) {
 							t.isFinish = true
