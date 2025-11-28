@@ -5,9 +5,9 @@
 
 
 //当前环境测试uat
-export const BASE_URL='http://nuat1.clwft.cn/'
-export const WS_URL='ws://nuat1.clwft.cn:9502'
-export const updateUrl='http://api.clwft.cn/api/common.publics/appUpgrade'
+export const BASE_URL='http://www.iuqwi.com/'
+export const WS_URL='ws://www.iuqwi.com:9501'
+export const updateUrl='http://api.iuqwi.com/api/common.publics/appUpgrade'
 
 // //当前环境pro
 // export const BASE_URL='http://www.hclnx.com/'
