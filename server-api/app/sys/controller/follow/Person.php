@@ -75,7 +75,8 @@ class Person extends Base
             ["revenue_max",0],
             ["revenue_lock",0],
             ["follow_count_text",0],
-            ["is_show_order",1]
+            ["is_show_order",1],
+            ["default_create_day",0]
         ]);
         if( $this->service->save($data)){
             $this->success('添加成功!');
@@ -109,7 +110,8 @@ class Person extends Base
             ["revenue_max",0],
             ["revenue_lock",0],
             ["follow_count_text",0],
-            ["is_show_order",1]
+            ["is_show_order",1],
+            ["default_create_day",0]
         ]);
         if($this->service->update($data['id'], $data)){
             $this->success('修改成功!');

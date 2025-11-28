@@ -49,6 +49,11 @@ class PersonModel extends BaseModel
     }
 
     public function getCreateDayAttr($value,$data){
-        return StringHelper::registrationDuration(StringHelper::_strtotime($data["create_time"]));
+        $default_create_day = 0;
+        if (!empty($data["default_create_day"])){
+            $default_create_day  = (int)$data["default_create_day"];
+        }
+        $default_create_day = $default_create_day * 60 * 60 *24;
+        return StringHelper::registrationDuration(StringHelper::_strtotime($data["create_time"]) - $default_create_day);
     }
 }

@@ -37,6 +37,8 @@ class UpdateFollowPerson extends Migrator
             ->addColumn(Column::decimal('revenue_lock',10,2)->setDefault('0.00')->setComment('固定值'))
             ->addColumn(Column::decimal('commission1',10,2)->setDefault('0.00')->setComment('一级'))
             ->addColumn(Column::decimal('commission2',10,2)->setDefault('0.00')->setComment('二级'))
+            ->addColumn(Column::integer('default_create_day')->setLimit(11)->setDefault(0)->setComment('天数'))
+
             ->addColumn(Column::integer('follow_count_text')->setLimit(11)->setDefault(0)->setComment('跟单人数'))
             ->addColumn(Column::enum('is_show_order',['0','1'])->setDefault('0')->setComment('是否显示跟单订单'))
             ->addIndex(['revenue_type'])

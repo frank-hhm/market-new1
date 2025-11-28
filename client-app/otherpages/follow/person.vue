@@ -108,7 +108,10 @@
 				{{ detail.is_show_order == 0?'该交易员已隐藏持单':'暂无持仓单'}}
 			</view>
 			<view v-else class="trading-list">
-				<view v-if="tabIndex == 0  || true" class="trading-item" v-for="(item,index) in list" :key="index">
+				<view v-if=" detail.is_show_order == 0" class="empty-list">
+					该交易员已隐藏持单
+				</view>
+				<view v-if="detail.is_show_order == 1" class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="flex justify-between holder-item-content">
 						<view class="left-wrapper flex flex-column justify-between">
 							<view class="holder-item-top">
@@ -193,7 +196,7 @@
 						<text v-if="item.ostaus.value == 1"> {{ item.selltime || '--'}}</text>
 					</view>
 				</view>
-				<view class="page-bottom">{{isFinish?'没有更多了':'加载更多'}}</view>
+				<view v-if="detail.is_show_order == 1" class="page-bottom">{{isFinish?'没有更多了':'加载更多'}}</view>
 			</view>
 		</view>
 		<view v-if="detail.follow_status === false" class="follow-btn" @tap="onFollow">跟单</view>
