@@ -63,7 +63,10 @@
         }
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "audit": {
+            "ignore": ["PKSA-2kqm-ps5x-s4f5"]
+        }
     },
     "scripts": {
         "post-autoload-dump": [
