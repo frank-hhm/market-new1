@@ -95,6 +95,10 @@ FLUSH PRIVILEGES;
 
 sudo yum install git -y
 
+UPDATE table_name
+SET column_name = REPLACE(column_name, '要被替换的字符串', '替换成的字符串')
+WHERE 条件;
+
 
 {
 "ac":"auth",
