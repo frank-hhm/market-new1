@@ -19,6 +19,8 @@ class MarketItickIndicesTask  extends AbstractProcess
     public string $host = "api.itick.org";
 
     public string $path = "/iws";
+    
+    public string $typeStr = "$GB";
 
 
     public mixed $cacheService = null;
@@ -37,11 +39,11 @@ class MarketItickIndicesTask  extends AbstractProcess
         $this->cacheKey = CacheKeyConstant::MARKET_ITICK_INDICES_STATUS;
         $taskName = "【Itick指数】";
         $this->logService->create($taskName."程序开始",true);
-        app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey);
+        app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey,$this->typeStr);
         $this->addTick($runTime, function () use ($taskName,$marketSource){
             $autoMarket = $this->cacheService->get( $this->cacheKey);
             if (null == $autoMarket || $autoMarket == 0) {
-                app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host,  $this->path,$this->cacheKey);
+                app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host,  $this->path,$this->cacheKey,$this->typeStr);
             }
         });
     }

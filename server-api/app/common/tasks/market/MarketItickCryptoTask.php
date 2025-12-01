@@ -19,6 +19,8 @@ class MarketItickCryptoTask  extends AbstractProcess
 
     public string $path = "/cws";
 
+    public string $typeStr = "$BA";
+
 
     public mixed $cacheService = null;
 
@@ -36,11 +38,11 @@ class MarketItickCryptoTask  extends AbstractProcess
         $this->cacheKey = CacheKeyConstant::MARKET_ITICK_CRYPTO_STATUS;
         $taskName = "【Itick加密货币】";
         $this->logService->create($taskName."程序开始",true);
-        app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey);
+        app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey,$this->typeStr);
         $this->addTick($runTime, function () use ($taskName,$marketSource){
             $autoMarket = $this->cacheService->get($this->cacheKey);
             if (null == $autoMarket || $autoMarket == 0) {
-                app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey);
+                app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey,$this->typeStr);
             }
         });
     }

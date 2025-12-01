@@ -37,6 +37,7 @@ class ItickCommon
     public array $productSelect = [];
 
     public string $productSubscribe = "";
+    public string $typeStr = "";
 
     public mixed $marketService = null;
     public mixed $messageService = null;
@@ -52,13 +53,16 @@ class ItickCommon
 //        return "7952b98579fd478d9e49b6b3de82f4c99f17e889d5eb4fa6bdbba0238fc22861";
     }
 
-    public function getRun($taskName,$marketSource,$host,$path,$cacheKey = '',$proId = 0)
+    public function getRun($taskName,$marketSource,$host,$path,$cacheKey = '',$proId = 0,$typeStr = '')
     {
         if(!empty($cacheKey)){
             $this->cacheKey = $cacheKey;
         }
         if(!empty($taskName)){
             $this->taskName = $taskName;
+        }
+        if(!empty($typeStr)){
+            $this->typeStr = $typeStr;
         }
         $this->productId = $proId;
         $this->cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
@@ -249,9 +253,9 @@ class ItickCommon
 
             if ($item['real_code']) {
                 if (empty($this->productSubscribe)){
-                    $this->productSubscribe = $item['real_code'];
+                    $this->productSubscribe = $item['real_code'] . $this->typeStr;
                 }else{
-                    $this->productSubscribe .= ",". $item['real_code'];
+                    $this->productSubscribe .= ",". $item['real_code']. $this->typeStr;
                 }
 //                $this->productMarkets[$item['real_code']] = $proItem;
             }
