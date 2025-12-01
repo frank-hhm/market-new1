@@ -5,9 +5,24 @@
 
 
 //当前环境测试uat
-export const BASE_URL='http://www.iuqwi.com/'
-export const WS_URL='ws://www.iuqwi.com:9501'
-export const updateUrl='http://api.iuqwi.com/api/common.publics/appUpgrade'
+// export const BASE_URL='http://www.clwft.cn/'
+// export const WS_URL='ws://ws.clwft.cn:9501'
+// export const updateUrl='http://api.clwft.cn/api/common.publics/appUpgrade'
+
+//当前环境测试uat
+export const getHost= () => {
+	if(process.env.NODE_ENV === 'development'){
+		return  'www.butchery.cc';
+	}
+	return window.location.hostname;
+}
+export const BASE_URL= () => {
+	return (window.location.protocol?window.location.protocol:"http:") + "//" +getHost();
+}
+export const WS_URL=() => {
+	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +':9501'));
+}
+export const updateUrl='https://api.butchery.cc/api/common.publics/appUpgrade'
 
 // //当前环境pro
 // export const BASE_URL='http://www.hclnx.com/'

@@ -119,7 +119,7 @@
         "devServer" : {
             "https" : false
         },
-        "domain" : "http://www.clwft.cn/"
+        "domain" : "http://www.butchery.cc/"
     },
     "fallbackLocale" : "zh-Hans",
     "locale" : "auto",
