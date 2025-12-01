@@ -36,9 +36,9 @@ class MailerHelper
     {
         $cacheService = app(CacheService::class);
         $cacheKey = 'verify_code:email:'.$email;
-        if (!$cacheService->has($cacheKey)) {
-            throw new CommonException('邮箱验证码错误,请先获取验证码!');
-        }
+        // if (!$cacheService->has($cacheKey)) {
+        //     throw new CommonException('邮箱验证码错误,请先获取验证码!');
+        // }
         $res = !empty($code) && $cacheService->get('verify_code:email:'.$email) === $code;
         if(!$res) throw new CommonException('邮箱验证码错误!');
         return $cacheService->delete('verify_code:email:'.$email);
