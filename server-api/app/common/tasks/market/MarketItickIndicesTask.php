@@ -19,8 +19,8 @@ class MarketItickIndicesTask  extends AbstractProcess
     public string $host = "api.itick.org";
 
     public string $path = "/iws";
-    
-    public string $typeStr = "$GB";
+
+    public string $typeStr = "GB";
 
 
     public mixed $cacheService = null;

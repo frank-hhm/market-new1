@@ -19,7 +19,7 @@ class MarketItickCryptoTask  extends AbstractProcess
 
     public string $path = "/cws";
 
-    public string $typeStr = "$BA";
+    public string $typeStr = "BA";
 
 
     public mixed $cacheService = null;

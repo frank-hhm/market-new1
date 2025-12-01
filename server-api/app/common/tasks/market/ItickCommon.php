@@ -253,9 +253,9 @@ class ItickCommon
 
             if ($item['real_code']) {
                 if (empty($this->productSubscribe)){
-                    $this->productSubscribe = $item['real_code'] . $this->typeStr;
+                    $this->productSubscribe = $item['real_code'] .'$'.  $this->typeStr;
                 }else{
-                    $this->productSubscribe .= ",". $item['real_code']. $this->typeStr;
+                    $this->productSubscribe .= ",". $item['real_code'] . '$'. $this->typeStr;
                 }
 //                $this->productMarkets[$item['real_code']] = $proItem;
             }

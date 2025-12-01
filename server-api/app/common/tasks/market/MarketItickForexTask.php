@@ -20,7 +20,7 @@ class MarketItickForexTask  extends AbstractProcess
 
     public string $path = "/fws";
 
-    public string $typeStr = "$GB";
+    public string $typeStr = "GB";
 
     public mixed $cacheService = null;
 
