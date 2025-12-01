@@ -8,7 +8,7 @@ namespace app\common\helper;
 
 use app\common\exception\CommonException;
 use app\common\services\common\CacheService;
-
+use app\common\constants\CacheKeyConstant;
 /**
  * 操作邮箱发送帮助类
  * Class MailerHelper
@@ -34,11 +34,11 @@ class MailerHelper
      */
     public static function checkCode(string $email = '', string $code = ''): bool
     {
-        $cacheService = app(CacheService::class);
+        $cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::JWT_REDIS_DRIVER);
         $cacheKey = 'verify_code:email:'.$email;
-        // if (!$cacheService->has($cacheKey)) {
-        //     throw new CommonException('邮箱验证码错误,请先获取验证码!');
-        // }
+        if (!$cacheService->has($cacheKey)) {
+            throw new CommonException('邮箱验证码错误,请先获取验证码!');
+        }
         $res = !empty($code) && $cacheService->get('verify_code:email:'.$email) === $code;
         if(!$res) throw new CommonException('邮箱验证码错误!');
         return $cacheService->delete('verify_code:email:'.$email);
@@ -54,7 +54,7 @@ class MailerHelper
     public static function getCodeTemplate(string $typeMsg = '绑定邮箱', string $email = '', int $codeLength = 6 ,int $expire = 60*10): array
     {
         $code = StringHelper::randString($codeLength);
-        $cacheService = app(CacheService::class);
+        $cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::JWT_REDIS_DRIVER);
         $res = $cacheService->set('verify_code:email:'.$email,$code,$expire);
         $html = "";
         $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
