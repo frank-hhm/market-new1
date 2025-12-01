@@ -42,8 +42,6 @@ class ItickCommon
     public mixed $marketService = null;
     public mixed $messageService = null;
 
-    public int $productId = 0;
-
     public mixed $timerId = null;
     public mixed $messageTime = [];
 
@@ -53,7 +51,7 @@ class ItickCommon
 //        return "7952b98579fd478d9e49b6b3de82f4c99f17e889d5eb4fa6bdbba0238fc22861";
     }
 
-    public function getRun($taskName,$marketSource,$host,$path,$cacheKey = '',$proId = 0,$typeStr = '')
+    public function getRun($taskName,$marketSource,$host,$path,$cacheKey = '',$typeStr = '')
     {
         if(!empty($cacheKey)){
             $this->cacheKey = $cacheKey;
@@ -64,7 +62,6 @@ class ItickCommon
         if(!empty($typeStr)){
             $this->typeStr = $typeStr;
         }
-        $this->productId = $proId;
         $this->cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
         $this->logService = app(ConsoleLogService::class);
         $this->marketService = app(MarketKLineDataService::class);
