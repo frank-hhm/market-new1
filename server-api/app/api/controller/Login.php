@@ -86,7 +86,7 @@ class Login extends BaseController
         ]);
         validate(MemberValidate::class)->check($data);
 
-//        $this->checkCode($data['mobile'],$data['code']);
+       $this->checkCode($data['mobile'],$data['code']);
         $memberServer = app(MemberService::class);
         if($memberServer->register($data)){
             $this->success('注册成功!');
