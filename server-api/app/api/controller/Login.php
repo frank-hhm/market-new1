@@ -90,7 +90,7 @@ class Login extends BaseController
         if($data["register_type"] == "phone"){
             $this->checkCode($data['mobile'],$data['code']);
         }else{
-            MailerHelper::checkCode($data['mobile'],$data['code']);
+            MailerHelper::checkCode($data['email'],$data['code']);
         }
         $memberServer = app(MemberService::class);
         if($memberServer->register($data)){
