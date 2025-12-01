@@ -196,7 +196,11 @@ if (!function_exists('getDownloadData')) {
 if (!function_exists('getKefuOther')) {
     function getKefuOther()
     {
-        return "https://web.jiaxincloud.com/onekey.html?id=n3vrnm5xzxnyba&appName=ssj735&appChannel=20002";
+        if (empty(sysconf("kefu_other"))){
+            return "https://web.jiaxincloud.com/onekey.html?id=n3vrnm5xzxnyba&appName=ssj735&appChannel=20002";
+        }else{
+            return sysconf("kefu_other");
+        }
     }
 }
 

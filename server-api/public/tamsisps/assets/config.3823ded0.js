@@ -1,0 +1,1 @@
+import{aY as s}from"./index.8ac15d0a.js";const o=e=>s({url:"system.config/get",method:"GET",params:{type:e}}),r=e=>s({url:"system.config/save",method:"POSt",data:e}),a=e=>s({url:"system.config/cleanCache",method:"PUT",data:e});export{a as c,o as g,r as s};

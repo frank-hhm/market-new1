@@ -47,6 +47,17 @@
           </a-form-item>
           <a-form-item
             :label-col-flex="labelColFlex"
+            label="客服链接"
+            field="kefu_other"
+          >
+            <a-input
+              v-model="configForm.kefu_other"
+              placeholder="请输入客服链接"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            :label-col-flex="labelColFlex"
             label="ios下载地址"
             field="ios_download_url"
           >
@@ -195,6 +206,7 @@ const configForm = ref<any>({
   about_bg: "",
   kefu_qq: "",
   kefu_wechat: "",
+  kefu_other:"",
   about_content: "",
   about_content_know: "",
   about_role: "",
@@ -231,6 +243,7 @@ const toInit = () => {
       configForm.value.about_bg = res.data.about_bg;
       configForm.value.kefu_qq = String(res.data.kefu_qq);
       configForm.value.kefu_wechat = String(res.data.kefu_wechat);
+      configForm.value.kefu_other = String(res.data.kefu_other);
       configForm.value.login_banner = String(res.data.login_banner);
       configForm.value.moni_activity_time_tips = String(
         res.data.moni_activity_time_tips

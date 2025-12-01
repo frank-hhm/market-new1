@@ -63,6 +63,7 @@ class Config extends Base
             'other'=>[
                 "kefu_wechat",
                 'kefu_qq',
+                'kefu_other',
                 'about_bg',
                 'about_content',
                 'about_content_know',
