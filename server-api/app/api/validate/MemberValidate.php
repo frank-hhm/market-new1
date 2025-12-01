@@ -12,8 +12,8 @@ class MemberValidate extends Validate
 {
     protected $rule = [
 //        'username' => 'require',
-        'email'  => 'requireWithout:phone',
-        'phone' => 'requireWithout:email',
+        'email'  => 'requireWithout:mobile',
+        'mobile' => 'requireWithout:email',
         'pwd' => 'requireCallback:check_require|min:5',
         'conf_pwd' => 'requireCallback:check_require|confirm:pwd|min:5',
         'invite_code' => 'require',
