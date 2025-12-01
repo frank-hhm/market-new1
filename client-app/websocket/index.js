@@ -13,7 +13,7 @@ export const createWebsocket = () => {
 		return
 	}
 	uni.connectSocket({
-		url: WS_URL,
+		url: WS_URL(),
 		header: {
 			'content-type': 'application/json'
 		},
