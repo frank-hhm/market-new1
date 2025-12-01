@@ -11,6 +11,7 @@ use app\BaseController;
 use app\common\exception\CommonException;
 use app\common\services\common\CaptchaService;
 use app\common\services\OperateLogsService;
+use app\common\helper\MailerHelper;
 
 /**
  * Class Login
@@ -86,7 +87,11 @@ class Login extends BaseController
         ]);
         validate(MemberValidate::class)->check($data);
 
-       $this->checkCode($data['mobile'],$data['code']);
+        if($data["register_type"] == "phone"){
+            $this->checkCode($data['mobile'],$data['code']);
+        }else{
+            MailerHelper::checkCode($data['mobile'],$data['code']);
+        }
         $memberServer = app(MemberService::class);
         if($memberServer->register($data)){
             $this->success('注册成功!');
