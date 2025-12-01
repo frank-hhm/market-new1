@@ -5,7 +5,7 @@ import {
 import qs from "qs"
 import { router } from "../router/index.js"
 const config = {
-	baseUrl: BASE_URL, // 请求的本域名
+	baseUrl: BASE_URL(), // 请求的本域名
 	method: 'POST',
 	// 设置为json，返回后会对数据进行一次JSON.parse()
 	dataType: 'json',

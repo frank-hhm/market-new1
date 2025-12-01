@@ -3,7 +3,6 @@
 // export const WS_URL='ws://dev-pm3-new.irugf.com:9501'
 // export const updateUrl='http://dev-pm3-new.irugf.com/api/common.publics/appUpgrade'
 
-
 //当前环境测试uat
 // export const BASE_URL='http://www.clwft.cn/'
 // export const WS_URL='ws://ws.clwft.cn:9501'

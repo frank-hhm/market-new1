@@ -172,7 +172,7 @@
 		},
 		async onLoad() {
 			try {
-				this.fileUploadAction = BASE_URL + "api/common.publics/uploadImage"
+				this.fileUploadAction = BASE_URL() + "api/common.publics/uploadImage"
 				// this.payAccount = this.numFilter(this.$Route.query.money/this.alipayInfo.usdttocny);
 				this.payAccount = this.$Route.query.money
 			} catch (e) {
