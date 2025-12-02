@@ -66,6 +66,8 @@
 					k: 0,
 				}, {
 					k: 1,
+				}, {
+					k: 2,
 				}],
 			}
 		},
@@ -166,7 +168,7 @@
 
 	let echartStockElement = []
 	let echartStockIsInitCom = false;
-	let echartLength = 2;
+	let echartLength = 3;
 	let echartStatus = false;
 	export default {
 		mounted() {

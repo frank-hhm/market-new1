@@ -110,12 +110,12 @@
 					},
 					{
 						name: '8',
-						count: 10,
+						count: 5,
 						image: '/static/images/activity/turntable-icon.png'
 					},
 					{
 						name: '苹果17',
-						count: 10,
+						count: 0,
 						image: '/static/images-new1/activity/turntable-17.png'
 					},
 					{

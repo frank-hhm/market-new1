@@ -60,7 +60,7 @@
 			<router-link class="nav-item" to="/pages/other/kefu">
 				<view class="nav-icon nav-7"></view>
 				<view class="title">
-					模拟练习
+					产品细则
 				</view>
 			</router-link>
 			<router-link class="nav-item" to="/pages/other/kefu">

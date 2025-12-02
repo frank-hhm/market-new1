@@ -263,6 +263,19 @@
 							}
 						})
 						break
+					case 'alipay_transfer':
+					case 'wechat_qrcode':
+						this.$Router.push({
+							path: "/otherpages/memberCoin/common-transfer",
+							query: {
+								money: this.numFilter(this.value * this.systemConfig.usdt_rate),
+								usdt: this.value,
+								type: this.chargeType,
+								payment_id: this.chargeIndex,
+								title: this.chargeItem.name
+							}
+						})
+						break;
 						//支付宝转账
 					case 'offline_alipay':
 						this.$Router.push({

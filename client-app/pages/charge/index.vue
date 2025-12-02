@@ -7,7 +7,7 @@
 			</view>
 			<view class="custom-nav-main">
 				<view class="custom-left" @tap="onChangeAccount">
-					<view class="custom-name">{{getConfig.system_name ||""}}{{isLogin &&　!isMoni ? "真实账户":'模拟账户'　}}</view>
+					<view class="custom-name">{{getConfig.system_name ||""}}{{isLogin || !isMoni ? "真实账户":'模拟账户'　}}</view>
 					<view class="custom-name-icon"></view>
 				</view>
 				<router-link class="custom-kefu" to="/pages/other/kefu"></router-link>
@@ -50,8 +50,8 @@
 				<view class="charge-system-box-item">
 					<view class="icon box-item-icon-2"></view>
 					<view class="right">
-						<view class="title">安全保障</view>
-						<view class="desc">采用NDD交易模式，交易均可获交易所派发独有“交易编码”</view>
+						<view class="title">品种丰富</view>
+						<view class="desc">100+热门交易品种</view>
 					</view>
 				</view>
 				<view class="charge-system-box-item">

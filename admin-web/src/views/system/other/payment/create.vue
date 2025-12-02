@@ -53,6 +53,8 @@
                 <a-option value="offline_usdt" label="线下usdt" />
                 <a-option value="offline_bank" label="线下银行卡" />
                 <a-option value="offline_alipay" label="线下支付宝" />
+                <a-option value="alipay_transfer" label="支付宝转账" />
+                <a-option value="wechat_qrcode" label="微信扫码" />
               </a-select>
             </a-form-item>
           </a-col>

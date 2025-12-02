@@ -216,13 +216,16 @@
 				border-bottom: 1rpx solid #F2F2F2;
 
 
-				.scroll-item-title,
+				.scroll-item-title{
+					width: 120rpx;
+					white-space: nowrap;
+				}
 				.scroll-item-center {
-					width: calc((100% - 140rpx) / 2);
+					width: calc(100% - 240rpx);
 				}
 
 				.scroll-item-center {
-					text-align: left;
+					text-align: center;
 				}
 
 				.scroll-item-right {

@@ -216,6 +216,29 @@
 				"navigationBarTextStyle": "white",
 				"enablePullDownRefresh": false
 			}
+		},  {
+			"path": "otherpages/memberCoin/common-transfer",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "入金",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "otherpages/member/bindAlipayCard",
+			"name": "bindAlipayCard",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "绑定支付宝",
+				"navigationStyle": "custom"
+			}
 		}, {
 			"path": "otherpages/order/createSuccess",
 			"meta": {
@@ -299,6 +322,14 @@
 			"name": "otherAbout",
 			"style": {
 				"navigationBarTitleText": "交易细则",
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "otherpages/about/product",
+			"name": "otherAbout",
+			"style": {
+				"navigationBarTitleText": "产品细则",
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white"
 			}

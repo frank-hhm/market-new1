@@ -86,7 +86,8 @@ class Config extends Base
             'agent'=>[
                 'agent_withdrawal_rate',
                 'member_withdrawal_rate',
-                'member_usdt_withdrawal_rate'
+                'member_usdt_withdrawal_rate',
+                "member_alipay_withdrawal_status"
             ],
             "member"=>[
                 "member_default_product"

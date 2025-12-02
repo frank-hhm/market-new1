@@ -35,6 +35,17 @@
                     </a-form-item>
                 </div>
             </a-card>
+            <a-card title="支付提现" class="card mt12">
+                <div class="card-form-box">
+                    <a-form-item :label-col-flex="labelColFlex" label="状态" field="member_alipay_withdrawal_status">
+                        <a-switch v-model="configForm.member_alipay_withdrawal_status" :checked-value="1"
+                            :unchecked-value="0" />
+                    </a-form-item>
+                </div>
+                <a-form-item :label-col-flex="labelColFlex">
+                    <a-button type="primary" @click="onSave" :loading="btnLoading" :disabled="btnLoading">保存</a-button>
+                </a-form-item>
+            </a-card>
 
             
         </a-form>
@@ -59,7 +70,8 @@ const configFormRef = ref<HTMLElement>();
 const configForm = ref<any>({
     agent_withdrawal_rate:0,
     member_withdrawal_rate:0,
-    member_usdt_withdrawal_rate:0
+    member_usdt_withdrawal_rate:0,
+    member_alipay_withdrawal_status: 0
 })
 
 const initLoading = ref<boolean>(false)
@@ -71,6 +83,7 @@ const toInit = () => {
         configForm.value.agent_withdrawal_rate = Number(res.data.agent_withdrawal_rate);
         configForm.value.member_withdrawal_rate = Number(res.data.member_withdrawal_rate);
         configForm.value.member_usdt_withdrawal_rate = Number(res.data.member_usdt_withdrawal_rate);
+        configForm.value.member_alipay_withdrawal_status = Number(res.data.member_alipay_withdrawal_status);
         initLoading.value = false;
     }, (err: ResultError) => {
         initLoading.value = false;
