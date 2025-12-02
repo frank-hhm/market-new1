@@ -195,7 +195,7 @@
 		},
 		async onLoad() {
 			try {
-				this.fileUploadAction = BASE_URL() + "api/common.publics/uploadImage"
+				this.fileUploadAction = BASE_URL() + "/api/common.publics/uploadImage"
 				this.usdt = this.$Route.query.usdt
 			} catch (e) {
 				//TODO handle the exception
