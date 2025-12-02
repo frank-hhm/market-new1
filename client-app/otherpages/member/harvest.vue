@@ -17,6 +17,14 @@
 					<u-icon size="24" color="#ccc" name="arrow-right"></u-icon>
 				</view>
 			</view>
+			<view class="top-list-item " @tap="turnAlipay">
+				<text class="label">支付宝</text>
+				<view class="flex align-center mr-24">
+					<text class="value"
+						:class="member.alipay_card?'text-green':'text-grey'">{{member.alipay_card?'已绑定':'未绑定'}}</text>
+					<u-icon size="24" color="#ccc" name="arrow-right"></u-icon>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -46,6 +54,13 @@
 					this.$Router.push("/otherpages/member/usdtDetail")
 				} else {
 					this.$Router.push("/otherpages/member/bindUsdt")
+				}
+			},
+			turnAlipay() {
+				if (this.member.alipay_card) {
+					this.$Router.push("/otherpages/member/alipayDetail")
+				} else {
+					this.$Router.push("/otherpages/member/bindAlipayCard")
 				}
 			},
 			toRecognize() {
