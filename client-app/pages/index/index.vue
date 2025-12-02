@@ -57,7 +57,7 @@
 					推荐分享
 				</view>
 			</router-link>
-			<router-link class="nav-item" to="/pages/other/kefu">
+			<router-link class="nav-item" to="/otherpages/about/product">
 				<view class="nav-icon nav-7"></view>
 				<view class="title">
 					产品细则

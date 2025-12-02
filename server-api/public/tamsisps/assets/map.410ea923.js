@@ -1,0 +1,1 @@
+import{aI as o,al as _,ar as e,aJ as t,aD as c,aq as s,bS as r}from"./index.c33313ca.js";const p={};function m(u,l){const a=r,n=t;return c(),_(n,{height:"100%"},{default:e(()=>[s(a)]),_:1})}const i=o(p,[["render",m]]);export{i as default};

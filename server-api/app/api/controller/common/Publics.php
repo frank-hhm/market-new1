@@ -82,6 +82,9 @@ class Publics extends \app\api\controller\Base
         $data['system_logo'] = sysconf('system_logo');
         $data['system_name'] = sysconf('system_name');
         $data['about_bg'] = sysconf('about_bg');
+
+        $data['about_product'] = sysconf('about_product');
+
         $data['member_withdrawal_rate'] = sysconf('member_withdrawal_rate');
         $data['member_usdt_withdrawal_rate'] = sysconf('member_usdt_withdrawal_rate');
         $data['member_alipay_withdrawal_status'] = sysconf('member_alipay_withdrawal_status');

@@ -68,6 +68,7 @@ class Config extends Base
                 'about_content',
                 'about_content_know',
                 'about_role',
+                'about_product',
                 'agreement_customer',
                 'agreement_risk',
                 'agreement_disclaimers',

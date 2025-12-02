@@ -135,6 +135,17 @@
             ></editor>
           </a-form-item>
           
+          <a-form-item
+            :label-col-flex="labelColFlex"
+            label="产品细则"
+            field="about_product"
+          >
+            <editor
+              ref="editorAboutProductRef"
+              height="400px"
+              v-model="configForm.about_product"
+            ></editor>
+          </a-form-item>
           <!-- <a-form-item :label-col-flex="labelColFlex" label="关于我们" field="about_bg">
                         <upload-btn v-model="configForm.about_bg" count="1" width="200px" height="300px"></upload-btn>
                     </a-form-item> -->
@@ -217,7 +228,8 @@ const configForm = ref<any>({
   moni_activity_time_tips: "",
   ios_download_url: "",
   android_download_url: "",
-  about_content_follow:""
+  about_content_follow:"",
+  about_product:""
 });
 
 const initLoading = ref<boolean>(false);
@@ -225,6 +237,7 @@ const initLoading = ref<boolean>(false);
 const editorRiskRef = ref<HTMLElement>();
 
 const editorCustomerRef = ref<HTMLElement>();
+const editorAboutProductRef = ref<HTMLElement>();
 
 const editorDisclaimersRef = ref<HTMLElement>();
 
@@ -255,6 +268,7 @@ const toInit = () => {
 
       proxy?.$refs["editorAboutRef"]?.setContent(res.data.about_content || "");
       proxy?.$refs["editorRoleRef"]?.setContent(res.data.about_role || "");
+      proxy?.$refs["editorAboutProductRef"]?.setContent(res.data.about_product || "");
       proxy?.$refs["editorRiskRef"]?.setContent(res.data.agreement_risk || "");
       proxy?.$refs["editorCustomerRef"]?.setContent(
         res.data.agreement_customer || ""
