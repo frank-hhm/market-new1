@@ -11,6 +11,7 @@
     <div class="member-column-detail-right">
       <div>{{ member.username }}</div>
       <div v-if="member?.nickname">{{ member.nickname }}</div>
+      <div>{{ member.email }}</div>
       <div>{{ member.mobile }}</div>
     </div>
   </div>

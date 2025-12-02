@@ -7,7 +7,8 @@
 			</view>
 			<view class="custom-nav-main">
 				<view class="custom-left" @tap="onChangeAccount">
-					<view class="custom-name">{{getConfig.system_name ||""}}{{isLogin || !isMoni ? "真实账户":'模拟账户'　}}</view>
+					<view class="custom-name" v-if="!isLogin">{{getConfig.system_name ||""}}真实账户</view>
+					<view class="custom-name" v-else>{{getConfig.system_name ||""}}{{!isMoni ? "真实账户":'模拟账户'　}}</view>
 					<view class="custom-name-icon"></view>
 				</view>
 				<router-link class="custom-kefu" to="/pages/other/kefu"></router-link>

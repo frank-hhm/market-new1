@@ -13,7 +13,7 @@
                 <a-input
                   class="form-input-inline"
                   v-model="searchForm.username_like"
-                  placeholder="请输入账号或手机号"
+                  placeholder="请输入账号/手机号/邮箱"
                   allow-clear
                 />
               </a-form-item>

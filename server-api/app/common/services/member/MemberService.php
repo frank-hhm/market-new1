@@ -137,7 +137,7 @@ class MemberService extends BaseService
             $filter[] = ['create_time','<=',StringHelper::_strtotime($param['create_time'][1])];
         }
         if(!empty($param['username_like']) ){
-            $filter[] = ['username|mobile|nickname', 'like','%'.$param['username_like'].'%' ];
+            $filter[] = ['username|mobile|nickname|email', 'like','%'.$param['username_like'].'%' ];
         }
         if(!empty($param['card_like']) ){
             $filter[] = ['real_name|card_number', 'like','%'.$param['card_like'].'%' ];

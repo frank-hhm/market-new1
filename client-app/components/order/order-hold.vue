@@ -47,6 +47,9 @@
 							</view>
 						</view>
 					</view>
+					<view v-if="isMoni" class="items-moni">
+						<view class="items-moni-text">模拟</view>
+					</view>
 					<view class="right-wrapper flex flex-column justify-between">
 						<view class="flex justify-end">
 							<text class="right-text mr-10">#{{item.orderno}}</text>
@@ -90,6 +93,7 @@
 			orderItemYingKui
 		},
 		computed: {
+			...mapState("member", ["isMoni"]),
 			...mapState("charge", ["order_hold"]),
 			...mapState("market", ["getMarketPrice"]),
 			...mapGetters("member", ["getDownColor", "getUpColor"]),
@@ -261,6 +265,14 @@
 						border-radius: $baseRadius;
 					}
 				}
+			}
+		}
+		.items-moni{
+			display: flex;
+			align-items: center;
+			color: var(--base-grey);
+			.items-moni-text{
+				line-height: 26rpx;
 			}
 		}
 	}
