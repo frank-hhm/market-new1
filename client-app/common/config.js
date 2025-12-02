@@ -19,7 +19,7 @@ export const BASE_URL= () => {
 	return (window.location.protocol?window.location.protocol:"http:") + "//" +getHost();
 }
 export const WS_URL=() => {
-	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +':9501'));
+	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +'/ws'));
 }
 export const updateUrl='https://api.butchery.cc/api/common.publics/appUpgrade'
 

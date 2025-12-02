@@ -27,6 +27,8 @@ const install = (Vue, vm) => {
 	const updateMemberApi = (data = {}) => vm.$u.put("/api/member.member/update", data)
 	const bindBankCardApi = (data = {}) => vm.$u.put("/api/member.member/bindBankCard", data)
 	const bindUsdtApi = (data = {}) => vm.$u.put("/api/member.member/bindUsdtApi", data)
+	const bindAlipayApi = (data = {}) => vm.$u.put("/api/member.member/bindAlipayApi", data)
+	
 	const updateMemberPasswordApi = (data = {}) => vm.$u.put("/api/member.member/updatePass", data)
 	const resetPasswordApi = (data = {}) => vm.$u.put("/api/member.member/resetPass", data)
 	const loginqieApi = (data = {}) => vm.$u.get("/api/member.member/loginqie")
@@ -101,6 +103,7 @@ const install = (Vue, vm) => {
 		updateMemberApi,
 		bindBankCardApi,
 		bindUsdtApi,
+		bindAlipayApi,
 		updateMemberPasswordApi,
 		resetPasswordApi,
 		loginqieApi,
