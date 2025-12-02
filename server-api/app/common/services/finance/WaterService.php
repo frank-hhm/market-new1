@@ -136,7 +136,7 @@ class WaterService extends BaseService
             $filter[] = ['create_time', '<=', StringHelper::_strtotime($param['end_date'] . " 23:59:59"),];
         }
         if(!empty($param['member_id'])){
-//            $filter[] = ['member_id', '=',$param['member_id'] ];
+            $filter[] = ['member_id', '=',$param['member_id'] ];
         }
         $list = $this->dao->model->where($filter)
             ->where("source",'in',$source)
