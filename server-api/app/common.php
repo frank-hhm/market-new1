@@ -152,7 +152,7 @@ if (!function_exists('go')) {
 if (!function_exists('baseUrl')) {
     function baseUrl()
     {
-        return 'http://nuat1.clwft.cn/';
+        return "https:".sysconf("web_domain");
         if(Env::get('env.env_name') === "uat"){
             return 'http://nuat1.clwft.cn/';
         }else{

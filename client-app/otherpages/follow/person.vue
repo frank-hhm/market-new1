@@ -196,7 +196,8 @@
 						<text v-if="item.ostaus.value == 1"> {{ item.selltime || '--'}}</text>
 					</view>
 				</view>
-				<view v-if="detail.is_show_order == 1" class="page-bottom">{{isFinish?'没有更多了':'加载更多'}}</view>
+				<view v-if="detail.tabIndex == 0 && detail.is_show_order == 1" class="page-bottom">{{isFinish?'没有更多了':'加载更多'}}</view>
+				<view v-if="detail.tabIndex == 1 && detail.is_show_order == 1" class="page-bottom">{{isFinish?'仅显示最近3天':'加载更多'}}</view>
 			</view>
 		</view>
 		<view v-if="detail.follow_status === false" class="follow-btn" @tap="onFollow">跟单</view>

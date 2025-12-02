@@ -78,7 +78,7 @@
 				</view>
 
 				<view class="follow-order-bottom" v-if="item.status.value === 1">
-					<view v-if="item.status.value === 1" class="follow-add-btn" @tap="onFollow(item,item.person_id)">继续投入</view>
+					<view v-if="item.status.value === 1" class="follow-add-btn" @tap="onFollow(item,item.person_id)">增加跟单金额</view>
 					<view v-if="item.status.value === 1" class="follow-close-btn" @tap="onEndFollow(item.person_id)">
 						结束跟单</view>
 				</view>
@@ -178,10 +178,10 @@
 		computed: {
 			...mapGetters("app", ["getConfig"]),
 			getRevenue() {
-				if (this.personDetail) {
+				if (this.personDetail && this.popupStatus) {
 					if (this.personDetail.revenue_type == "lock" && this.personDetail.revenue_lock) {
 						return parseFloat(this.personDetail.revenue_lock * this.followPrice / 100).toFixed(2) + "usd"
-					} else if (this.personDetail.revenue_type == "auto" && this.personDetail.revenue_min && this.detail.revenue_min) {
+					} else if (this.personDetail.revenue_type == "auto" && this.personDetail.revenue_min && this.personDetail.revenue_max) {
 						const min = parseFloat(this.personDetail.revenue_min);
 						const max = parseFloat(this.personDetail.revenue_max);
 						return min + "%~" + max + "%";
@@ -192,9 +192,8 @@
 		},
 		methods: {
 			onFollow(item,id) {
-					console.log(item)
-				this.popupStatus = !this.popupStatus
-				if(this.popupStatus === false){
+				console.log(item.person)
+				if(this.popupStatus === true){
 					this.selectPopupId = 0
 					this.personDetail = {}
 					this.followPrice = ""
@@ -202,6 +201,9 @@
 					this.selectPopupId = id || 0
 					this.personDetail = item.person || {}
 				}
+				this.$nextTick(()=>{
+					this.popupStatus = !this.popupStatus
+				})
 			},
 			setSelectStatus(c) {
 				this.selectStatus = c
