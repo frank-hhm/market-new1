@@ -7,6 +7,7 @@ namespace app\api\controller\follow;
 use app\api\services\follow\OrderService;
 use app\common\enum\finance\WithdrawalTypeEnum;
 use app\common\helper\StringHelper;
+use app\common\services\member\MemberSubscribeService;
 use app\common\services\order\MemberOrderService;
 use think\facade\App;
 use app\api\services\follow\PersonService;
@@ -54,6 +55,13 @@ class Person extends \app\api\controller\Base
         $detail["follow_status"] = !empty($followOrder);
         $detail["follow_order"] = $followOrder;
         $detail["member_count"] = $orderService->getMemberCountByPerson($params["id"]);
+        $memberSubscribeService = app(MemberSubscribeService::class);
+        $detail["member_subscribe"] = $memberSubscribeService->isExists(array_merge([
+            "member_id"=>$this->uid
+        ],[
+            "source"=>"follow_person",
+            "source_id"=>$params["id"],
+        ]));
         $this->success('获取成功',$detail);
     }
 
