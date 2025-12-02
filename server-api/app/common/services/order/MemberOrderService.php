@@ -18,6 +18,7 @@ use app\common\services\common\PushWebSockQueueService;
 use app\common\services\finance\MemberCommissionWaterService;
 use app\common\services\finance\MemberFeeCashWaterService;
 use app\common\services\finance\WaterService;
+use app\common\services\follow\PersonService;
 use app\common\services\member\MemberCoinService;
 use app\common\services\member\MemberService;
 use app\common\services\ProductCacheService;
@@ -488,6 +489,7 @@ class MemberOrderService extends BaseService
         if (!empty($res) && ArrayHelper::checkArr($res)) {
             Db::commit();
             app(PushWebSockQueueService::class)->createMemberMessage(['type'=>'createOrder','member_id'=>$memberId]);
+            app(PersonService::class)->sendSubscribeMessage($memberId,$orderData['ptitle']);
             $orderData['id'] = $ids;
             return $orderData;
         } else {
