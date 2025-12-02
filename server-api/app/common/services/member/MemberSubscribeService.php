@@ -27,7 +27,7 @@ class MemberSubscribeService extends BaseService
     }
 
     public function isExists($filter){
-        return $this->dao->model->where($filter)->exists();
+        return $this->dao->model->where($filter)->limit(1)->count();;
     }
 
 
