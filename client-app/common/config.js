@@ -11,12 +11,12 @@
 //当前环境测试uat
 export const getHost= () => {
 	if(process.env.NODE_ENV === 'development'){
-		return 'www.butchery.cc';
+		return  'www.butchery.cc';
 	}
 	return window.location.hostname;
 }
 export const BASE_URL= () => {
-	return  getHost();
+	return (window.location.protocol?window.location.protocol:"http:") + "//" +getHost();
 }
 export const WS_URL=() => {
 	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +'/ws'));
