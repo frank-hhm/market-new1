@@ -1,6 +1,12 @@
 <template>
 	<view class="custom-container">
 		<customNav title="跟单" leftColor="#000" bg="#f5f5f5">
+			<template slot='right'>
+
+				<view class="follow-person-message">
+					<text class="icon icon-jia"></text>订阅
+				</view>
+			</template>
 		</customNav>
 
 		<view class="follow-person-header-main">
@@ -20,8 +26,11 @@
 						{{detail.signature || '--'}}
 					</view>
 				</view>
-				<view v-if="detail.follow_status === true" class="follow-status">
-					跟单中
+				<view class="header-right">
+					<view v-if="detail.follow_status === true" class="follow-status">
+						跟单中
+					</view>
+
 				</view>
 			</view>
 
@@ -196,8 +205,12 @@
 						<text v-if="item.ostaus.value == 1"> {{ item.selltime || '--'}}</text>
 					</view>
 				</view>
-				<view v-if="detail.tabIndex == 0 && detail.is_show_order == 1" class="page-bottom">{{isFinish?'没有更多了':'加载更多'}}</view>
-				<view v-if="detail.tabIndex == 1 && detail.is_show_order == 1" class="page-bottom">{{isFinish?'仅显示最近3天':'加载更多'}}</view>
+				<view v-if="detail.tabIndex == 0 && detail.is_show_order == 1" class="page-bottom">
+					{{isFinish?'没有更多了':'加载更多'}}
+				</view>
+				<view v-if="detail.tabIndex == 1 && detail.is_show_order == 1" class="page-bottom">
+					{{isFinish?'仅显示最近3天':'加载更多'}}
+				</view>
 			</view>
 		</view>
 		<view v-if="detail.follow_status === false" class="follow-btn" @tap="onFollow">跟单</view>
@@ -290,7 +303,7 @@
 			...mapGetters("app", ["getConfig"]),
 			...mapState("market", ["getMarketPrice"]),
 			...mapGetters("market", ["getMarketPrice"]),
-			...mapGetters("member", [ "getDownColor", "getUpColor"]),
+			...mapGetters("member", ["getDownColor", "getUpColor"]),
 			getRevenue() {
 				if (this.detail) {
 					if (this.detail.revenue_type == "lock" && this.detail.revenue_lock) {
@@ -632,12 +645,13 @@
 					border-bottom: 1rpx solid #F7F7F7;
 					padding: 30rpx 0;
 
-		.ying-kui{
-			
-				font-size: $baseFontSizeLg;
-				font-weight: bold;
-				text-align: right;
-		}
+					.ying-kui {
+
+						font-size: $baseFontSizeLg;
+						font-weight: bold;
+						text-align: right;
+					}
+
 					.trading-header {
 						display: flex;
 						align-items: center;
@@ -957,6 +971,16 @@
 			line-height: 90rpx;
 			text-align: center;
 		}
-		
+	}
+
+	.follow-person-message {
+		display: flex;
+		align-items: center;
+		color: #000;
+		height: 56rpx;
+		line-height: 56rpx;
+		padding: 0 20rpx;
+		border-radius: 10rpx;
+		background: #F4CF4A;
 	}
 </style>

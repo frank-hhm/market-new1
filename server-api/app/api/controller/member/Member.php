@@ -23,6 +23,7 @@ use app\common\services\finance\MemberRechargeService;
 use app\common\services\finance\MemberWithdrawalService;
 use app\common\services\finance\WaterService;
 use app\common\services\member\MemberCardService;
+use app\common\services\member\MemberSubscribeService;
 use app\common\services\order\MemberOrderService;
 use app\common\services\order\OrderRobotService;
 use app\common\services\pay\PayOrderService;
@@ -418,5 +419,33 @@ class Member extends \app\api\controller\Base
         $member['withdrawal_tips'] = "";
         $member['fee_cash_tips'] = "佣金将于交易日次日18:00发放至账户。您可在交易日次日18:00查看您的佣金。具体返佣金额请以实际发放为准。";
         $this->success('获取成功',$member);
+    }
+
+
+
+    /**
+     * 订阅消息
+     * @method(POST)
+     *
+     */
+    public function createSubscribe(){
+        $data = $this->request->postMore([
+            ["source_id",0],
+            ["source","default"]
+        ]);
+        $memberSubscribeService = app(MemberSubscribeService::class);
+        if($memberSubscribeService->isExists(array_merge([
+            "member_id"=>$this->uid
+        ],$data))){
+            if($memberSubscribeService->deleteSubscribe($this->uid,$data)){
+                $this->success('取消订阅成功');
+            }
+            $this->error($memberSubscribeService->getError()?:"取消订阅失败");
+        }else{
+            if($memberSubscribeService->createSubscribe($this->uid,$data)){
+                $this->success('订阅成功');
+            }
+            $this->error($memberSubscribeService->getError()?:"订阅失败");
+        }
     }
 }
