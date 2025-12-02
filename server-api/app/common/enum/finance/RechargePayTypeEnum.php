@@ -28,6 +28,11 @@ class RechargePayTypeEnum extends BaseEnum
     // 线下usdt充值
     const OFFLINE_USDT = 'offline_usdt';
 
+    // 支付宝转账
+    const ALIPAY_TRANSFER = 'alipay_transfer';
+    // 微信扫码
+    const WECHAT_QRCODE = 'wechat_qrcode';
+
     // 账户
     const BALANCE = 'balance';
     // 佣金账户
@@ -57,6 +62,14 @@ class RechargePayTypeEnum extends BaseEnum
             self::OFFLINE_USDT => [
                 'name' => '线下usdt',
                 'value' => self::OFFLINE_USDT,
+            ],
+            self::ALIPAY_TRANSFER => [
+                'name' => '支付宝转账',
+                'value' => self::ALIPAY_TRANSFER,
+            ],
+            self::WECHAT_QRCODE => [
+                'name' => '微信扫码',
+                'value' => self::WECHAT_QRCODE,
             ],
             self::TURNTABLE => [
                 'name' => '抽奖奖励',
