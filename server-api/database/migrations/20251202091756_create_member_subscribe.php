@@ -3,7 +3,7 @@
 use think\migration\Migrator;
 use think\migration\db\Column;
 
-class CreateFollowPersonMemberRel extends Migrator
+class CreateMemberSubscribe extends Migrator
 {
     /**
      * Change Method.
