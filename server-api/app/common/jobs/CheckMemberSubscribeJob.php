@@ -7,7 +7,9 @@ namespace app\common\jobs;
 
 use app\common\constants\CacheKeyConstant;
 use app\common\enum\order\SellTypeEnum;
+use app\common\helper\MailerHelper;
 use app\common\helper\ProductHelper;
+use app\common\library\party\email\MailerService;
 use app\common\services\common\ConsoleLogService;
 use app\common\services\member\MemberSubscribeService;
 use app\common\services\order\MemberOrderService;
@@ -44,9 +46,14 @@ class CheckMemberSubscribeJob
 
         $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
 
+        $mailService = app(MailerService::class);
+        $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
+        !empty($tempRes['html']) && $mailService->setHtml(true);
         foreach ($subscribeSelect as $item){
-            if (!empty($item["member"])){
-
+            if (!empty($item["member"]) && !empty($item["member"]['email'])){
+                $mailService->addAddress($item["member"]['email'], $item["member"]['real_name'] ?? $item["member"]['username']);
+                // 发送邮件
+                $mailService->send($tempRes['title'], $tempRes['content']);
             }
         }
         return true;

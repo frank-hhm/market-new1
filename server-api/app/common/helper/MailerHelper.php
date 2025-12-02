@@ -25,6 +25,7 @@ class MailerHelper
             'forget-password' => self::getCodeTemplate('找回密码',...$age),
             'register' => self::getCodeTemplate('注冊账号',...$age),
             'again-email' => self::getCodeTemplate('重新绑定邮箱',...$age),
+            'subscribe-message' => self::getSubscribeTemplate('订阅消息',...$age),
             default => [],
         };
     }
@@ -70,4 +71,20 @@ class MailerHelper
         ];
     }
 
+    /**
+     * 获取验证码模板
+     */
+    public static function getSubscribeTemplate(string $msgTitle = '', string $content = ''): array
+    {
+        $html = "";
+        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
+        $html .= "<div style='text-align: left'>";
+        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
+        $html .= "</div>";
+        return [
+            'title'=>$msgTitle,
+            'html'=>true,
+            'content'=>$html,
+        ];
+    }
 }
