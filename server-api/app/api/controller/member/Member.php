@@ -343,6 +343,29 @@ class Member extends \app\api\controller\Base
     }
 
     /**
+     * 绑定支付宝账号
+     * @method(PUT)
+     */
+    public function bindAlipayApi(){
+
+        $data = $this->request->postMore([
+            ['alipay_card', ''],
+            ['alipay_name', ''],
+            ['alipay_img', ''],
+        ]);
+        if(!empty($this->member['alipay_card'])){
+            $this->error("若需要修改联系客服");
+        }
+
+        if( $this->service->update($this->uid,$data)){
+            $this->service->deleteCacheDetail($this->uid);
+            $this->success('绑定成功!');
+        }
+        $this->error('绑定失败!');
+    }
+
+
+    /**
      * 抽奖
      * @method(POST)
      *

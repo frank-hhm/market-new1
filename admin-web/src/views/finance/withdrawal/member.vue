@@ -125,7 +125,7 @@
           </a-table-column>
           <a-table-column title="信息" data-index="bank_name" :width="320">
             <template #cell="{ record }">
-              <div class="" v-if="record.pay_type.value !== 'offline_usdt'">
+              <div class="" v-if="record.pay_type.value == 'offline_bank'">
                 <div class="flex">
                   <div class="text-grey">银行卡名称：</div>
                   <div>{{ record.bank_name }}</div>
@@ -143,10 +143,26 @@
                   <div>{{ record.bank_child }}</div>
                 </div>
               </div>
-              <div v-else>
+              <div v-else-if="record.pay_type.value == 'offline_usdt'">
                 <div class="flex">
                   <div class="text-grey">U地址：</div>
                   <div>{{ record.usdt_card || "" }}</div>
+                </div>
+              </div>
+              <div v-else-if="record.pay_type.value == 'offline_alipay'">
+                <div class="flex">
+                  <div class="text-grey">支付账号：</div>
+                  <div>{{ record.alipay_card || "" }}</div>
+                </div>
+                <div class="flex">
+                  <div class="text-grey">支付姓名：</div>
+                  <div>{{ record.alipay_name || "" }}</div>
+                </div>
+                <div class="flex">
+                  <div class="text-grey">支付收款码：</div>
+                  <div>
+                    <a-image :src="record.alipay_img" :height="40" :width="40"></a-image>
+                  </div>
                 </div>
               </div>
             </template>

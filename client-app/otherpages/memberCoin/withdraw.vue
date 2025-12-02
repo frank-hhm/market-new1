@@ -66,6 +66,18 @@
 					</view>
 					<view class="card-cell-item-right" :class="bank_status == 2?'active':''"></view>
 				</view>
+				<view class="card-cell-item" v-if="member_alipay_withdrawal_status" @tap="onSelectBank(4)">
+					<view class="card-cell-item-left alipay">
+						<view class="icon"></view>
+						<view class="icon-detail">
+							<text class="value">支付宝</text>
+							<view class="tip">
+								手续费{{member_usdt_withdrawal_rate}}%
+							</view>
+						</view>
+					</view>
+					<view class="card-cell-item-right" :class="bank_status == 4?'active':''"></view>
+				</view>
 			</view>
 		</view>
 		<view class="common-btn submit-btn" :class="isYes?'':'disabled'" @tap="onSubmit">提交申请</view>
@@ -93,6 +105,7 @@
 				value: "",
 				member_withdrawal_rate: 0,
 				member_usdt_withdrawal_rate: 0,
+				member_alipay_withdrawal_status: 0,
 				bank_status: 1,
 				submitLoading: false
 			};
@@ -130,6 +143,22 @@
 					})
 					return false;
 				}
+				if (t.bank_status == 4 && !t.member.alipay_card) {
+					uni.showModal({
+						title: '提示',
+						content: '请先绑定支付宝',
+						cancelText: '取消',
+						confirmText: '去绑定',
+						success: function(res) {
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '/otherpages/member/bindAlipayCard'
+								})
+							}
+						}
+					})
+					return false;
+				}
 				if (!t.value) {
 					uni.showToast({
 						icon: "none",
@@ -138,18 +167,27 @@
 					return
 				}
 				try {
-					let usdtType = '';
+
+
+					let usdtType = '',
+						payType = "";
 					if (t.bank_status == 2) {
+						payType = 'offline_usdt'
 						usdtType = 'usdt'
 					} else if (t.bank_status == 3) {
+						payType = 'offline_usdt'
 						usdtType = 'usdt_bep'
+					} else if (t.bank_status == 4) {
+						payType = 'offline_alipay'
+					} else {
+						payType = 'offline_bank'
 					}
 					t.submitLoading = true
 					uni.showLoading({
 						title: '正在提交中...'
 					})
 					t.$u.api.withdrawApi({
-						pay_type: t.bank_status == 1 ? 'offline_bank' : 'offline_usdt',
+						pay_type: payType,
 						usdt_type: usdtType,
 						money: t.value
 					}).then(res => {
@@ -456,22 +494,26 @@
 		margin: 40rpx 20rpx;
 		border-radius: 96rpx;
 	}
-		.tip-wrapper {
-			margin: 20rpx;
-			background-color: #fff;
-			padding: 30rpx;
-			border-radius: 20rpx;
-			color: #000;
-			.tip-head{
-				font-size: $baseFontSize;
-			}
-			.tip-item{
-				margin-top: 20rpx;
-				font-size: $baseFontSizeSm;
-			}
-			.tip-text {
-				font-size: $baseFontSizeSm;
-				color: #999999;
-			}
+
+	.tip-wrapper {
+		margin: 20rpx;
+		background-color: #fff;
+		padding: 30rpx;
+		border-radius: 20rpx;
+		color: #000;
+
+		.tip-head {
+			font-size: $baseFontSize;
 		}
+
+		.tip-item {
+			margin-top: 20rpx;
+			font-size: $baseFontSizeSm;
+		}
+
+		.tip-text {
+			font-size: $baseFontSizeSm;
+			color: #999999;
+		}
+	}
 </style>

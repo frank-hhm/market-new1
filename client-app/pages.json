@@ -239,7 +239,18 @@
 				"navigationBarTitleText": "绑定支付宝",
 				"navigationStyle": "custom"
 			}
-		}, {
+		},  {
+			"path": "otherpages/member/alipayDetail",
+			"name": "alipayDetail",
+			"meta": {
+				"auth": true,
+				"forbidenMock": true
+			},
+			"style": {
+				"navigationBarTitleText": "绑定支付宝",
+				"navigationStyle": "custom"
+			}
+		},{
 			"path": "otherpages/order/createSuccess",
 			"meta": {
 				"auth": true
