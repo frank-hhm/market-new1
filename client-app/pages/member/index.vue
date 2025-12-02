@@ -4,7 +4,7 @@
 			<template #left>
 				<view class="header-top-left">
 					<view class="header-top-left-title">
-						Hi,{{member.username!=""?member.username:"***"}}
+						Hi,{{member.username!=""?(member.bind_status.value == 1?member.real_name:member.username):"***"}}
 					</view>
 					<view class="header-top-left-desc">
 						加入亮点第 {{member.create_day || 0}} 天
