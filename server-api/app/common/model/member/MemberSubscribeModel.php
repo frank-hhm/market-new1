@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace app\common\model\member;
 
+use app\api\controller\member\Member;
 use app\common\helper\IpHelper;
 use app\common\helper\StringHelper;
 use app\common\model\agent\AgentModel;
@@ -32,4 +33,9 @@ class MemberSubscribeModel extends BaseModel
      * 模型名称
      */
     protected $name = 'member_subscribe';
+
+
+    public function member(){
+        return $this->hasOne(Member::class,'id','member_id');
+    }
 }

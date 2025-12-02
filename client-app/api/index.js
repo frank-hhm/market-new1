@@ -76,6 +76,7 @@ const install = (Vue, vm) => {
 	const createFollowPersonOrderApi = (data = {}) => vm.$u.post("/api/follow.person/createOrder", data)
 	const getFollowWaterList = (data = {}) => vm.$u.get("/api/finance.FinanceLog/getFollowWaterList", data)
 	const closeFollowPersonOrderApi = (data = {}) => vm.$u.post("/api/follow.person/endStatus", data)
+	const createSubscribeApi = (data = {}) => vm.$u.post("/api/member.member/createSubscribe", data)
 	
 	Vue.prototype.$u.api = {
 		initConfigApi,
@@ -144,7 +145,8 @@ const install = (Vue, vm) => {
 		createFollowPersonOrderApi,
 		getFollowPersonOrderListApi,
 		getFollowWaterList,
-		closeFollowPersonOrderApi
+		closeFollowPersonOrderApi,
+		createSubscribeApi
 	}
 }
 

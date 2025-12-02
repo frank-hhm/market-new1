@@ -16,7 +16,11 @@ export const getHost= () => {
 	return window.location.hostname;
 }
 export const BASE_URL= () => {
-	return (window.location.protocol?window.location.protocol:"http:") + "//" +getHost();
+	let t = window.location.protocol?window.location.protocol:"http:";
+	if(process.env.NODE_ENV === 'development'){
+		t = "https:"
+	}
+	return t + "//" +getHost();
 }
 export const WS_URL=() => {
 	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +'/ws'));

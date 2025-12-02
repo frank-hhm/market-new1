@@ -1,12 +1,12 @@
 <template>
 	<view class="custom-container">
 		<customNav title="跟单" leftColor="#000" bg="#f5f5f5">
-			<template slot='right'>
+	<!-- 		<template slot='right'>
 
-				<view class="follow-person-message">
-					<text class="icon icon-jia"></text>订阅
+				<view class="follow-person-message" @tap="toSubscribe">
+					<text class="icon icon-jia" v-if="!detail.member_subscribe"></text>{{detail.member_subscribe?'取消订阅':'订阅'}}
 				</view>
-			</template>
+			</template> -->
 		</customNav>
 
 		<view class="follow-person-header-main">
@@ -385,6 +385,37 @@
 					uni.showToast({
 						icon: "none",
 						title: "获取失败!" + (err.data.message || '')
+					})
+				})
+			},
+			toSubscribe(){
+				let t = this;
+				let obj = {
+					source_id: t.id,
+					source: "follow_person"
+				}
+				if (t.isLoading) {
+					return false;
+				}
+				uni.showLoading({
+					title: '正在处理...'
+				})
+				t.isLoading = true;
+				t.$u.api.createSubscribeApi(obj).then((res) => {
+					t.isLoading = false;
+					uni.hideLoading()
+					uni.showToast({
+						icon: "none",
+						title: (res.message || '处理成功')
+					})
+					setTimeout(() => {
+						t.requestDetail()
+					}, 1000)
+				}).catch((err) => {
+					t.isLoading = false;
+					uni.showToast({
+						icon: "none",
+						title: "处理失败!" + (err.message || '')
 					})
 				})
 			},
