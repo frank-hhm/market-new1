@@ -41,13 +41,10 @@ class CheckMemberSubscribeJob
     public function checkSubscribe($data)
     {
         try {
-            dump($data);
             $memberSubscribeService = app(MemberSubscribeService::class);
             $filter[] = ["source","=",$data["source"] ?? 0];
             $filter[] = ["source_id","=",$data["source_id"] ?? 0];
-
             $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
-
             $mailService = app(MailerService::class);
             $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
             !empty($tempRes['html']) && $mailService->setHtml(true);

@@ -27,6 +27,7 @@ class CacheKeyConstant
     // itick-forex行情生成器状态
     public const MARKET_ITICK_FOREX_AXU_STATUS = 'MarketItickForexAXUStatus';
     public const MARKET_ITICK_FOREX_XAG_STATUS = 'MarketItickForexXAGStatus';
+    public const MARKET_ITICK_FUTURE_STATUS = 'MarketItickFutureStatus';
 
     // Itick-crypto 币种状态
     public const MARKET_ITICK_CRYPTO_STATUS = 'MarketItickCryptoStatus';

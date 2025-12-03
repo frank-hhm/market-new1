@@ -35,6 +35,8 @@ class MarketSourceEnum extends BaseEnum
     const ITICK_INDICES = 'itick_indices';
     // itick-crypto
     const ITICK_CRYPTO = 'itick_crypto';
+    // itick-future
+    const ITICK_FUTURE = 'itick_future';
 
     /**
      * 获取枚举数据
@@ -70,6 +72,10 @@ class MarketSourceEnum extends BaseEnum
             self::ITICK_FOREX_AXG => [
                 'name' => 'ITICK-白银',
                 'value' => self::ITICK_FOREX_AXG,
+            ],
+            self::ITICK_FUTURE => [
+                'name' => 'ITICK-期货',
+                'value' => self::ITICK_FUTURE,
             ],
 
         ];
