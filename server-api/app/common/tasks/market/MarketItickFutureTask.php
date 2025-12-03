@@ -30,7 +30,7 @@ class MarketItickFutureTask  extends AbstractProcess
     public function run($arg)
     {
         // TODO: Implement run() method.
-        $runTime = 1000 * 30;
+        $runTime = 1000 * 32;
         $marketSource = MarketSourceEnum::ITICK_FUTURE;
         $this->cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
         $this->logService = app(ConsoleLogService::class);
