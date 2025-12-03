@@ -18,10 +18,9 @@ class MarketItickFutureTask  extends AbstractProcess
     //外汇
     public string $host = "api.itick.org";
 
-    public string $path = "/indices";
+    public string $path = "/future";
 
     public string $typeStr = "US";
-
 
     public mixed $cacheService = null;
 
