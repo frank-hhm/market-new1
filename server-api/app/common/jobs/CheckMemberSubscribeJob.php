@@ -40,25 +40,31 @@ class CheckMemberSubscribeJob
 
     public function checkSubscribe($data)
     {
-        $memberSubscribeService = app(MemberSubscribeService::class);
-        $filter[] = ["source","=",$data["source"] ?? 0];
-        $filter[] = ["source_id","=",$data["source_id"] ?? 0];
+        try {
 
-        $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
+            $memberSubscribeService = app(MemberSubscribeService::class);
+            $filter[] = ["source","=",$data["source"] ?? 0];
+            $filter[] = ["source_id","=",$data["source_id"] ?? 0];
 
-        $mailService = app(MailerService::class);
-        $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
-        dump($data,$subscribeSelect);
-        !empty($tempRes['html']) && $mailService->setHtml(true);
-        foreach ($subscribeSelect as $item){
-            dump($item);
-            if (!empty($item["member"]) && !empty($item["member"]['email'])){
-                $mailService->addAddress($item["member"]['email'], $item["member"]['real_name'] ?? $item["member"]['username']);
-                // 发送邮件
-                $mailService->send($tempRes['title'], $tempRes['content']);
+            $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
+
+            $mailService = app(MailerService::class);
+            $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
+            dump($data,$subscribeSelect);
+            !empty($tempRes['html']) && $mailService->setHtml(true);
+            foreach ($subscribeSelect as $item){
+                dump($item);
+                if (!empty($item["member"]) && !empty($item["member"]['email'])){
+                    $mailService->addAddress($item["member"]['email'], $item["member"]['real_name'] ?? $item["member"]['username']);
+                    // 发送邮件
+                    $mailService->send($tempRes['title'], $tempRes['content']);
+                }
             }
+            return true;
+        }catch (\Exception $e){
+            dump($e->getMessage());
+            return false;
         }
-        return true;
     }
 
     public function failed($data)
