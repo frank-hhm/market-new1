@@ -38,6 +38,7 @@ class MarketItickFutureTask  extends AbstractProcess
         $this->cacheKey = CacheKeyConstant::MARKET_ITICK_FUTURE_STATUS;
         $taskName = "【Itick期货】";
         $this->logService->create($taskName."程序开始",true);
+        sleep(2);
         app(ItickCommon::class)->getRun($taskName,$marketSource,$this->host, $this->path,$this->cacheKey,$this->typeStr);
         $this->addTick($runTime, function () use ($taskName,$marketSource){
             $autoMarket = $this->cacheService->get( $this->cacheKey);
