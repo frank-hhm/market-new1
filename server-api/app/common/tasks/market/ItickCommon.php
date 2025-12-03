@@ -83,7 +83,7 @@ class ItickCommon
                 }
             });
             try {
-                $ret = $client->upgrade($path);
+                $ret = $client->upgrade($path . "?token=".$this->getKey());
                 if ($ret) {
                     // 持续监听推送
                     while (true) {
