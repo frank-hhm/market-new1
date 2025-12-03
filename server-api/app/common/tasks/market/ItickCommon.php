@@ -89,9 +89,6 @@ class ItickCommon
                     while (true) {
                         $frame = $client->recv();
                         if ($frame === false || !$frame->data) {
-                            dump($frame);
-                            dump($ret);
-                            dump($client);
                             $this->createLog($this->taskName."服务器连接失败 ");
                             $this->setStatus(0);
                             break;
