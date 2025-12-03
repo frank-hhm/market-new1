@@ -12,6 +12,7 @@ use app\common\tasks\market\MarketItickCryptoTask;
 use app\common\tasks\market\MarketItickForexTask;
 use app\common\tasks\market\MarketItickForexXAUTask;
 use app\common\tasks\market\MarketItickForexXAGTask;
+use app\common\tasks\market\MarketItickFutureTask;
 use app\common\tasks\market\MarketItickIndicesTask;
 use app\common\tasks\SetupGlobalHeartbeatCheckTask;
 use app\websocket\process\QueueProcess;
@@ -84,6 +85,7 @@ class EasySwooleEvent implements Event
         ServerManager::getInstance()->getSwooleServer()->addProcess((new MarketItickForexTask('MarketItickForexTask'))->getProcess());
         ServerManager::getInstance()->getSwooleServer()->addProcess((new MarketItickCryptoTask('MarketItickCryptoTask'))->getProcess());
         ServerManager::getInstance()->getSwooleServer()->addProcess((new MarketItickIndicesTask('MarketItickIndicesTask'))->getProcess());
+        ServerManager::getInstance()->getSwooleServer()->addProcess((new MarketItickFutureTask('MarketItickFutureTask'))->getProcess());
         // 挂单检查
         ServerManager::getInstance()->getSwooleServer()->addProcess((new CheckOrderRobotTask('CheckOrderRobotTask'))->getProcess());
         // 强平检查
