@@ -84,6 +84,7 @@ class ItickCommon
             });
             try {
                 $ret = $client->upgrade($path);
+                dump($ret);
                 if ($ret) {
                     // 持续监听推送
                     while (true) {
