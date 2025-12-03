@@ -51,7 +51,7 @@ class PersonService extends BaseService
         Queue::push("app\common\jobs\CheckMemberSubscribeJob", [
             'source_id' => $person["id"],
             'source' => "follow_person",
-            'message' => "您订阅的".$person["nickname"] . "交易员 ".date("Y-m-d H:i:s")."下单".$productName,
+            'message' => "您订阅的交易员:".$person["nickname"] . " ".date("Y-m-d H:i:s")." 下单".$productName,
         ], 'CheckMemberSubscribeJob');
 
         return true;

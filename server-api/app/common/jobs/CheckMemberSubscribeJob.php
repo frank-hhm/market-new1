@@ -47,13 +47,11 @@ class CheckMemberSubscribeJob
             $filter[] = ["source_id","=",$data["source_id"] ?? 0];
 
             $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
-            dump($subscribeSelect);
 
             $mailService = app(MailerService::class);
             $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
             !empty($tempRes['html']) && $mailService->setHtml(true);
             foreach ($subscribeSelect as $item){
-                dump($item);
                 if (!empty($item["member"]) && !empty($item["member"]['email'])){
                     $mailService->addAddress($item["member"]['email'], $item["member"]['real_name'] ?? $item["member"]['username']);
                     // 发送邮件
@@ -62,7 +60,6 @@ class CheckMemberSubscribeJob
             }
             return true;
         }catch (\Exception $e){
-            dump($e->getMessage());
             return false;
         }
     }
