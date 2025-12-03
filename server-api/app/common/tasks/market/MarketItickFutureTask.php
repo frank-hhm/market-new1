@@ -18,7 +18,7 @@ class MarketItickFutureTask  extends AbstractProcess
     //外汇
     public string $host = "api.itick.org";
 
-    public string $path = "/future";
+    public string $path = "/fws";
 
     public string $typeStr = "US";
 
@@ -34,7 +34,6 @@ class MarketItickFutureTask  extends AbstractProcess
         $marketSource = MarketSourceEnum::ITICK_FUTURE;
         $this->cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
         $this->logService = app(ConsoleLogService::class);
-
         $this->cacheKey = CacheKeyConstant::MARKET_ITICK_FUTURE_STATUS;
         $taskName = "【Itick期货】";
         $this->logService->create($taskName."程序开始",true);
