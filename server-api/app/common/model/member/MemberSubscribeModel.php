@@ -5,15 +5,8 @@
 declare(strict_types=1);
 
 namespace app\common\model\member;
-
-use app\api\controller\member\Member;
-use app\common\helper\IpHelper;
-use app\common\helper\StringHelper;
-use app\common\model\agent\AgentModel;
 use app\common\model\BaseModel;
 use app\common\traits\ModelTrait;
-use app\common\enum\EnumFactory;
-use think\model\concern\SoftDelete;
 
 /**
  * 用户
@@ -36,6 +29,6 @@ class MemberSubscribeModel extends BaseModel
 
 
     public function member(){
-        return $this->hasOne(Member::class,'id','member_id');
+        return $this->hasOne(MemberModel::class,'id','member_id');
     }
 }
