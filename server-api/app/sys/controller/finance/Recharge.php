@@ -62,10 +62,10 @@ class Recharge extends Base
             $this->error('参数错误!');
         }
         $cacheService = app(CacheService::class);
-        if($cacheService->has(CacheKeyConstant::API_SUBMIT_LOCK.':handleRecharge:'.$this->uid)){
+        if($cacheService->has(CacheKeyConstant::API_SUBMIT_LOCK.':handleRecharge:'.$this->adminId)){
             $this->error("请勿重复操作!稍等一分再试试");
         }
-        $cacheService->set(CacheKeyConstant::API_SUBMIT_LOCK.':handleRecharge:'.$this->uid,1,60);
+        $cacheService->set(CacheKeyConstant::API_SUBMIT_LOCK.':handleRecharge:'.$this->adminId,1,60);
 
         if ($this->service->handle($data)) {
             $this->success('处理成功');
