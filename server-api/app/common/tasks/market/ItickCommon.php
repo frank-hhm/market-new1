@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace app\common\tasks\market;
 
 use app\common\constants\CacheKeyConstant;
+use app\common\enum\product\MarketSourceEnum;
 use app\common\helper\ProductHelper;
 use app\common\services\common\CacheService;
 use app\common\services\common\ConsoleLogService;
@@ -42,11 +43,22 @@ class ItickCommon
     public mixed $marketService = null;
     public mixed $messageService = null;
 
+    public string $marketSource = "";
     public mixed $timerId = null;
     public mixed $messageTime = [];
 
     public function getKey()
     {
+//        if (in_array($this->marketSource,[
+//            MarketSourceEnum::ITICK_CRYPTO,
+//            MarketSourceEnum::ITICK_FOREX,
+//            MarketSourceEnum::ITICK_FOREX_AXG,
+//            MarketSourceEnum::ITICK_FOREX_AXU,
+//            MarketSourceEnum::ITICK_INDICES,
+//            MarketSourceEnum::ITICK_STOCK,
+//        ])){
+//
+//        }
         return sysconf('itick_key');
 //        return "7952b98579fd478d9e49b6b3de82f4c99f17e889d5eb4fa6bdbba0238fc22861";
     }
@@ -61,6 +73,9 @@ class ItickCommon
         }
         if(!empty($typeStr)){
             $this->typeStr = $typeStr;
+        }
+        if(!empty($marketSource)){
+            $this->marketSource = $marketSource;
         }
         $this->cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
         $this->logService = app(ConsoleLogService::class);
