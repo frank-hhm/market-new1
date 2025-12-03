@@ -48,7 +48,7 @@ class CheckMemberSubscribeJob
 
         $mailService = app(MailerService::class);
         $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
-
+        dump($subscribeSelect);
         !empty($tempRes['html']) && $mailService->setHtml(true);
         foreach ($subscribeSelect as $item){
             dump($item);
