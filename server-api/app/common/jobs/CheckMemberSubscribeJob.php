@@ -41,7 +41,7 @@ class CheckMemberSubscribeJob
     public function checkSubscribe($data)
     {
         try {
-
+            dump($data);
             $memberSubscribeService = app(MemberSubscribeService::class);
             $filter[] = ["source","=",$data["source"] ?? 0];
             $filter[] = ["source_id","=",$data["source_id"] ?? 0];
