@@ -41,8 +41,8 @@ class CheckMemberSubscribeJob
     public function checkSubscribe($data)
     {
         $memberSubscribeService = app(MemberSubscribeService::class);
-        $filter["source"] = $data["source"] ?? "";
-        $filter["source_id"] = $data["source_id"] ?? "";
+        $filter[] = ["source","=",$data["source"] ?? 0];
+        $filter[] = ["source_id","=",$data["source_id"] ?? 0];
 
         $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
 
