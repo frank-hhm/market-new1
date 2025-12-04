@@ -20,7 +20,7 @@ class MarketItickFutureTask  extends AbstractProcess
 
     public string $path = "/future";
 
-    public string $typeStr = "US";
+    public string $typeStr = "CN";
 
     public mixed $cacheService = null;
 
