@@ -49,18 +49,18 @@ class ItickCommon
 
     public function getKey()
     {
-//        if (in_array($this->marketSource,[
-//            MarketSourceEnum::ITICK_CRYPTO,
-//            MarketSourceEnum::ITICK_FOREX,
-//            MarketSourceEnum::ITICK_FOREX_AXG,
-//            MarketSourceEnum::ITICK_FOREX_AXU,
-//            MarketSourceEnum::ITICK_INDICES,
-//            MarketSourceEnum::ITICK_STOCK,
-//        ])){
-//
-//        }
-        return sysconf('itick_key');
-//        return "7952b98579fd478d9e49b6b3de82f4c99f17e889d5eb4fa6bdbba0238fc22861";
+        if (in_array($this->marketSource,[
+            MarketSourceEnum::ITICK_CRYPTO,
+            MarketSourceEnum::ITICK_FOREX,
+            MarketSourceEnum::ITICK_FOREX_AXG,
+            MarketSourceEnum::ITICK_FOREX_AXU,
+            MarketSourceEnum::ITICK_INDICES,
+            MarketSourceEnum::ITICK_STOCK,
+        ])){
+            return sysconf('itick_key');
+        }else{
+            return "469ca14a3cf54c53b871a6288b2a0e4bed0768665f024d83b8d6ababce8775c9";
+        }
     }
 
     public function getRun($taskName,$marketSource,$host,$path,$cacheKey = '',$typeStr = '')
