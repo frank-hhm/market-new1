@@ -59,7 +59,7 @@ class ItickCommon
         ])){
             return sysconf('itick_key');
         }else{
-            dump($this->marketSource);
+//            dump($this->marketSource);
             return "469ca14a3cf54c53b871a6288b2a0e4bed0768665f024d83b8d6ababce8775c9";
         }
     }
