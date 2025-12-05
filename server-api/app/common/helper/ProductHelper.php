@@ -64,6 +64,10 @@ class ProductHelper
                     if($isOpen){
                         continue;
                     }
+                    //23:59
+                    if($_check_shi[1] == "23:59"){
+                        $_check_shi[1]  = "24:00";
+                    }
                     if($_check_shi[0] <= $_Hi && $_Hi <= $_check_shi[1]
                     ){
                         $isOpen = true;
