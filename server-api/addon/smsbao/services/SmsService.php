@@ -84,8 +84,8 @@ class SmsService
         $smsapi = "https://106.ihuyi.com";
         $content = $this->data;//要发送的短信内容
         $phone = $this->phone;//要发送短信的手机号码
-        $this->params['account'] = 'C87353081';
-        $this->params['password'] = "4cf1282b97c8c29928890a1c485d3cca";
+        $this->params['account'] = 'C04952097';
+        $this->params['password'] = "b883ea3c4be497b09f29342ab360f1af";
         $this->params['mobile'] = $phone;
         $this->params['content'] = $content;
         $this->params['time'] = time();

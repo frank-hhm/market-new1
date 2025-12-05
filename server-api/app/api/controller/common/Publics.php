@@ -206,7 +206,10 @@ class Publics extends \app\api\controller\Base
             ['temp',''],
         ]);
         if ($params["type"] === "phone"){
-            event("SendSms",$this->request->param());
+            event("SendSms",[
+                "phone"=>$params["number"],
+                "temp"=>$params["temp"]
+            ]);
             $this->success('发送成功');
         }elseif ($params["type"] === "email"){
             $mailService = app(MailerService::class);

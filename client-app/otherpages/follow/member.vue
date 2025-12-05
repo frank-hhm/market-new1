@@ -70,10 +70,10 @@
 							<view class="follow-order-defail-item-title">上日分润</view>
 							<view class="follow-order-defail-item-desc">{{item.yesterday_revenue}}</view>
 						</view>
-						<view class="follow-order-defail-item">
+					<!-- 	<view class="follow-order-defail-item">
 							<view class="follow-order-defail-item-title">累计收益(usd)</view>
 							<view class="follow-order-defail-item-desc desc-red">{{item.total_revenue || 0.00}}</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 
@@ -502,6 +502,7 @@
 						.follow-order-defail-item-desc {
 							margin-top: 10rpx;
 							font-weight: bold;
+							text-align: center;
 							font-size: $baseFontSizeDefault;
 
 							&.desc-red {
