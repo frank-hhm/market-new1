@@ -158,7 +158,19 @@ class WaterService extends BaseService
             $list[$sourceItem] =  $this->dao->model->where($filter)
                 ->where([
                     "source"=>$sourceItem
-                ])->whereIn("pay_type",$payType)->sum('money');
+                ])
+                ->when(in_array(SourceEnum::MEMBER_COMMISSION_WITHDRAWAL,$source),function ($query) use ($source){
+                    $query->whereOr([
+                        [
+                            ["source","=",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
+                            ["pay_type","=",RechargePayTypeEnum::COMMISSION_BALANCE],
+
+                        ],
+                        [
+                            ["source","<>",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
+                        ]
+                    ]);
+                })->sum('money');
         }
         return $list;
     }
