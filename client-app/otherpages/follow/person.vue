@@ -1,12 +1,11 @@
 <template>
 	<view class="custom-container">
 		<customNav title="跟单" leftColor="#000" bg="#f5f5f5">
-	<!-- 		<template slot='right'>
-
+			<template slot='right'>
 				<view class="follow-person-message" @tap="toSubscribe">
 					<text class="icon icon-jia" v-if="!detail.member_subscribe"></text>{{detail.member_subscribe?'取消订阅':'订阅'}}
 				</view>
-			</template> -->
+			</template>
 		</customNav>
 
 		<view class="follow-person-header-main">
