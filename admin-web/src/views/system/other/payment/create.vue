@@ -127,7 +127,7 @@
               </div>
             </a-form-item>
           </a-col>
-          <a-col :md="24" :xs="24" v-if="createForm.type === 'offline_alipay'">
+          <a-col :md="24" :xs="24" v-if="createForm.type === 'offline_alipay' || createForm.type === 'wechat_qrcode'">
             <a-form-item
               :label-col-flex="labelColFlex"
               label="是否大图扫码"
