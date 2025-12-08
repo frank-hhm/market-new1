@@ -97,11 +97,11 @@ class OrderService extends BaseService
             Db::startTrans();
 
             #收益不入账户余额，需入当前跟单
-//            $res[] = $memberCoin->save([
+            $res[] = $memberCoin->save([
 //                'balance'=>Db::raw('balance+'.($revenue)),
-//                "follow_total_revenue"=>Db::raw('follow_total_revenue+'.($revenue)),
-//                'update_time' => time(),
-//            ]);
+                "follow_total_revenue"=>Db::raw('follow_total_revenue+'.($revenue)),
+                'update_time' => time(),
+            ]);
 
             $res[] = $this->dao->model->where("id",$item["id"])->save([
                 'total_revenue'=>Db::raw('total_revenue+'.($revenue)),
