@@ -113,11 +113,12 @@
 			</view>
 
 			<view v-if="!isLoading && list.length == 0" class="empty-list">
-				{{ detail.is_show_order == 0 && tabIndex === 1?'该交易员已隐藏持单':'暂无持仓单'}}
+				<text v-if="tabIndex === 0">{{ detail.is_show_order == 0 ?'该交易员已隐藏持单':'暂无持仓单'}}</text>
+				<text v-else>暂无操盘记录</text>
 			</view>
 			<view v-else class="trading-list">
-				<view v-if=" detail.is_show_order == 0 && tabIndex === 1" class="empty-list">
-					该交易员已隐藏持单
+				<view v-if="tabIndex === 0 && detail.is_show_order == 0" class="empty-list">
+					<text>{{'该交易员已隐藏持单'}}</text>
 				</view>
 				<view v-else class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="flex justify-between holder-item-content">
