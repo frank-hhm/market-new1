@@ -249,6 +249,7 @@
 			try {
 				this.member_withdrawal_rate = this.getConfig.member_withdrawal_rate || 0
 				this.member_usdt_withdrawal_rate = this.getConfig.member_usdt_withdrawal_rate || 0
+				this.member_alipay_withdrawal_status = this.getConfig.member_alipay_withdrawal_status || 0
 
 			} catch (e) {
 				//TODO handle the exception
@@ -472,6 +473,13 @@
 						width: 80rpx;
 						margin-right: 20rpx;
 						background-image: url('~@/static/images/icon/usdt-icon.png');
+						background-size: 100% 100%;
+					}
+					&.alipay .icon {
+						height: 80rpx;
+						width: 80rpx;
+						margin-right: 20rpx;
+						background-image: url('~@/static/images/icon/icon-alipay.png');
 						background-size: 100% 100%;
 					}
 				}
