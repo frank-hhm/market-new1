@@ -1,6 +1,6 @@
 <template>
 	<view class="container container-bg container-page" v-if="productDetail">
-		<customNav :title="productDetail.name" bg="#fff" leftColor="#000">
+		<customNav :title="productDetail.name" bg="#f4cf4a" leftColor="#000">
 
 			<template slot='right'>
 				<view class="custom-nav-right-box" v-if="marketStatus">

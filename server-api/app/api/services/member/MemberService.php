@@ -55,6 +55,7 @@ class MemberService extends CommonMemberService
 
         $FollowOrderService = app(FollowOrderService::class);
         $member["follow_revenue"] = $FollowOrderService->getToDayRevenue($member["id"]);
+        $member["follow_revenue"] = sprintf("%.2f", $member["follow_revenue"] );
         $followBalance = sprintf("%.2f", $FollowOrderService->getMemberFollowOrderBalance($member["id"]) ?? 0);
         $member["follow_balance"] = $followBalance;
         //
