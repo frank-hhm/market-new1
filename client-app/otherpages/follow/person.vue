@@ -3,7 +3,8 @@
 		<customNav title="跟单" leftColor="#000" bg="#f5f5f5">
 			<template slot='right'>
 				<view class="follow-person-message" @tap="toSubscribe">
-					<text class="icon icon-jia" v-if="!detail.member_subscribe"></text>{{detail.member_subscribe?'取消订阅':'订阅'}}
+					<text class="icon icon-jia"
+						v-if="!detail.member_subscribe"></text>{{detail.member_subscribe?'取消订阅':'订阅'}}
 				</view>
 			</template>
 		</customNav>
@@ -117,10 +118,10 @@
 				<text v-else>暂无操盘记录</text>
 			</view>
 			<view v-else class="trading-list">
-				<view v-if="tabIndex === 0 && detail.is_show_order == 0" class="empty-list">
+				<!-- 	<view v-if="tabIndex === 0 && detail.is_show_order == 0" class="empty-list">
 					<text>{{'该交易员已隐藏持单'}}</text>
-				</view>
-				<view v-else class="trading-item" v-for="(item,index) in list" :key="index">
+				</view> -->
+				<view class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="flex justify-between holder-item-content">
 						<view class="left-wrapper flex flex-column justify-between">
 							<view class="holder-item-top">
@@ -170,6 +171,9 @@
 							<view class="time">{{item.buytime}}</view>
 						</view>
 					</view>
+				</view>
+				<view v-if="tabIndex === 1 && list.length > 0" class="empty-list">
+					<text>{{'仅展示近10单记录'}}</text>
 				</view>
 				<view v-if="false  && tabIndex == 1" class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="trading-header">
@@ -388,7 +392,7 @@
 					})
 				})
 			},
-			toSubscribe(){
+			toSubscribe() {
 				let t = this;
 				let obj = {
 					source_id: t.id,
@@ -498,7 +502,7 @@
 			this.requestList(true)
 		},
 		onReachBottom() {
-			this.requestList()
+			// this.requestList()
 		},
 	}
 </script>

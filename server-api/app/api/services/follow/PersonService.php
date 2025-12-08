@@ -62,7 +62,7 @@ class PersonService extends CommonPersonService
             ->where("ostaus",$ostaus)
 
             ->whereTime('create_time', '>=', '-2 days')
-            ->order([ "create_time"=>"DESC"])->page($page)->paginate($limit)->toArray();
+            ->order([ "create_time"=>"DESC"])->page($page)->paginate(10)->toArray();
         $marketCacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
         foreach ($list["data"] as &$item){
             if (empty($item['ploss'])){
