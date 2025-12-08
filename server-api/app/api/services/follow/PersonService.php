@@ -49,7 +49,7 @@ class PersonService extends CommonPersonService
         $personDetail =  $this->getDetail([
             "id" => $personId
         ]);
-        if(empty($personDetail) || $personDetail["is_show_order"] == 0){
+        if(empty($personDetail) ){
             return [
                 "data"=>[],
                 "total"=>0
