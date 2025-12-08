@@ -59,12 +59,12 @@
 	.item-price-change {
 		font-size: $baseFontSizeSm;
 		text-align: center;
-			min-width:160rpx;
+			min-width:140rpx;
 		width: 100%;
 		&.is-bg{
 			text-align: center;
 			display: inline-block;
-			padding: 18rpx 30rpx;
+			padding: 18rpx 0;
 			border-radius: 4rpx;
 			border: 0;
 		}

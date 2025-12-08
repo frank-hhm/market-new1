@@ -181,7 +181,7 @@
 
 	.sector-tabs {
 		display: flex;
-		justify-content: space-around;
+		justify-content:space-around;
 		background-color: #fff;
 		border-bottom: 1rpx solid #f3f3f3;
 		position: fixed;
@@ -192,6 +192,11 @@
 
 		.sector-tab-item {
 			color: #666;
+			// width: 180rpx;
+			// text-align: center;
+			&:nth-child(2){
+				// width: calc(100% - 320rpx);
+			}
 		}
 
 		.sector-tab-item.active {
@@ -229,7 +234,7 @@
 				}
 
 				.scroll-item-right {
-					width: 160rpx;
+					width: 140rpx;
 					text-align: right;
 				}
 

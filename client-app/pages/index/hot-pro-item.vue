@@ -79,12 +79,12 @@
 				text-align: left;
 			}
 			.pro-item-price{
-				width: calc(100% - 360rpx);
+				width: calc(100% - 340rpx);
 				text-align: left;
 				
 			}
 			.pro-item-change{
-				width: 160rpx;
+				width: 140rpx;
 				text-align: right;
 			}
 		}
