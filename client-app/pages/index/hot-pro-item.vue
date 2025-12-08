@@ -84,7 +84,7 @@
 				
 			}
 			.pro-item-change{
-				width: 120rpx;
+				width: 160rpx;
 				text-align: right;
 			}
 		}

@@ -221,7 +221,7 @@
 					white-space: nowrap;
 				}
 				.scroll-item-center {
-					width: calc(100% - 240rpx);
+					width: calc(100% - 320rpx);
 				}
 
 				.scroll-item-center {
@@ -229,7 +229,7 @@
 				}
 
 				.scroll-item-right {
-					width: 120rpx;
+					width: 160rpx;
 					text-align: right;
 				}
 

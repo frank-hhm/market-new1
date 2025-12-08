@@ -58,12 +58,13 @@
 <style lang="scss" scoped>
 	.item-price-change {
 		font-size: $baseFontSizeSm;
+		text-align: center;
+			min-width:160rpx;
 		width: 100%;
 		&.is-bg{
 			text-align: center;
 			display: inline-block;
 			padding: 18rpx 30rpx;
-			min-width:60rpx;
 			border-radius: 4rpx;
 			border: 0;
 		}
