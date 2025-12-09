@@ -762,8 +762,13 @@ class MemberOrderService extends BaseService
             }else{
                 $productNowPrice = ProductHelper::setProHuaDian($orderDetail['ostyle']['value'],$productNowPrice,$productDetail['sell_slippage'],2);
             }
+        }else if (in_array($sellType,[
+                SellTypeEnum::MARK,
+                SellTypeEnum::LOSS,
+                SellTypeEnum::SURPLUS,
+            ]) && !empty($other["now_sell_price"])){
+            $productNowPrice = $other["now_sell_price"];
         }
-
         //默认买涨
         $yingkui = 0;
         //平仓盈亏
@@ -785,91 +790,91 @@ class MemberOrderService extends BaseService
         Db::startTrans();
         try {
 
-        $result[] = app(MemberCoinService::class)->dao->model->where('member_id', $orderDetail['member_id'])->update([
-            'balance' => Db::raw('balance+' . $u_add),
-            'yingkui_total'=> Db::raw('yingkui_total+' . $u_add),
-        ]);
+            $result[] = app(MemberCoinService::class)->dao->model->where('member_id', $orderDetail['member_id'])->update([
+                'balance' => Db::raw('balance+' . $u_add),
+                'yingkui_total'=> Db::raw('yingkui_total+' . $u_add),
+            ]);
 
-        if ($u_add > 0) {
-            $plusminus = 1;
-            $u_add_true = $u_add;
-        } else {
-            $plusminus = 0;
-            $u_add_true = $u_add * -1;
-        }
-        if ($yingkui > 0) {  //盈利
-            $d_map['is_win'] = 1;
-        }elseif ($yingkui <= 0) {    //亏损
-            $d_map['is_win'] = 2;
+            if ($u_add > 0) {
+                $plusminus = 1;
+                $u_add_true = $u_add;
+            } else {
+                $plusminus = 0;
+                $u_add_true = $u_add * -1;
+            }
+            if ($yingkui > 0) {  //盈利
+                $d_map['is_win'] = 1;
+            }elseif ($yingkui <= 0) {    //亏损
+                $d_map['is_win'] = 2;
 
-        }
-        //写入日志
-        $result[] = app(WaterService::class)->dao->model->insert([
-            'member_id' => $memberDetail['id'],
-            'agent_id' => $memberDetail['agent_id'],
-            'money' => $u_add_true * $moneyDefaultRate,
-            'remark' => '',
-            'source' => 'settlement',
-            'source_id' => $orderDetail['id'],
-            'pay_type' => 'balance',
-            'member_balance' => $memberCoin['balance'] ,
-            'balance' =>$u_add > 0? ($memberCoin[ 'balance'] + $u_add_true * $moneyDefaultRate) :  ($memberCoin['balance'] - $u_add_true * $moneyDefaultRate),
-            'describe' => '结算盈利',
-            'type'=>$u_add > 0 ?1:0,
-            'create_time' => time(),
-        ]);
-        $result[] = app(OrderLogService::class)->dao->model->insert([
-            'member_id' => $memberDetail['id'],
-            'agent_id' => $memberDetail['agent_id'],
-            'username' => $memberDetail['username'],
-            'pid' => $orderDetail['pid'],
-            'ptitle' => $orderDetail['ptitle'],
-            'ostyle' => $orderDetail['ostyle']['value'],
-            'onumber' => $orderDetail['onumber'],
-            'price' => $productNowPrice,
-            'type' => 1,
-            'oid' => $orderDetail['id'],
-        ]);
-
-        //结算佣金
-        $result[] = app(MemberCommissionWaterService::class)->settlement($orderDetail['id']);
-
-        //平仓处理订单
-        $d_map['ostaus'] = 1;
-        $d_map['sellprice'] = $productNowPrice;
-        $d_map['selltime'] = $nowTime;
-        $d_map['sell_type'] = $sellType;
-        $d_map['ploss'] = $yingkui;
-        $d_map['id'] = $orderDetail['id'];
-
-        $result[] = app(OrderService::class)->dao->model->where('id', $orderDetail['id'])->update($d_map);
-        //平仓写入redis
-        if (ArrayHelper::checkArr($result)) {
-//            $memberTradeInfo = $this->getMemberTradeInfo($orderDetail['member_id']);
-            $log['order_id'] = $orderDetail['id'];
-            $log['member_id'] = $orderDetail['member_id'];
-            $log['agent_id'] = $orderDetail['agent_id'];
-            $log['pid'] = $orderDetail['pid'];
-            $log['sellprice'] = $productNowPrice;
-            $log['selltime'] = $nowTime ;
-            $log['sell_type'] = $sellType;
-            $log['other_data'] = $other['other_data'] ?? '';
-            $log['user_jiao_info'] = $other['user_jiao_info'] ?? $this->getMemberTradeInfo($orderDetail['member_id']);
-            $log['order_data'] = $orderDetail;
-            Queue::push("app\common\jobs\CreateOrderPingCangLogJob", $log, 'OrderPingCangLogJob');
-            Db::commit();
-            app(MemberService::class)->deleteCacheDetail($orderDetail['member_id']);
-//            app(PushWebSockQueueService::class)->createMemberMessage(['type'=>'pingCang','member_id'=>$memberId]);
-            return [
-                'sell_price' => $productNowPrice,
-                'yingkui' => $u_add,
-                'order_id' => $orderId,
-                'sell_time' => date('Y-m-d H:i:s',$nowTime),
-                'onumber'=>$orderDetail['onumber'],
-                'product_name'=>$productDetail['name'],
+            }
+            //写入日志
+            $result[] = app(WaterService::class)->dao->model->insert([
+                'member_id' => $memberDetail['id'],
+                'agent_id' => $memberDetail['agent_id'],
+                'money' => $u_add_true * $moneyDefaultRate,
+                'remark' => '',
+                'source' => 'settlement',
+                'source_id' => $orderDetail['id'],
+                'pay_type' => 'balance',
+                'member_balance' => $memberCoin['balance'] ,
+                'balance' =>$u_add > 0? ($memberCoin[ 'balance'] + $u_add_true * $moneyDefaultRate) :  ($memberCoin['balance'] - $u_add_true * $moneyDefaultRate),
+                'describe' => '结算盈利',
+                'type'=>$u_add > 0 ?1:0,
+                'create_time' => time(),
+            ]);
+            $result[] = app(OrderLogService::class)->dao->model->insert([
+                'member_id' => $memberDetail['id'],
+                'agent_id' => $memberDetail['agent_id'],
+                'username' => $memberDetail['username'],
+                'pid' => $orderDetail['pid'],
+                'ptitle' => $orderDetail['ptitle'],
                 'ostyle' => $orderDetail['ostyle']['value'],
-            ];
-        }
+                'onumber' => $orderDetail['onumber'],
+                'price' => $productNowPrice,
+                'type' => 1,
+                'oid' => $orderDetail['id'],
+            ]);
+
+            //结算佣金
+            $result[] = app(MemberCommissionWaterService::class)->settlement($orderDetail['id']);
+
+            //平仓处理订单
+            $d_map['ostaus'] = 1;
+            $d_map['sellprice'] = $productNowPrice;
+            $d_map['selltime'] = $nowTime;
+            $d_map['sell_type'] = $sellType;
+            $d_map['ploss'] = $yingkui;
+            $d_map['id'] = $orderDetail['id'];
+
+            $result[] = app(OrderService::class)->dao->model->where('id', $orderDetail['id'])->update($d_map);
+            //平仓写入redis
+            if (ArrayHelper::checkArr($result)) {
+//            $memberTradeInfo = $this->getMemberTradeInfo($orderDetail['member_id']);
+                $log['order_id'] = $orderDetail['id'];
+                $log['member_id'] = $orderDetail['member_id'];
+                $log['agent_id'] = $orderDetail['agent_id'];
+                $log['pid'] = $orderDetail['pid'];
+                $log['sellprice'] = $productNowPrice;
+                $log['selltime'] = $nowTime ;
+                $log['sell_type'] = $sellType;
+                $log['other_data'] = $other['other_data'] ?? '';
+                $log['user_jiao_info'] = $other['user_jiao_info'] ?? $this->getMemberTradeInfo($orderDetail['member_id']);
+                $log['order_data'] = $orderDetail;
+                Queue::push("app\common\jobs\CreateOrderPingCangLogJob", $log, 'OrderPingCangLogJob');
+                Db::commit();
+                app(MemberService::class)->deleteCacheDetail($orderDetail['member_id']);
+//            app(PushWebSockQueueService::class)->createMemberMessage(['type'=>'pingCang','member_id'=>$memberId]);
+                return [
+                    'sell_price' => $productNowPrice,
+                    'yingkui' => $u_add,
+                    'order_id' => $orderId,
+                    'sell_time' => date('Y-m-d H:i:s',$nowTime),
+                    'onumber'=>$orderDetail['onumber'],
+                    'product_name'=>$productDetail['name'],
+                    'ostyle' => $orderDetail['ostyle']['value'],
+                ];
+            }
             Db::rollback();
             $this->error = "平仓失败，请重试!";
             return false;
@@ -879,6 +884,7 @@ class MemberOrderService extends BaseService
             return false;
         }
     }
+
 
     /*
      * 平仓亏损最多的订单
@@ -895,13 +901,11 @@ class MemberOrderService extends BaseService
             break;
         }
     }
-
     public function pingCangZhiDing($memberId = 0,$orderId = 0,$sellType = '',$other = []){
-    {
-        return $this->pingCang($memberId,$orderId,$sellType, $other);
+        {
+            return $this->pingCang($memberId,$orderId,$sellType, $other);
+        }
     }
-    }
-
     /*
      * [addGuarantee APP修改止损]
      */

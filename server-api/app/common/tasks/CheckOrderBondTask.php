@@ -75,22 +75,26 @@ class CheckOrderBondTask extends AbstractProcess
 
                 //平仓方式 sell_type
                 $sellType = '';
+                $sellPrice = $productNowPrice;
                 //买跌 达到止盈
                 if ( $item['ostyle']['value'] == 1 && (!empty($item['surplus']) && $productNowPrice <= $item['buyprice'] && $productNowPrice <= $item['surplus'])
                 ) {
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达到买跌止盈",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::SURPLUS;
+                    $sellPrice = $item['surplus'];
                     //买跌 止损线
                 }else if (  $item['ostyle']['value'] == 1 && (!empty($item['loss']) && $productNowPrice >= $item['buyprice'] && $productNowPrice >= $item['loss']) ) {
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达止买跌损线",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::LOSS;
+                    $sellPrice = $item['loss'];
                     //买涨 止盈
                 } else if ( $item['ostyle']['value'] == 2 && (!empty($item['surplus']) && $productNowPrice >= $item['buyprice'] && $productNowPrice >= $item['surplus']) ) {
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达到买涨止盈",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::SURPLUS;
+                    $sellPrice = $item['surplus'];
                     //买涨 止损线
                 } elseif (
                     $item['ostyle']['value'] == 2
@@ -99,6 +103,7 @@ class CheckOrderBondTask extends AbstractProcess
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达止买涨损线",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::LOSS;
+                    $sellPrice = $item['loss'];
                 }
 
 
@@ -107,9 +112,11 @@ class CheckOrderBondTask extends AbstractProcess
                     if($item['mark_price'] >= $item['trigger_price'] && $productNowPrice > $item['mark_price'] ){
                         $isBongPing = true;
                         $sellType = SellTypeEnum::MARK;
+                        $sellPrice = $item['mark_price'];
                     }elseif ($item['mark_price'] <=  $item['trigger_price'] && $item['mark_price'] > $productNowPrice){
                         $isBongPing = true;
                         $sellType = SellTypeEnum::MARK;
+                        $sellPrice = $item['mark_price'];
                     }
                 }
 
@@ -139,7 +146,8 @@ class CheckOrderBondTask extends AbstractProcess
                 if ($isBongPing) {
                     $this->logService->create("用户：{$item['member_id']}平仓：{$item['id']}",true);
                     $memberService->pingCangZhiDing($item['member_id'], $item['id'],$sellType,[
-                        'user_jiao_info' =>$memberTrade
+                        'user_jiao_info' =>$memberTrade,
+                        "now_sell_price"=>$sellPrice
                     ]);
                 }
             }
