@@ -79,6 +79,12 @@ class Agent extends Base
         }
         $data['roles'] = [$data['level']];
 
+        if (!empty($data['pwd'] )) {
+            # code...
+            $data['pwd'] = $this->service->dao->passwordHash($data['pwd']);
+        }
+        
+
         $data['ratio_agent_fee'] = json_encode($this->service->getInitFee(null),JSON_UNESCAPED_UNICODE);
         if($this->service->create($data)){
             $this->success('添加代理成功!');
