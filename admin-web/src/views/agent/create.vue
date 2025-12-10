@@ -65,8 +65,8 @@
                 </a-row>
                 <a-row :gutter="20">
                     <a-col :md="12" :xs="24">
-                        <a-form-item :label-col-flex="labelColFlex" label="客服蝙蝠号" field="kefu_wechat">
-                            <a-input v-model="createForm.kefu_wechat" placeholder="请输客服蝙蝠号"
+                        <a-form-item :label-col-flex="labelColFlex" label="客服其他号" field="kefu_wechat">
+                            <a-input v-model="createForm.kefu_wechat" placeholder="请输客服其他号"
                                 ></a-input>
                         </a-form-item>
                     </a-col>
