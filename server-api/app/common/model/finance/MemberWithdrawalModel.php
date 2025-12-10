@@ -41,6 +41,9 @@ class MemberWithdrawalModel extends BaseModel
             'bank_name'=>'bank_name',
             'bank_code'=>'bank_code',
             'usdt_card'=>'usdt_card',
+            'alipay_card'=>'alipay_card',
+            'alipay_name'=>'alipay_name',
+            'alipay_img'=>'alipay_img',
         ]);
     }
     public function agent(){
