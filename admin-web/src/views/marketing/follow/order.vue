@@ -74,10 +74,10 @@
                     <a-table-column title="交易员" data-index="person" :width="240">
                         <template #cell="{ record }">
                             <member-column-detail :member="{
-                                avatar: record.person.avatar,
-                                username: record.person.nickname,
-                                mobile: record.person.mobile,
-                                id: record.person.id,
+                                avatar: record.person?.avatar,
+                                username: record.person?.nickname,
+                                mobile: record.person?.mobile,
+                                id: record.person?.id,
                             }"></member-column-detail>
                         </template>
                     </a-table-column>
