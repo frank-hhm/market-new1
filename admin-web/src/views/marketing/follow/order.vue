@@ -5,15 +5,15 @@
                 <a-form :model="searchForm" ref="searchFormRef">
                     <a-row :gutter="20">
                         <a-col :md="12" :xs="24" :xl="6">
-                            <a-form-item :label-col-flex="labelColFlex" label="账号" prop="username_like">
+                            <a-form-item :label-col-flex="labelColFlex" label="用户账号" prop="username_like">
                                 <a-input class="form-input-inline" v-model="searchForm.username_like"
-                                    placeholder="请输入跟单员账号或手机号" allow-clear />
+                                    placeholder="请输入用户账号或手机号" allow-clear />
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :xs="24" :xl="6">
-                            <a-form-item :label-col-flex="labelColFlex" label="账号" prop="person_like">
+                            <a-form-item :label-col-flex="labelColFlex" label="跟单员" prop="person_like">
                                 <a-input class="form-input-inline" v-model="searchForm.person_like"
-                                    placeholder="请输入用户账号或手机号" allow-clear />
+                                    placeholder="请输入跟单员账号" allow-clear />
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :xs="24" :xl="6">

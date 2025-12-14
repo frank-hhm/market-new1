@@ -221,9 +221,9 @@ class OrderService extends BaseService
             $query->whereIn("person_id",function ($query1) use ($params){
                 $map = [];
                 if (!empty($params['person_like'])){
-                    $map[] = ['real_name|username|mobile', 'like', "%{$params['person_like']}%"];
+                    $map[] = ['nickname', 'like', "%{$params['person_like']}%"];
                 }
-                return $query1->name("member")->where($map)->field('id');
+                return $query1->name("follow_person")->where($map)->field('id');
             });
         })
         ->when($params["status"] !== "all" && $params["status"] !== '',function ($query) use ($params){
