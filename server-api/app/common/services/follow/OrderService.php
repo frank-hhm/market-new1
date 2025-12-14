@@ -208,7 +208,7 @@ class OrderService extends BaseService
             $filter[] = ['create_time','>=',strtotime($params['create_time'][0])];
             $filter[] = ['create_time','<=',strtotime($params['create_time'][1])+86400];
         }
-        $list = $this->dao->model->with(["person","member"])
+        $queryModel = $this->dao->model->with(["person","member"])
         ->when(!empty($params["username_like"]),function($query) use ($params){
                 $query->whereIn("member_id",function ($query1) use ($params){
                     $map = [];
@@ -228,7 +228,10 @@ class OrderService extends BaseService
         })
         ->when($params["status"] !== "all" && $params["status"] !== '',function ($query) use ($params){
             $query->where("status",$params["status"]);
-            })->where($filter)->order(['create_time DESC'])->page($page)->paginate($limit)->toArray();
+            })->where($filter)->order(['create_time DESC']);
+
+        $list = $queryModel->page($page)->paginate($limit)->toArray();
+        $list["money_count"] = $queryModel->sum("money");
         return $list;
     }
 }

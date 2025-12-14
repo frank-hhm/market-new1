@@ -48,7 +48,14 @@
             </a-card>
             <div class="mt12"></div>
         </template>
-        <template v-slot:page-header-left> 订单列表 </template>
+    <template v-slot:page-header-left>
+      <div>
+        <span class="">统计:</span>
+        <span class="">{{
+          Number(countData.money_count || 0).toFixed(2)
+        }}</span>
+      </div>
+    </template>
         <template v-slot:page-header-right>
             <a-space>
                 <a-tooltip content="刷新">
@@ -169,6 +176,10 @@ const initLoading = ref<boolean>(true);
 
 const lists = ref<any>([]);
 
+const countData = ref<any>({
+  money_count: 0
+});
+
 const toInit = (isInit: boolean = false) => {
     if (isInit) {
         listPage.value.page = 1;
@@ -186,6 +197,7 @@ const toInit = (isInit: boolean = false) => {
             initLoading.value = false;
             lists.value = res.data.data;
             listPage.value.total = res.data.total;
+      countData.value.money_count = res.data.money_count || 0.0;
             setTimeout(() => {
                 initLoading.value = false;
             }, 300);
