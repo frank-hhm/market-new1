@@ -17,6 +17,15 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :xs="24" :xl="6">
+                            <a-form-item :label-col-flex="labelColFlex" label="账号" prop="person_like">
+                                <a-select v-model="searchForm.status" placeholder="选择状态" allow-clear>
+                                    <a-option value="all">全部</a-option>
+                                    <a-option v-for="(item, index) in OrderStatusEnum" :key="index" :value="item.value"
+                                        :label="item.name" />
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :xs="24" :xl="6">
                             <a-form-item :label-col-flex="labelColFlex" label="时间" prop="create_time">
                                 <shortcuts-time v-model="searchForm.create_time" :btnShortcuts="false" />
                             </a-form-item>
@@ -121,12 +130,15 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref, getCurrentInstance } from "vue";
-import { PageLimitType, Result, ResultError } from "@/types";
+import { EnumItemType, PageLimitType, Result, ResultError } from "@/types";
 import { useSetting } from "@/hooks/useSetting";
 import { endFollowOrderApi, getFollowOrderListApi } from "@/api/follow/order";
+import { useEnumStore } from "@/store";
 
 const labelColFlex = ref<string>("50px");
 
+
+const OrderStatusEnum = ref<EnumItemType[]>(useEnumStore().getEnumItem("follow.OrderStatusEnum"));
 
 const {
     proxy,
@@ -139,10 +151,12 @@ const searchForm = ref<{
     username_like: string;
     person_like: string;
     create_time: any;
+    status: any,
 }>({
     username_like: "",
     person_like: "",
     create_time: [],
+    status: "all",
 });
 
 const onSearchReset = () => {
@@ -165,6 +179,7 @@ const toInit = (isInit: boolean = false) => {
     obj.create_time = searchForm.value.create_time;
     obj.person_like = searchForm.value.person_like;
     obj.username_like = searchForm.value.username_like;
+    obj.status = searchForm.value.status;
     initLoading.value = true;
     getFollowOrderListApi(obj)
         .then((res: Result) => {

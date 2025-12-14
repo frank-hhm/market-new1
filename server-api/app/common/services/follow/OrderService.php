@@ -208,13 +208,22 @@ class OrderService extends BaseService
             $filter[] = ['create_time','>=',strtotime($params['create_time'][0])];
             $filter[] = ['create_time','<=',strtotime($params['create_time'][1])+86400];
         }
-        $list = $this->dao->model->with(["person","member"])->whereIn("member_id",function ($query) use ($params){
+        $list = $this->dao->model->with(["person","member"])
+            ->whereIn("member_id",function ($query) use ($params){
             $map = [];
             if (!empty($params['username_like'])){
                 $map[] = ['real_name|username|mobile', 'like', "%{$params['username_like']}%"];
             }
             return $query->name("member")->where($map)->field('id');
-        })->where($filter)->order(['create_time DESC'])->page($page)->paginate($limit)->toArray();
+        })->whereIn("person_id",function ($query) use ($params){
+            $map = [];
+            if (!empty($params['person_like'])){
+                $map[] = ['real_name|username|mobile', 'like', "%{$params['person_like']}%"];
+            }
+            return $query->name("member")->where($map)->field('id');
+        })->when($params["status"] !== "all",function ($query) use ($params){
+            $query->where("status",$params["status"]);
+            })->where($filter)->order(['create_time DESC'])->page($page)->paginate($limit)->toArray();
         return $list;
     }
 }

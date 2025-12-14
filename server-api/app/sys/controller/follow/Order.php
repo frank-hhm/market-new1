@@ -35,7 +35,9 @@ class Order extends Base
     {
         $data = $this->request->postMore([
             ["create_time",[]],
-            ["username_like",""]
+            ["username_like",""],
+            ["person_like",""],
+            ["status","all"]
         ]);
         $this->success("获取成功",$this->service->getList($data));
     }
