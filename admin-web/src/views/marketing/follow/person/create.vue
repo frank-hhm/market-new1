@@ -129,6 +129,14 @@
                             </a-radio-group>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="12" :xs="24">
+                        <a-form-item :label-col-flex="labelColFlex" label="是否显示历史单" field="is_show_order_history">
+                            <a-radio-group v-model="createForm.is_show_order_history">
+                                <a-radio  :value="1" :key="1">显示</a-radio>
+                                <a-radio  :value="0" :key="0">隐藏</a-radio>
+                            </a-radio-group>
+                        </a-form-item>
+                    </a-col>
                 </a-row>
                 <a-row :gutter="20">
                     <a-col :md="12" :xs="24">
@@ -214,6 +222,7 @@ const toInit = () => {
         createForm.value.commission2 = Number(res.data.commission2);
         createForm.value.follow_count_text = Number(res.data.follow_count_text);
         createForm.value.is_show_order = Number(res.data.is_show_order);
+        createForm.value.is_show_order_history = Number(res.data.is_show_order_history);
         createForm.value.default_create_day = Number(res.data.default_create_day);
         
         createForm.value.status = res.data.status.value;
@@ -244,6 +253,7 @@ const createForm = ref<any>({
     commission2:null,
     follow_count_text:null,
     is_show_order:1,
+    is_show_order_history:1,
     default_create_day:null
 });
 

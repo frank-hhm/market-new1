@@ -76,6 +76,8 @@ class Person extends Base
             ["revenue_lock",0],
             ["follow_count_text",0],
             ["is_show_order",1],
+            ["is_show_order_history",1],
+
             ["default_create_day",0]
         ]);
         if( $this->service->save($data)){
@@ -111,6 +113,7 @@ class Person extends Base
             ["revenue_lock",0],
             ["follow_count_text",0],
             ["is_show_order",1],
+            ["is_show_order_history",1],
             ["default_create_day",0]
         ]);
         if($this->service->update($data['id'], $data)){
