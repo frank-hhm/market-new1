@@ -17,7 +17,7 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :xs="24" :xl="6">
-                            <a-form-item :label-col-flex="labelColFlex" label="账号" prop="person_like">
+                            <a-form-item :label-col-flex="labelColFlex" label="状态" prop="status">
                                 <a-select v-model="searchForm.status" placeholder="选择状态" allow-clear>
                                     <a-option value="all">全部</a-option>
                                     <a-option v-for="(item, index) in OrderStatusEnum" :key="index" :value="item.value"
