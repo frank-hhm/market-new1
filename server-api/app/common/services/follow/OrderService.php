@@ -226,7 +226,7 @@ class OrderService extends BaseService
                 return $query1->name("member")->where($map)->field('id');
             });
         })
-        ->when($params["status"] !== "all",function ($query) use ($params){
+        ->when($params["status"] !== "all" && $params["status"] !== '',function ($query) use ($params){
             $query->where("status",$params["status"]);
             })->where($filter)->order(['create_time DESC'])->page($page)->paginate($limit)->toArray();
         return $list;
