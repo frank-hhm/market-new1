@@ -7,7 +7,13 @@
                         <a-col :md="12" :xs="24" :xl="6">
                             <a-form-item :label-col-flex="labelColFlex" label="账号" prop="username_like">
                                 <a-input class="form-input-inline" v-model="searchForm.username_like"
-                                    placeholder="请输入账号或手机号" allow-clear />
+                                    placeholder="请输入跟单员账号或手机号" allow-clear />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :xs="24" :xl="6">
+                            <a-form-item :label-col-flex="labelColFlex" label="账号" prop="person_like">
+                                <a-input class="form-input-inline" v-model="searchForm.person_like"
+                                    placeholder="请输入用户账号或手机号" allow-clear />
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :xs="24" :xl="6">
@@ -131,9 +137,11 @@ const searchFormRef = ref<HTMLElement>();
 
 const searchForm = ref<{
     username_like: string;
+    person_like: string;
     create_time: any;
 }>({
     username_like: "",
+    person_like: "",
     create_time: [],
 });
 
@@ -155,6 +163,7 @@ const toInit = (isInit: boolean = false) => {
     obj.page = listPage.value.page;
     obj.limit = listPage.value.limit;
     obj.create_time = searchForm.value.create_time;
+    obj.person_like = searchForm.value.person_like;
     obj.username_like = searchForm.value.username_like;
     initLoading.value = true;
     getFollowOrderListApi(obj)

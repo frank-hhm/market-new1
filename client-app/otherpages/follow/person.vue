@@ -114,12 +114,16 @@
 			</view>
 
 			<view v-if="!isLoading && list.length == 0" class="empty-list">
-				<text v-if="tabIndex === 0">{{ detail.is_show_order == 0 ?'该交易员已隐藏持单':'暂无持仓单'}}</text>
+				<text v-if="tabIndex === 0 && detail.is_show_order == 0">该交易员已隐藏持单</text>
+				<text v-if="tabIndex === 1 && detail.is_show_order_history == 0">该交易员已隐藏历史单</text>
 				<text v-else>暂无操盘记录</text>
 			</view>
 			<view v-else class="trading-list">
 				<view v-if="tabIndex === 0 && detail.is_show_order == 0" class="empty-list">
 					<text>{{'该交易员已隐藏持单'}}</text>
+				</view>
+				<view v-if="tabIndex === 1 && detail.is_show_order_history == 0" class="empty-list">
+					<text>{{'该交易员已隐藏历史单'}}</text>
 				</view>
 				<view v-else class="trading-item" v-for="(item,index) in list" :key="index">
 					<view class="flex justify-between holder-item-content">
@@ -172,7 +176,7 @@
 						</view>
 					</view>
 				</view>
-				<view v-if="tabIndex === 1 && list.length > 0" class="empty-list">
+				<view v-if="tabIndex === 1 && list.length > 0 && detail.is_show_order_history == 1" class="empty-list">
 					<text>{{'仅展示近10单记录'}}</text>
 				</view>
 				<view v-if="false  && tabIndex == 1" class="trading-item" v-for="(item,index) in list" :key="index">
