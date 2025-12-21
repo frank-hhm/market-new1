@@ -5,11 +5,6 @@
                 <a-form :model="searchForm" ref="searchFormRef">
                     <a-row :gutter="20">
                         <a-col :md="12" :xs="24" :xl="6">
-                            <a-form-item :label-col-flex="labelColFlex" label="代理商" prop="agent_id">
-                                <agent-search-select v-model="searchForm.agent_id"></agent-search-select>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="12" :xs="24" :xl="6">
                             <a-form-item :label-col-flex="labelColFlex" label="用户账号" prop="username_like">
                                 <a-input class="form-input-inline" v-model="searchForm.username_like"
                                     placeholder="请输入用户账号或手机号" allow-clear />
@@ -147,20 +142,6 @@
                             <div class="text-grey">{{ record.create_time }}</div>
                         </template>
                     </a-table-column>
-                    <a-table-column title="操作" fixed="right" align="center" :width="320">
-                        <template #cell="{ record }">
-                            <a-space>
-                                <div v-permission="'follow-order-endStatus'" v-if="record.status.value == 1">
-                                    <a-popconfirm content="确定结束该订单吗？" @ok="onEnd(record.id)">
-                                        <template #icon>
-                                            <icon-exclamation-circle-fill type="red" />
-                                        </template>
-                                        <a-button size="small">结束</a-button>
-                                    </a-popconfirm>
-                                </div>
-                            </a-space>
-                        </template>
-                    </a-table-column>
                 </template>
             </a-table>
         </template>
@@ -173,7 +154,7 @@
 import { onMounted, ref, getCurrentInstance } from "vue";
 import { EnumItemType, PageLimitType, Result, ResultError } from "@/types";
 import { useSetting } from "@/hooks/useSetting";
-import { endFollowOrderApi, getFollowOrderListApi } from "@/api/follow/order";
+import {  getFollowOrderListApi } from "@/api/follow/order";
 import { useEnumStore } from "@/store";
 
 const labelColFlex = ref<string>("50px");
@@ -193,19 +174,16 @@ const searchForm = ref<{
     person_like: string;
     create_time: any;
     status: any,
-    agent_id: string | number | string[] | number[];
 }>({
     username_like: "",
     person_like: "",
     create_time: [],
     status: "all",
-    agent_id: [],
 });
 
 const onSearchReset = () => {
     proxy?.$refs["searchFormRef"]?.resetFields();
     searchForm.value.create_time = [];
-  searchForm.value.agent_id = [];
     toInit(true);
 };
 
@@ -228,7 +206,6 @@ const toInit = (isInit: boolean = false) => {
     obj.create_time = searchForm.value.create_time;
     obj.person_like = searchForm.value.person_like;
     obj.username_like = searchForm.value.username_like;
-  obj.agent_id = searchForm.value.agent_id;
     obj.status = searchForm.value.status;
   if (sortField.value && sortFields.value) {
     obj.table_sorter = {
@@ -286,22 +263,10 @@ const pageChange = (res: PageLimitType) => {
     toInit();
 };
 
-const onEnd = (id: number | string) => {
-    endFollowOrderApi({ id })
-        .then((res: Result) => {
-            toInit();
-            $utils.successMsg(res.message);
-        })
-        .catch((err: ResultError) => {
-            $utils.errorMsg(err);
-        });
-};
 
 onMounted(() => {
     toInit();
 });
-
-const tradeComponentRef = ref<HTMLElement>()
 
 const onTrade = (id: number | string) => {
     proxy?.$refs["tradeComponentRef"]?.open(id)

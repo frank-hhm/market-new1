@@ -5,6 +5,7 @@ import member from './member'
 import finance from './finance'
 import order from './order'
 import agent from './agent'
+import marketing from './marketing'
 
 export default [{
     path: '/',
@@ -37,6 +38,7 @@ export default [{
         ...member,
         ...finance,
         ...order,
-        ...agent
+        ...agent,
+        ...marketing
     ]
 }]
