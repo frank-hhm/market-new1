@@ -209,7 +209,7 @@ class OrderService extends BaseService
             $filter[] = ['create_time','<=',strtotime($params['create_time'][1])+86400];
         }
 
-        $queryModel = $this->dao->model->with(["person","member"])
+        $queryModel = $this->dao->model->with(["person","member"=>["agent"]])
             ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
                 $query->whereIn("member_id",function ($query1) use ($params){
                     $map = [];

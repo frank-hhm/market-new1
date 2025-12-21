@@ -79,6 +79,16 @@
                 y: height - 39,
             }" :table-layout-fixed="true">
                 <template #columns>
+          <a-table-column
+            title="代理商"
+            data-index="agent_id"
+            align="left"
+            :width="120"
+          >
+            <template #cell="{ record }">
+              <agent-column-detail :agent="record.agent"></agent-column-detail>
+            </template>
+          </a-table-column>
                     <a-table-column title="用户账号" data-index="member" :width="120">
                         <template #cell="{ record }">
                             <member-column-detail :member="{
