@@ -210,8 +210,8 @@ class OrderService extends BaseService
         }
 
         $sorter = 'create_time DESC';
-        if(!empty($param['table_sorter'])){
-            $sorter = json_decode($param['table_sorter'],true);
+        if(!empty($params['table_sorter'])){
+            $sorter = json_decode($params['table_sorter'],true);
         }
         $queryModel = $this->dao->model->with(["person","member"=>["agent"]])
             ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
