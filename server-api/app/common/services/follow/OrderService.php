@@ -211,9 +211,9 @@ class OrderService extends BaseService
 
         $queryModel = $this->dao->model->with(["person","member"])
         ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
-                $query->when(!empty($param['agent_id']) && $param['agent_id'] !== 'all' ,function($query1) use ($params){
+                $query->when(!empty($params['agent_id']) && $params['agent_id'] !== 'all' ,function($query1) use ($params){
                     $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
-                })->when(empty($param['agent_id']) || $param['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
+                })->when(empty($params['agent_id']) || $params['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
                     $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
                 })->whereIn("member_id",function ($query1) use ($params){
                     $map = [];
