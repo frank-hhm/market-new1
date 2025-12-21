@@ -220,10 +220,14 @@ class OrderService extends BaseService
                 });
             })
 
-            ->when(!empty($params['agent_id']) && $params['agent_id'] !== 'all' ,function($query1) use ($params){
-                $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
-            })->when(empty($params['agent_id']) || $params['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
-                $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
+            ->when(!empty($params['agent_id']) && $params['agent_id'] !== 'all' ,function($query) use ($params,$agentIds){
+                $query->whereIn("member_id",function ($query1) use ($params,$agentIds){
+                    return $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
+                });
+            })->when(empty($params['agent_id']) || $params['agent_id'] === 'all' ,function($query) use ($params,$agentIds){
+                $query->whereIn("member_id",function ($query1) use ($params,$agentIds){
+                    return $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
+                });
             })
 
 
