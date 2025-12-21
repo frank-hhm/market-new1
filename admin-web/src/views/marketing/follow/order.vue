@@ -77,16 +77,18 @@
             <a-table :loading="initLoading" :data="lists" row-key="id" isLeaf :pagination="false" :scroll="{
                 x: '100%',
                 y: height - 39,
-            }" :table-layout-fixed="true">
+            }" :table-layout-fixed="true" 
+        @sorter-change="onTableSorterChange">
                 <template #columns>
           <a-table-column
             title="代理商"
             data-index="agent_id"
             align="left"
-            :width="120"
+            :width="160"
           >
             <template #cell="{ record }">
-              <agent-column-detail :agent="record.agent"></agent-column-detail>
+              <agent-column-detail v-if="record.member && record.member.agent" :agent="record.member?.agent"></agent-column-detail>
+              <span v-else class="text-gren">无</span>
             </template>
           </a-table-column>
                     <a-table-column title="用户账号" data-index="member" :width="120">
@@ -108,17 +110,29 @@
                             }"></member-column-detail>
                         </template>
                     </a-table-column>
-                    <a-table-column title="跟单时间累计" data-index="create_day" :width="160">
+                    <a-table-column title="跟单时间累计" data-index="create_day" :width="160" 
+            :sortable="{
+              sortDirections: ['ascend', 'descend'],
+              sorter: true,
+            }">
                         <template #cell="{ record }">
                             <div>{{ record.create_day }}</div>
                         </template>
                     </a-table-column>
-                    <a-table-column title="收益累计" data-index="total_revenue" :width="160">
+                    <a-table-column title="收益累计" data-index="total_revenue" :width="160" 
+            :sortable="{
+              sortDirections: ['ascend', 'descend'],
+              sorter: true,
+            }">
                         <template #cell="{ record }">
                             <div>{{ record.total_revenue }}</div>
                         </template>
                     </a-table-column>
-                    <a-table-column title="跟单金额" data-index="money" :width="160">
+                    <a-table-column title="跟单金额" data-index="money" :width="160" 
+            :sortable="{
+              sortDirections: ['ascend', 'descend'],
+              sorter: true,
+            }">
                         <template #cell="{ record }">
                             <div>{{ record.money }}</div>
                         </template>
@@ -216,6 +230,11 @@ const toInit = (isInit: boolean = false) => {
     obj.username_like = searchForm.value.username_like;
   obj.agent_id = searchForm.value.agent_id;
     obj.status = searchForm.value.status;
+  if (sortField.value && sortFields.value) {
+    obj.table_sorter = {
+      [sortField.value]: sortFieldValue.value,
+    };
+  }
     initLoading.value = true;
     getFollowOrderListApi(obj)
         .then((res: Result) => {
@@ -232,6 +251,28 @@ const toInit = (isInit: boolean = false) => {
             initLoading.value = false;
             $utils.errorMsg(error);
         });
+};
+
+const sortFields = ref<any>({});
+const sortField = ref<string>("");
+const sortFieldValue = ref<string>("");
+
+const onTableSorterChange = (dataIndex: string, direction: string) => {
+  sortField.value = dataIndex;
+  //   sortFieldValue.value = direction === "ascend" ? "asc" : "desc";
+  if (direction) {
+    sortFieldValue.value = direction === "ascend" ? "asc" : "desc";
+  } else {
+    sortFieldValue.value = "";
+  }
+  //   const newSort = { ...sortFields.value };
+  //   if (direction) {
+  //     newSort[dataIndex] = direction === 'ascend' ? 'asc' : 'desc';
+  //   } else {
+  //     delete newSort[dataIndex];
+  //   }
+  //   sortFields.value = newSort;
+  toInit(true);
 };
 
 const listPage = ref<any>({

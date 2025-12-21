@@ -39,6 +39,7 @@ class Order extends Base
             ["person_like",""],
             ["status","all"],
             ['agent_id',[]],
+            ['table_sorter','']
         ]);
         $agentIds = $this->getAgentChildIds();
         $this->success("获取成功",$this->service->getList($data,$agentIds));

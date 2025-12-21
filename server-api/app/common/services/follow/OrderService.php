@@ -209,6 +209,10 @@ class OrderService extends BaseService
             $filter[] = ['create_time','<=',strtotime($params['create_time'][1])+86400];
         }
 
+        $sorter = 'create_time DESC';
+        if(!empty($param['table_sorter'])){
+            $sorter = json_decode($param['table_sorter'],true);
+        }
         $queryModel = $this->dao->model->with(["person","member"=>["agent"]])
             ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
                 $query->whereIn("member_id",function ($query1) use ($params){
@@ -243,7 +247,7 @@ class OrderService extends BaseService
         })
         ->when($params["status"] !== "all" && $params["status"] !== '',function ($query) use ($params){
             $query->where("status",$params["status"]);
-            })->where($filter)->order(['create_time DESC']);
+            })->where($filter)->order($sorter);
 
         $list = $queryModel->page($page)->paginate($limit)->toArray();
 
