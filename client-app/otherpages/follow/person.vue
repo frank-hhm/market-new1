@@ -115,14 +115,14 @@
 
 			<view v-if="!isLoading && list.length == 0" class="empty-list">
 				<text v-if="tabIndex === 0 && detail.is_show_order == 0">该交易员已隐藏持单</text>
-				<text v-if="tabIndex === 1 && detail.is_show_order_history == 0">该交易员已隐藏历史单</text>
+				<text v-else-if="tabIndex === 1 && detail.is_show_order_history == 0">该交易员已隐藏历史单</text>
 				<text v-else>暂无操盘记录</text>
 			</view>
 			<view v-else class="trading-list">
 				<view v-if="tabIndex === 0 && detail.is_show_order == 0" class="empty-list">
 					<text>{{'该交易员已隐藏持单'}}</text>
 				</view>
-				<view v-if="tabIndex === 1 && detail.is_show_order_history == 0" class="empty-list">
+				<view v-else-if="tabIndex === 1 && detail.is_show_order_history == 0" class="empty-list">
 					<text>{{'该交易员已隐藏历史单'}}</text>
 				</view>
 				<view v-else class="trading-item" v-for="(item,index) in list" :key="index">

@@ -231,7 +231,10 @@ class OrderService extends BaseService
             })->where($filter)->order(['create_time DESC']);
 
         $list = $queryModel->page($page)->paginate($limit)->toArray();
+
         $list["money_count"] = $queryModel->sum("money");
+        $list["total_revenue"] = $queryModel->sum("total_revenue");
+
         return $list;
     }
 }

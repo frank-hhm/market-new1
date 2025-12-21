@@ -50,10 +50,15 @@
         </template>
     <template v-slot:page-header-left>
       <div>
-        <span class="">统计:</span>
+        <span class="">跟单总金额:</span>
         <span class="">{{
           Number(countData.money_count || 0).toFixed(2)
         }}</span>
+        <span class="">累计收益:</span>
+        <span class="">{{
+          Number(countData.total_revenue || 0).toFixed(2)
+        }}</span>
+        
       </div>
     </template>
         <template v-slot:page-header-right>
@@ -177,7 +182,8 @@ const initLoading = ref<boolean>(true);
 const lists = ref<any>([]);
 
 const countData = ref<any>({
-  money_count: 0
+  money_count: 0,
+  total_revenue:0
 });
 
 const toInit = (isInit: boolean = false) => {
@@ -198,6 +204,7 @@ const toInit = (isInit: boolean = false) => {
             lists.value = res.data.data;
             listPage.value.total = res.data.total;
       countData.value.money_count = res.data.money_count || 0.0;
+      countData.value.total_revenue = res.data.total_revenue || 0.0;
             setTimeout(() => {
                 initLoading.value = false;
             }, 300);
