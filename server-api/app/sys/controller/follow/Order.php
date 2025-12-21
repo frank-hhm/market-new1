@@ -37,9 +37,11 @@ class Order extends Base
             ["create_time",[]],
             ["username_like",""],
             ["person_like",""],
-            ["status","all"]
+            ["status","all"],
+            ['agent_id',[]],
         ]);
-        $this->success("获取成功",$this->service->getList($data));
+        $agentIds = $this->getAgentChildIds();
+        $this->success("获取成功",$this->service->getList($data,$agentIds));
     }
 
 

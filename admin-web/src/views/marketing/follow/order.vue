@@ -5,6 +5,11 @@
                 <a-form :model="searchForm" ref="searchFormRef">
                     <a-row :gutter="20">
                         <a-col :md="12" :xs="24" :xl="6">
+                            <a-form-item :label-col-flex="labelColFlex" label="代理商" prop="agent_id">
+                                <agent-search-select v-model="searchForm.agent_id"></agent-search-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :xs="24" :xl="6">
                             <a-form-item :label-col-flex="labelColFlex" label="用户账号" prop="username_like">
                                 <a-input class="form-input-inline" v-model="searchForm.username_like"
                                     placeholder="请输入用户账号或手机号" allow-clear />
@@ -48,19 +53,19 @@
             </a-card>
             <div class="mt12"></div>
         </template>
-    <template v-slot:page-header-left>
-      <div>
-        <span class="">跟单总金额:</span>
-        <span class="">{{
-          Number(countData.money_count || 0).toFixed(2)
-        }}</span>
-        <span class="">累计收益:</span>
-        <span class="">{{
-          Number(countData.total_revenue || 0).toFixed(2)
-        }}</span>
-        
-      </div>
-    </template>
+        <template v-slot:page-header-left>
+            <div>
+                <span class="">跟单总金额:</span>
+                <span class="">{{
+                    Number(countData.money_count || 0).toFixed(2)
+                    }}</span>
+                <span class="ml20">累计收益:</span>
+                <span class="">{{
+                    Number(countData.total_revenue || 0).toFixed(2)
+                    }}</span>
+
+            </div>
+        </template>
         <template v-slot:page-header-right>
             <a-space>
                 <a-tooltip content="刷新">
@@ -164,16 +169,19 @@ const searchForm = ref<{
     person_like: string;
     create_time: any;
     status: any,
+    agent_id: string | number | string[] | number[];
 }>({
     username_like: "",
     person_like: "",
     create_time: [],
     status: "all",
+    agent_id: [],
 });
 
 const onSearchReset = () => {
     proxy?.$refs["searchFormRef"]?.resetFields();
     searchForm.value.create_time = [];
+  searchForm.value.agent_id = [];
     toInit(true);
 };
 
@@ -182,8 +190,8 @@ const initLoading = ref<boolean>(true);
 const lists = ref<any>([]);
 
 const countData = ref<any>({
-  money_count: 0,
-  total_revenue:0
+    money_count: 0,
+    total_revenue: 0
 });
 
 const toInit = (isInit: boolean = false) => {
@@ -196,6 +204,7 @@ const toInit = (isInit: boolean = false) => {
     obj.create_time = searchForm.value.create_time;
     obj.person_like = searchForm.value.person_like;
     obj.username_like = searchForm.value.username_like;
+  obj.agent_id = searchForm.value.agent_id;
     obj.status = searchForm.value.status;
     initLoading.value = true;
     getFollowOrderListApi(obj)
@@ -203,8 +212,8 @@ const toInit = (isInit: boolean = false) => {
             initLoading.value = false;
             lists.value = res.data.data;
             listPage.value.total = res.data.total;
-      countData.value.money_count = res.data.money_count || 0.0;
-      countData.value.total_revenue = res.data.total_revenue || 0.0;
+            countData.value.money_count = res.data.money_count || 0.0;
+            countData.value.total_revenue = res.data.total_revenue || 0.0;
             setTimeout(() => {
                 initLoading.value = false;
             }, 300);

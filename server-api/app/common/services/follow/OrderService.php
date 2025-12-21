@@ -200,7 +200,7 @@ class OrderService extends BaseService
 
 
 
-    public function getList($params = [])
+    public function getList($params = [],$agentIds = [])
     {
         [$page, $limit] = $this->dao->getPageValue();
         $filter = [];
@@ -208,9 +208,14 @@ class OrderService extends BaseService
             $filter[] = ['create_time','>=',strtotime($params['create_time'][0])];
             $filter[] = ['create_time','<=',strtotime($params['create_time'][1])+86400];
         }
+
         $queryModel = $this->dao->model->with(["person","member"])
-        ->when(!empty($params["username_like"]),function($query) use ($params){
-                $query->whereIn("member_id",function ($query1) use ($params){
+        ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
+                $query->when(!empty($param['agent_id']) && $param['agent_id'] !== 'all' ,function($query1) use ($params){
+                    $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
+                })->when(empty($param['agent_id']) || $param['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
+                    $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
+                })->whereIn("member_id",function ($query1) use ($params){
                     $map = [];
                     if (!empty($params['username_like'])){
                         $map[] = ['real_name|username|mobile', 'like', "%{$params['username_like']}%"];
