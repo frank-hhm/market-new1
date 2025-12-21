@@ -210,19 +210,25 @@ class OrderService extends BaseService
         }
 
         $queryModel = $this->dao->model->with(["person","member"])
-        ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
-                $query->when(!empty($params['agent_id']) && $params['agent_id'] !== 'all' ,function($query1) use ($params){
-                    $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
-                })->when(empty($params['agent_id']) || $params['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
-                    $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
-                })->whereIn("member_id",function ($query1) use ($params){
+            ->when(!empty($params["username_like"]),function($query) use ($params,$agentIds){
+                $query->whereIn("member_id",function ($query1) use ($params){
                     $map = [];
                     if (!empty($params['username_like'])){
                         $map[] = ['real_name|username|mobile', 'like', "%{$params['username_like']}%"];
                     }
                     return $query1->name("member")->where($map)->field('id');
                 });
-            })->when(!empty($params["person_like"]),function($query) use ($params){
+            })
+
+            ->when(!empty($params['agent_id']) && $params['agent_id'] !== 'all' ,function($query1) use ($params){
+                $query1->name("member")->where('agent_id', is_array($params['agent_id'])?'in':'=', $params['agent_id'])->field('id');
+            })->when(empty($params['agent_id']) || $params['agent_id'] === 'all' ,function($query1) use ($params,$agentIds){
+                $query1->name("member")->where('agent_id', "in",$agentIds)->field('id');
+            })
+
+
+
+            ->when(!empty($params["person_like"]),function($query) use ($params){
             $query->whereIn("person_id",function ($query1) use ($params){
                 $map = [];
                 if (!empty($params['person_like'])){
