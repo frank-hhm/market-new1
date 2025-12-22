@@ -283,6 +283,21 @@
               </div>
             </template>
           </a-table-column>
+          
+          <a-table-column
+            title="注册时间"
+            data-index="create_time"
+            :width="140"
+          >
+            <template #cell="{ record }">
+              <div class="text-grey">
+                {{ record.create_time }}
+              </div>
+            </template>
+          </a-table-column>
+          
+          
+
           <a-table-column title="操作" align="center" :width="180">
             <template #cell="{ record }">
               <a-space>
