@@ -89,7 +89,7 @@ class MarketAutoTask extends AbstractProcess
                                 $v['ktime'] = date("Y-m-d H:i:s",$ktime);
 //                                echo $v['ktime'] ."产品：".$v['id']."  价格：".$v['price']."\n";
                                 $this->cacheService->set(CacheKeyConstant::PRODUCT_PRICE.":".$v['id'],$v['price'],60);
-                                $v["volume"] = rand(100,10000) ;
+                                $v["volume"] = rand(100,1000000) ;
                                 PushMarketService::instance()->pushMarket($v['id'],$v);
                                 $this->marketService->createKData($v['price'],$v,$ktime);
 //                                $this->logService->create($v['ktime'] ."产品：".$v['id']."  价格：".$v['price'],true);
