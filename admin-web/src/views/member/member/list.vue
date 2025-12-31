@@ -336,7 +336,7 @@
                           type: 'bank',
                           id: record.id,
                         }"
-                        >编辑银行卡</a-doption
+                        >编辑绑定信息</a-doption
                       >
                     </div>
                     <div v-permission="'member-update'">

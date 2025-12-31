@@ -173,6 +173,10 @@ class Member extends Base
             ['bank_name',''],
             ['bank_real_name',''],
             ['usdt_card',''],
+            ['alipay_name',''],
+            ['alipay_card',''],
+            ['alipay_img',''],
+
         ]);
         if( $this->service->update($data['id'],$data)){
             app(MemberService::class)->deleteCacheDetail( $data['id']);

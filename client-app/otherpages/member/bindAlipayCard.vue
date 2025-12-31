@@ -9,7 +9,7 @@
 				<u-form-item label="支付宝姓名" prop="alipay_name">
 					<u-input v-model="form.alipay_name" placeholder="请输入支付宝姓名" />
 				</u-form-item>
-				<u-form-item label="支付宝姓名" prop="alipay_img">
+				<u-form-item label="支付宝收款码" prop="alipay_img">
 					<u-upload ref="uUpload" :action="fileUploadAction" width="160" name="image" height="160"
 						:file-list="fileList" max-count="1" :show-progress="false" :multiple="false"
 						@on-change="onUploadChange" :before-upload="onBeforeUpload" :custom-btn="member && form.alipay_img ? true:false">

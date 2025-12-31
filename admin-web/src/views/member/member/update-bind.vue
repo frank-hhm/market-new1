@@ -3,7 +3,7 @@
     :title="'编辑绑定信息'"
     @BeforeOk="onCreateOk"
     @BeforeCancel="close"
-    width="700px"
+    width="800px"
     :top="useSetting().ModalTop"
     class="modal"
     v-model:visible="visible"
@@ -74,6 +74,42 @@
               ></a-input>
             </a-form-item>
           </a-col>
+
+          <a-col :md="24" :xs="24">
+            <a-row :gutter="20">
+          <a-col :md="12" :xs="24">
+            <a-form-item
+              :label-col-flex="labelColFlex"
+              label="支付宝账号"
+              field="alipay_card"
+            >
+              <a-input
+                v-model="createForm.alipay_card"
+                placeholder="请输入支付宝账号"
+              ></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" :xs="24">
+            <a-form-item
+              :label-col-flex="labelColFlex"
+              label="支付宝姓名"
+              field="alipay_name"
+            >
+              <a-input
+                v-model="createForm.alipay_name"
+                placeholder="请输入支付宝姓名"
+              ></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="24" :xs="24">
+            <a-form-item :label-col-flex="labelColFlex" label="支付宝收款码" field="alipay_img">
+              <upload-btn v-model="createForm.alipay_img" count="1" width="60px" height="60px"></upload-btn>
+            </a-form-item>
+          </a-col>
+
+
+            </a-row>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -108,7 +144,7 @@ import {
   updateBindMemberApi,
 } from "@/api/member/member";
 
-const labelColFlex = ref<string>("60px");
+const labelColFlex = ref<string>("100px");
 
 const {
   proxy,
@@ -139,6 +175,9 @@ const toInit = () => {
       createForm.value.bank_name = res.data.bank_name;
       createForm.value.bank_real_name = res.data.bank_real_name;
       createForm.value.usdt_card = res.data.usdt_card;
+      createForm.value.alipay_name = res.data.alipay_name;
+      createForm.value.alipay_card = res.data.alipay_card;
+      createForm.value.alipay_img = res.data.alipay_img;
       
       initLoading.value = false;
     })
@@ -157,7 +196,10 @@ const createForm = ref<any>({
   bank_code: "",
   bank_name: "",
   bank_real_name: "",
-  usdt_card:""
+  usdt_card:"",
+  alipay_name:"",
+  alipay_card:"",
+  alipay_img:""
 });
 
 const createRules: any = reactive({});
