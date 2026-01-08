@@ -17,6 +17,7 @@ use app\common\services\finance\MemberFeeCashWaterService;
 use app\common\services\finance\MemberRechargeService;
 use app\common\services\finance\MemberWithdrawalService;
 use app\common\services\finance\WaterService;
+use app\common\services\follow\PersonService;
 use app\common\services\order\OrderLogService;
 use app\common\services\order\OrderPingCangLogService;
 use app\common\services\order\OrderService;
@@ -34,7 +35,18 @@ class DeleteCommand extends Command
 
     protected function execute(Input $input, Output $output)
     {
-//        $memberServer = app(MemberService::class);
+        $OrderService = app(\app\common\services\follow\OrderService::class);
+        $memberServer = app(MemberService::class);
+        $orderSelect = $OrderService->dao->model->select()->toArray();
+        $res = [];
+        foreach ($orderSelect as $item){
+             $detail = $memberServer->dao->model->where("id", $item["member_id"])->find();
+            if(!empty($detail) && $detail["moni"] == 1){
+//                $OrderService->dao->model->where("member_id", $item["member_id"])->delete();
+                $res[] = $item["member_id"];
+            }
+        }
+        dump($res);die;
 //        $memberIds = $memberServer->dao->model->column('id');
 //        $memberIds = [109,148,110];
 
