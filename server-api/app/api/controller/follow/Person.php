@@ -107,7 +107,7 @@ class Person extends \app\api\controller\Base
         if(empty($params["id"])){
             $this->error('选择交易员错误！');
         }
-        if($this->member['moni'] == 0){
+        if($this->member['moni'] == 1){
             $this->error('模拟账户不支持跟单！');
         }
         $cacheService = app(CacheService::class);
