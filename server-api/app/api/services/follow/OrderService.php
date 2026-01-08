@@ -101,6 +101,11 @@ class OrderService extends CommonOrderService
 //            $this->error = "跟单失败，已存在跟单!";
 //            return false;
 
+            if($money < 1000 ){
+                $this->error = '投入跟单最低1000u起跟！';
+                Db::rollback();
+                return false;
+            }
             $res[] =  $ids = $this->dao->model->where([
                 [
                     "member_id","=",$memberId
