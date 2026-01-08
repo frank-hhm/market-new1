@@ -5,8 +5,10 @@
 declare(strict_types=1);
 namespace app\api\controller\follow;
 use app\api\services\follow\OrderService;
+use app\common\constants\CacheKeyConstant;
 use app\common\enum\finance\WithdrawalTypeEnum;
 use app\common\helper\StringHelper;
+use app\common\services\common\CacheService;
 use app\common\services\member\MemberSubscribeService;
 use app\common\services\order\MemberOrderService;
 use think\facade\App;
@@ -105,10 +107,22 @@ class Person extends \app\api\controller\Base
         if(empty($params["id"])){
             $this->error('选择交易员错误！');
         }
+        if($this->member['moni'] == 0){
+            $this->error('模拟账户不支持跟单！');
+        }
+        $cacheService = app(CacheService::class);
+        if($cacheService->has(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid)){
+            $this->error("请勿重复操作");
+        }
+        $cacheService->set(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid,1,1);
+
 
         $balance = $this->member['balance'];
         $MemberTrade = app(MemberOrderService::class)->getMemberTradeInfo($this->uid);
         if($params['money'] > $balance - $MemberTrade['baozhengjin_sum']){
+            $this->error('可用余额不足！');
+        }
+        if(($balance - $MemberTrade['baozhengjin_sum'] - $params['money']) < 0){
             $this->error('可用余额不足！');
         }
         $service = app(OrderService::class);
