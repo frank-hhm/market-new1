@@ -160,6 +160,16 @@
             </template>
           </a-table-column>
           <a-table-column
+            title="跟单资产"
+            data-index="follow_balance"
+            :width="120"
+          >
+            <template #cell="{ record }">
+              <div>{{ record.follow_balance || 0 }}</div>
+            </template>
+          </a-table-column>
+          
+          <a-table-column
             title="盈亏"
             data-index="yingkui_total"
             :width="180"
