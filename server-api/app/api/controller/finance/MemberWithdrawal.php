@@ -89,6 +89,9 @@ class MemberWithdrawal extends \app\api\controller\Base
         if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_bank' && empty($this->member['bank_code'])){
             $this->error('请先绑定银行卡！');
         }
+        if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_bank' && $data['money'] < 350){
+            $this->error('银行卡最低提350u以上，小额请提支付宝！');
+        }
         if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_usdt' && empty($this->member['usdt_card'])){
             $this->error('请先绑定usdt地址！');
         }

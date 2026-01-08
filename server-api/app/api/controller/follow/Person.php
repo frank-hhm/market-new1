@@ -110,6 +110,9 @@ class Person extends \app\api\controller\Base
         if($this->member['moni'] == 1){
             $this->error('模拟账户不支持跟单！');
         }
+        if($params["money"] < 1000 ){
+            $this->error('投入跟单最低1000u起跟！');
+        }
         $cacheService = app(CacheService::class);
         if($cacheService->has(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid)){
             $this->error("请勿重复操作");
