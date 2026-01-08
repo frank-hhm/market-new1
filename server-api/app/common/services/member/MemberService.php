@@ -166,11 +166,14 @@ class MemberService extends BaseService
             ->with(['agent'])
             ->where($filter)->order($sorter)->page($page)->paginate($limit)->toArray();
         $memberOrderService = app(MemberOrderService::class);
+        $FollowOrderService = app(FollowOrderService::class);
         foreach ($list['data'] as &$item){
              $memberTrade = $memberOrderService->getMemberTradeInfo($item['id']);
              !empty($memberTrade['yingkui_sum']) && $item["yingkui"] = $memberTrade['yingkui_sum'];
              !empty($memberTrade["jingzhi"]) &&  $item["jingzhi"] = $memberTrade['jingzhi'];
             !empty($memberTrade["money_keyong"]) &&  $item["money_keyong"] = $memberTrade['money_keyong'];
+            $followBalance = sprintf("%.2f", $FollowOrderService->getMemberFollowOrderBalance($item["id"]) ?? 0);
+            $item["follow_balance"] = $followBalance;
         }
         return $list;
     }
