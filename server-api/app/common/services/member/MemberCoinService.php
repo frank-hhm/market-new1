@@ -15,6 +15,7 @@ use app\common\services\finance\WaterService;
 use app\common\services\order\MemberOrderService;
 use think\facade\Db;
 
+use app\api\services\follow\OrderService as FollowOrderService;
 /**
  * 用户钱包
  * Class MemberCoinService
@@ -60,14 +61,16 @@ class MemberCoinService extends BaseService
             ['agent_id','in',$agentIds],
             ['username|mobile|nickname','like','%'.$param['username_like'].'%']
         ])->where($filter)->order($sorter)->page($page)->paginate($limit)->toArray();
-
+        $FollowOrderService = app(FollowOrderService::class);
 //        $memberOrderService = app(MemberOrderService::class);
-//        foreach ($list['data'] as &$item){
+        foreach ($list['data'] as &$item){
 //            $memberTrade = $memberOrderService->getMemberTradeInfo($item['member_id']);
 //            $item["yingkui"] = $memberTrade['yingkui_sum'] ?? 0;
 //            $item["jingzhi"] = $memberTrade['jingzhi'] ?? 0;
 //            $item["keyong"] = $memberTrade['money_keyong'] ?? 0;
-//        }
+            $followBalance = sprintf("%.2f", $FollowOrderService->getMemberFollowOrderBalance($item["member_id"]));
+            $item["follow_balance"] = $followBalance;
+        }
         return $list;
     }
 

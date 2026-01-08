@@ -5,7 +5,7 @@
 declare(strict_types=1);
 namespace app\common\services\member;
 
-use app\common\services\follow\OrderService as FollowOrderService;
+use app\api\services\follow\OrderService as FollowOrderService;
 use app\api\services\OrderService;
 use app\common\constants\CacheKeyConstant;
 use app\common\dao\member\MemberDao;
@@ -166,10 +166,7 @@ class MemberService extends BaseService
             ->with(['agent'])
             ->where($filter)->order($sorter)->page($page)->paginate($limit)->toArray();
         $memberOrderService = app(MemberOrderService::class);
-        $FollowOrderService = app(FollowOrderService::class);
         foreach ($list['data'] as &$item){
-            $followBalance = sprintf("%.2f", $FollowOrderService->getMemberFollowOrderBalance($item["id"]));
-            $item["follow_balance"] = $followBalance;
              $memberTrade = $memberOrderService->getMemberTradeInfo($item['id']);
              !empty($memberTrade['yingkui_sum']) && $item["yingkui"] = $memberTrade['yingkui_sum'];
              !empty($memberTrade["jingzhi"]) &&  $item["jingzhi"] = $memberTrade['jingzhi'];
