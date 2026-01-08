@@ -82,19 +82,19 @@ class CheckOrderBondTask extends AbstractProcess
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达到买跌止盈",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::SURPLUS;
-                    $sellPrice = $item['surplus'];
+//                    $sellPrice = $item['surplus'];
                     //买跌 止损线
                 }else if (  $item['ostyle']['value'] == 1 && (!empty($item['loss']) && $productNowPrice >= $item['buyprice'] && $productNowPrice >= $item['loss']) ) {
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达止买跌损线",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::LOSS;
-                    $sellPrice = $item['loss'];
+//                    $sellPrice = $item['loss'];
                     //买涨 止盈
                 } else if ( $item['ostyle']['value'] == 2 && (!empty($item['surplus']) && $productNowPrice >= $item['buyprice'] && $productNowPrice >= $item['surplus']) ) {
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达到买涨止盈",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::SURPLUS;
-                    $sellPrice = $item['surplus'];
+//                    $sellPrice = $item['surplus'];
                     //买涨 止损线
                 } elseif (
                     $item['ostyle']['value'] == 2
@@ -103,7 +103,7 @@ class CheckOrderBondTask extends AbstractProcess
                     $this->logService->create("【强平】用户：{$item['member_id']}，到达止买涨损线",true);
                     $isBongPing = true;
                     $sellType = SellTypeEnum::LOSS;
-                    $sellPrice = $item['loss'];
+//                    $sellPrice = $item['loss'];
                 }
 
 
@@ -112,11 +112,11 @@ class CheckOrderBondTask extends AbstractProcess
                     if($item['mark_price'] >= $item['trigger_price'] && $productNowPrice > $item['mark_price'] ){
                         $isBongPing = true;
                         $sellType = SellTypeEnum::MARK;
-                        $sellPrice = $item['mark_price'];
+//                        $sellPrice = $item['mark_price'];
                     }elseif ($item['mark_price'] <=  $item['trigger_price'] && $item['mark_price'] > $productNowPrice){
                         $isBongPing = true;
                         $sellType = SellTypeEnum::MARK;
-                        $sellPrice = $item['mark_price'];
+//                        $sellPrice = $item['mark_price'];
                     }
                 }
 
