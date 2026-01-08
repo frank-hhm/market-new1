@@ -42,7 +42,7 @@ class DeleteCommand extends Command
         foreach ($orderSelect as $item){
              $detail = $memberServer->dao->model->where("id", $item["member_id"])->find();
             if(!empty($detail) && $detail["moni"] == 1){
-//                $OrderService->dao->model->where("member_id", $item["member_id"])->delete();
+                $OrderService->dao->model->where("member_id", $item["member_id"])->delete();
                 $res[] = $item["member_id"];
             }
         }
