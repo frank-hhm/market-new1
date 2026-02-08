@@ -66,7 +66,7 @@ class MemberService extends BaseService
 
     public function getDetail($filter,$exception = true)
     {
-        $detail = $this->dao->detail($filter,['coin']);
+        $detail = $this->dao->detail($filter,['coin','peopleDetail']);
         if (!$detail ) {
             if(!$exception){
                 return [];
@@ -163,7 +163,7 @@ class MemberService extends BaseService
         $list = $this->dao->model
             ->join($coinTable,"$thisTableName.id=$coinTable.member_id")
             ->field($thisTableName.".*,$coinTable.balance,$coinTable.member_id,$coinTable.yingkui_total,$coinTable.commission_balance,$coinTable.commission_total")
-            ->with(['agent'])
+            ->with(['agent','peopleDetail'])
             ->where($filter)->order($sorter)->page($page)->paginate($limit)->toArray();
         $memberOrderService = app(MemberOrderService::class);
         foreach ($list['data'] as &$item){
