@@ -123,7 +123,14 @@
             </template>
           </a-table-column>
 
-          <a-table-column title="账号" data-index="username" :width="120">
+          <a-table-column title="推荐人" data-index="peopleDetail" :width="160">
+            <template #cell="{ record }">
+              <member-column-detail v-if="record.people_id > 0 && record.peopleDetail" :member="record.peopleDetail" ></member-column-detail>
+              <span v-else class="text-grey">无</span>
+            </template>
+          </a-table-column>
+
+          <a-table-column title="账号" data-index="username" :width="160">
             <template #cell="{ record }">
               <member-column-detail :member="record" isId></member-column-detail>
             </template>
