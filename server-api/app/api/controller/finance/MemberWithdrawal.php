@@ -43,6 +43,11 @@ class MemberWithdrawal extends \app\api\controller\Base
             ['type','balance']
         ]);
 
+        $targetDate = strtotime('2026-02-25');
+        $now = time();
+        if ($targetDate >= $now) {
+           $this->error('2月10至2月24号为春节假期，春节假期将暂停出金，2月25号恢复正常出金！');
+        }
         if($data['type'] === WithdrawalTypeEnum::BALANCE && !$this->service->checkWorkTime()){
             $this->error('不好意思，提现时间周一到周五 早上9点到17点！');
         }
