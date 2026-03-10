@@ -110,20 +110,27 @@ class Person extends \app\api\controller\Base
         if($this->member['moni'] == 1){
             $this->error('模拟账户不支持跟单！');
         }
+
         $cacheService = app(CacheService::class);
         if($cacheService->has(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid)){
-            $this->error("请勿重复操作");
+            $this->error("请勿重复操作!请隔一分钟后再试");
         }
-        $cacheService->set(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid,1,1);
+        $cacheService->set(CacheKeyConstant::API_SUBMIT_LOCK.':createPersonOrder:'.$this->uid,1,60);
 
 
         $balance = $this->member['balance'];
         $MemberTrade = app(MemberOrderService::class)->getMemberTradeInfo($this->uid);
         if($params['money'] > $balance - $MemberTrade['baozhengjin_sum']){
             $this->error('可用余额不足！');
+            return false;
         }
         if(($balance - $MemberTrade['baozhengjin_sum'] - $params['money']) < 0){
             $this->error('可用余额不足！');
+            return false;
+        }
+        if ($MemberTrade['money_keyong'] < $params['money']){
+            $this->error('您得余额不足，请充值！');
+            return false;
         }
         $service = app(OrderService::class);
         if( $service->createOrder($this->uid,$params)){
