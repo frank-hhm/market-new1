@@ -63,7 +63,7 @@ class OrderService extends BaseService
             ['username|mobile','like','%'.$param['username_like'].'%'],
             ['moni','=',$isMoni]
         ]) ->where('id', 'IN', function ($query) use ($agentIds) {
-            $query->table('m_order')->whereIn('agent_id',$agentIds)->where('agent_id','<>',2)->field('id');
+            $query->table('m_order')->whereIn('agent_id',$agentIds)->field('id');
         })->where($filter)->where([
             ['ostaus','<>',0],
             ['ostaus','<>',2],

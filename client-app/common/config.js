@@ -11,21 +11,21 @@
 //当前环境测试uat
 export const getHost= () => {
 	if(process.env.NODE_ENV === 'development'){
-		return  'www.butchery.cc';
+		return  'market.dev-frank.cn';
 	}
 	return window.location.hostname;
 }
 export const BASE_URL= () => {
 	let t = window.location.protocol?window.location.protocol:"http:";
 	if(process.env.NODE_ENV === 'development'){
-		t = "https:"
+		t = "http:"
 	}
 	return t + "//" +getHost();
 }
 export const WS_URL=() => {
 	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +'/ws'));
 }
-export const updateUrl='https://api.butchery.cc/api/common.publics/appUpgrade'
+export const updateUrl='https://api.liangdian1.cc/api/common.publics/appUpgrade'
 
 // //当前环境pro
 // export const BASE_URL='http://www.hclnx.com/'

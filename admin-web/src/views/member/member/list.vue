@@ -348,6 +348,15 @@
                         >配置滑点</a-doption
                       >
                     </div>
+                    <div v-permission="'member-update'">
+                      <a-doption
+                        :value="{
+                          type: 'risk',
+                          id: record.id,
+                        }"
+                        >配置风控滑点</a-doption
+                      >
+                    </div>
                     <div v-permission="'member-delete'">
                       <a-doption
                         :value="{
@@ -371,6 +380,10 @@
         ref="slippageComponentRef"
         @success="toInit()"
       ></slippageComponent>
+      <riskComponent
+        ref="riskComponentRef"
+        @success="toInit()"
+      ></riskComponent>
       <updateBindComponent
         ref="updateBindComponentRef"
         @success="toInit()"
@@ -398,6 +411,7 @@ import slippageComponent from "./slippage.vue";
 import { Modal } from "@arco-design/web-vue";
 import updateBindComponent from "./update-bind.vue";
 import agentUpdateComponent from "./update-agent.vue";
+import riskComponent from "./risk.vue";
 
 const { adminInfo } = storeToRefs(useAdminStore());
 
@@ -416,6 +430,13 @@ const slippageComponentRef = ref<HTMLElement>();
 const onSetSlippage = (id: number | string) => {
   proxy?.$refs["slippageComponentRef"].open(id);
 };
+
+
+const riskComponentRef = ref<HTMLElement>();
+const onSetRisk = (id: number | string) => {
+  proxy?.$refs["riskComponentRef"].open(id);
+};
+
 
 const labelColFlex = ref<string>("50px");
 
@@ -546,6 +567,9 @@ const onHandleSelect = (res: any) => {
         break;
       case "slippage":
         onSetSlippage(res.id);
+        break;
+      case "risk":
+        onSetRisk(res.id);
         break;
       case "bank":
         onBindUpdate(res.id);

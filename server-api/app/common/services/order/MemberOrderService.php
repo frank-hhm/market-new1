@@ -769,6 +769,52 @@ class MemberOrderService extends BaseService
             ]) && !empty($other["now_sell_price"])){
             $productNowPrice = $other["now_sell_price"];
         }
+
+        $productRiskCacheKey  ="memberOrderRisk:".$memberId.":".$orderDetail["pid"];
+        $riskCacheData = [];
+        $productRiskCacheTime = 0;
+        $riskCacheStatus = false;
+        //风控滑点
+        if(!$memberDetail['moni'] && !empty($memberDetail['risk']) ){
+            $memberRisk = json_decode($memberDetail['risk'],true);
+            if (isset($memberRisk[$orderDetail['pid']])  && !empty($memberRisk[$orderDetail['pid']]) ){
+                $productRisk = $memberRisk[$orderDetail['pid']];
+                if ($productRisk["status"] == 1  && $productRisk["trigger_time"] > 0){
+                    $productPrice = $productRisk["price"];
+                    $productRiskCache = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER)->get($productRiskCacheKey);
+                    if((time() - $createTime) <= $productRisk['trigger_time'] && $productRisk["price"]){
+                        //缓存风控滑点
+                        if (empty($productRiskCache) ||
+                            (time() - $productRiskCache["create_time"] > $productRisk["monitor_time"] * 60 * 60)
+                            ){
+                            $productRiskCacheTime = (int)($productRisk["monitor_time"] * 60 * 60);
+                            $riskCacheData = [
+                                "count" => 1,
+                                "create_time" => time(),
+                                "price"=>$productPrice,
+                                "cache_time"=>$productRiskCacheTime
+                            ];
+                        }else{
+                            $riskCacheData = $productRiskCache;
+                            $riskCacheData["count"]++;
+                            $productPrice = $riskCacheData["count"] * $productPrice;
+                            $productRiskCacheTime = (int)($productRisk["monitor_time"] * 60 * 60 - (time() - $riskCacheData["create_time"]));
+                            $riskCacheData["cache_time"] = $productRiskCacheTime;
+                        }
+                        $riskCacheData["risk_price"] = $productPrice;
+                        //执行风控滑点
+                        $productNowPrice = ProductHelper::setMemberProHuaDian( $orderDetail['ostyle']['value'],$productNowPrice,$productPrice,2);
+                        $other['other_data']["risk"] = $riskCacheData;
+                        $riskCacheStatus = true;
+                    }
+                    //dump($productRisk,$productNowPrice,$productPrice,$riskCacheData);die;
+                }
+            }
+        }
+
+
+
+
         //默认买涨
         $yingkui = 0;
         //平仓盈亏
@@ -863,6 +909,10 @@ class MemberOrderService extends BaseService
                 $log['order_data'] = $orderDetail;
                 Queue::push("app\common\jobs\CreateOrderPingCangLogJob", $log, 'OrderPingCangLogJob');
                 Db::commit();
+
+
+                $riskCacheStatus && app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER)->set($productRiskCacheKey,$riskCacheData,(int)($productRiskCacheTime + 2));
+
                 app(MemberService::class)->deleteCacheDetail($orderDetail['member_id']);
 //            app(PushWebSockQueueService::class)->createMemberMessage(['type'=>'pingCang','member_id'=>$memberId]);
                 return [
