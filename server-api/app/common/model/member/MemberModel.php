@@ -49,6 +49,13 @@ class MemberModel extends BaseModel
     public function agent(){
         return $this->hasOne(AgentModel::class,'id','agent_id');
     }
+
+
+    public function peopleDetail(){
+        return $this->hasOne(MemberModel::class,'id','people_id');
+    }
+
+
     public function coin(){
         return $this->hasOne(MemberCoinModel::class,'member_id','id')->bind([
             'balance'=>'balance',

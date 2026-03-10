@@ -1,0 +1,1 @@
+import{a_ as e}from"./index.5083832c.js";const o=()=>e({url:"productSector/select",method:"GET"}),c=t=>e({url:"productSector/create",method:"POST",data:t}),u=t=>e({url:"productSector/update",method:"POST",data:t}),d=t=>e({url:"productSector/delete",method:"DELETE",params:t});export{c,d,o as g,u};
