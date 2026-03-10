@@ -31,7 +31,7 @@ class UpdateMember20260308 extends Migrator
 
         $table = $this->table('member');
         $table
-            ->addColumn(Column::text('risk')->setDefault('')->setComment('风控配置'))
+            ->addColumn(Column::text('risk')->setComment('风控配置'))
             ->update();
     }
 }
