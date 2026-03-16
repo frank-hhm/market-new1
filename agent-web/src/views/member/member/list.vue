@@ -237,8 +237,24 @@
               </div>
             </template>
           </a-table-column>
+          <a-table-column title="操作" align="center" :width="180">
+            <template #cell="{ record }">
+              <a-space>
+                <a-button
+                  @click="onRisk(record.id)"
+                  v-permission="'member-update'"
+                  size="small"
+                  >配置风控滑点</a-button
+                >
+              </a-space>
+            </template>
+          </a-table-column>
         </template>
       </a-table>
+      <riskComponent
+        ref="riskComponentRef"
+        @success="toInit()"
+      ></riskComponent>
     </template>
     <template #footer>
       <page :listPage="listPage" @change="pageChange"></page>
@@ -255,6 +271,7 @@ import {
 import { storeToRefs } from "pinia";
 import slippageComponent from "./slippage.vue";
 import { Modal } from "@arco-design/web-vue";
+import riskComponent from "./risk.vue";
 
 
 const {
@@ -339,5 +356,11 @@ const pageChange = (res: PageLimitType) => {
 onMounted(() => {
   toInit();
 });
+
+  
+const riskComponentRef = ref<HTMLElement>();
+const onRisk = (id: number | string) => {
+  proxy?.$refs["riskComponentRef"].open(id);
+};
 
 </script>

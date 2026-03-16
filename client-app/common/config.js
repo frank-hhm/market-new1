@@ -11,14 +11,14 @@
 //当前环境测试uat
 export const getHost= () => {
 	if(process.env.NODE_ENV === 'development'){
-		return  'market.dev-frank.cn';
+		return  'www.liangdian1.cc';
 	}
 	return window.location.hostname;
 }
 export const BASE_URL= () => {
 	let t = window.location.protocol?window.location.protocol:"http:";
 	if(process.env.NODE_ENV === 'development'){
-		t = "http:"
+		t = "https:"
 	}
 	return t + "//" +getHost();
 }

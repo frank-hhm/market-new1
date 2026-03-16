@@ -229,12 +229,12 @@
 					专属务服
 				</view>
 				<view class="kefu-popup-wrapper-desc">
-					您可将专属客服海鸥号/QQ号复制后并添加好友尊享专属客服1对1的优质服务。
+					您可将专属客服YM号/QQ号复制后并添加好友尊享专属客服1对1的优质服务。
 				</view>
 				<view class="kefu-list">
 					<view class="kefu-item">
 						<view class="kefu-icon kefu-wechat"></view>
-						<view class="kefu-name">海鸥号：{{member.kefu_wechat ||""}}</view>
+						<view class="kefu-name">YM号：{{member.kefu_wechat ||""}}</view>
 						<view class="kefu-copy-icon" @tap="copy(member.kefu_wechat || '')"></view>
 					</view>
 					<view class="kefu-item">
@@ -951,7 +951,7 @@
 			width: 60rpx;
 			height: 60rpx;
 			background-size: 100% 100%;
-			background-image: url("~@/static/images-new1/common/kefu-1.jpg");
+			background-image: url("~@/static/images-new1/common/kefu-ym.jpg");
 			border-radius: 10rpx;
 		}
 
