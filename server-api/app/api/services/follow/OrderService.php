@@ -155,63 +155,6 @@ class OrderService extends CommonOrderService
     }
 
 
-    public function onEndStatus($id = 0,$personId = 0, $memberId = 0){
-        $map = [];
-        if ($id !== 0) {
-            $map[] = ["id","=",$id];
-        }
-        if ($personId !== 0) {
-            $map[] = ["person_id","=",$personId];
-        }
-        if ($memberId !== 0) {
-            $map[] = ["member_id","=",$memberId];
-        }
-
-        $detail = $this->dao->model->where($map)->find();
-        if (empty($detail)){
-            $this->error = "找不到该跟单订单，请重试!";
-            return false;
-        }
-        Db::startTrans();
-
-        $detail = $detail->toArray();
-        $time = strtotime('yesterday 18:00:00');
-//        if(StringHelper::_strtotime($detail["create_time"]) > $time){
-//            $this->error = "该跟单订单昨天才转入，暂不支持转出，请明天再试试";
-//            return false;
-//        }
-        $memberCoin = app(MemberCoinService::class)->dao->model->where('member_id',$detail["member_id"])->find();
-        $member = app(MemberService::class)->dao->model->where('id',$detail["member_id"])->find();
-        $memberBalance = $memberCoin['balance'];
-        $res[] = $memberCoin->save(['balance'=>Db::raw('balance+'.($detail["money"]))]);
-        $res[] = $this->dao->model->where($map)->save( ['status' =>2,"update_time"=>time()]);
-        $res[] = app(MemberService::class)->deleteCacheDetail($detail["member_id"]);
-        $res[] = app(WaterService::class)->dao->model->insert([
-            'member_id' => $detail["member_id"],
-            'agent_id' => $member['agent_id'],
-            'money' => ($detail["money"]),
-            'remark' => '',
-            'source' => SourceEnum::FOLLOW_CLOSE,
-            'source_id' => $detail["id"],
-            'pay_type' => WithdrawalTypeEnum::BALANCE,
-            'member_balance' => $memberBalance,
-            'balance' => ($memberBalance + $detail["money"]),
-            'describe' => '跟单结束返还',
-            'type'=>1,
-            'create_time' => time(),
-            'update_time' => time(),
-        ]);
-        if (!empty($res) && ArrayHelper::checkArr($res)) {
-            Db::commit();
-            app(PushWebSockQueueService::class)->createMemberMessage(['type'=>'closeFollowOrder','member_id'=>$detail["member_id"]]);
-            return true;
-        } else {
-            Db::rollback();
-            $this->error = "结束跟单失败，请重试!";
-            return false;
-        }
-       return false;
-    }
 
     public function getMemberOrderListApi($memberId = 0 ,$params = []){
         [$page, $limit] = $this->dao->getPageValue();
