@@ -140,17 +140,19 @@ class WaterService extends BaseService
         }
         $list = $this->dao->model->where($filter)
             ->where("source",'in',$source)
-            ->when(in_array(SourceEnum::MEMBER_COMMISSION_WITHDRAWAL,$source),function ($query) use ($source){
-                $query->whereOr([
-                    [
-                        ["source","=",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
-                        ["pay_type","=",RechargePayTypeEnum::COMMISSION_BALANCE],
+            ->where(function ($querys) use ($source){
+                $querys->when(in_array(SourceEnum::MEMBER_COMMISSION_WITHDRAWAL,$source),function ($query) use ($source){
+                    $query->whereOr([
+                        [
+                            ["source","=",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
+                            ["pay_type","=",RechargePayTypeEnum::COMMISSION_BALANCE],
 
-                    ],
-                    [
-                        ["source","<>",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
-                    ]
-                ]);
+                        ],
+                        [
+                            ["source","<>",SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],
+                        ]
+                    ]);
+                });
             })
             ->order(['create_time DESC'])
             ->page($page)->paginate($limit)->toArray();
