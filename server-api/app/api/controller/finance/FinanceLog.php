@@ -55,7 +55,7 @@ class FinanceLog extends \app\api\controller\Base
             "start_date",
             "end_date"
         ]);
-//        $data['member_id'] = $this->uid;
+        $data['member_id'] = $this->uid;
         $this->success("获取成功",$this->service->getListApi($data,[SourceEnum::COMMISSION_FEE,SourceEnum::MEMBER_COMMISSION_WITHDRAWAL],[
             RechargePayTypeEnum::COMMISSION_BALANCE
         ]));
