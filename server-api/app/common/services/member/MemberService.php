@@ -347,7 +347,7 @@ class MemberService extends BaseService
             $item["commission_balance"]= $waterService->dao->model->where("member_id",$uid)->where([
                 "other_id"=>$item["id"]
             ])->where([
-                'source' => SourceEnum::COMMISSION_FEE
+                'source' => SourceEnum::SETTLEMENT
             ])->sum("money");
         }
         return $list;
