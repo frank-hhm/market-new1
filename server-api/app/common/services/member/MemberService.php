@@ -330,10 +330,11 @@ class MemberService extends BaseService
         $orderService = app(OrderService::class);
         foreach ($list["data"] as &$item){
             //今日合约
-            $item["today_follow_order_total"] = $orderService->dao->model->where("member_id",$item["id"])->whereDay('create_time')->sum("fee");
+            $item["today_order_total"] = $orderService->dao->model->where("member_id",$item["id"])->whereDay('create_time')->sum("fee");
             //
-            $item["follow_balance"] = sprintf("%.2f", $followOrderService->dao->model->where([
+            $item["today_follow_order_total"] = sprintf("%.2f", $followOrderService->dao->model->where([
                 ["member_id","=",$item["id"]]
+
             ])->whereDay('create_time')->sum("money"));
             //跟单佣金
             $item["follow_commission_total"] = $waterService->dao->model->where("member_id",$uid)->where([
