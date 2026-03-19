@@ -30,13 +30,13 @@ class TestCommand extends Command
 
         echo "开始处理\n";
         $walletSelect = Db::name("finance_water")->where("source","in",[
-            "follow_revenue_commission","follow_revenue_commission2"
+            "commission_fee"
         ])->select()->toArray();
         foreach ($walletSelect as $item){
-            $followOrderMember = Db::name("follow_order")->where("id",$item['source_id'])->find();
+            $followOrderMember = Db::name("member_commission_water")->where("order_id",$item['source_id'])->find();
             if(!empty($followOrderMember)){
                 Db::name("finance_water")->where("id",$item['id'])->update([
-                    "other_id"=>$followOrderMember['member_id']
+                    "other_id"=>$followOrderMember['people_id']
                 ]);
             }
             echo "处理数据完成【".$item['id']."】\n";
