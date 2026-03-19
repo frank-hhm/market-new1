@@ -56,7 +56,8 @@ class MemberCommissionWaterService extends BaseService
                         'member_balance' => $memberBalance,
                         'balance' => $memberBalance + $water['money'],
                         'describe' => '佣金结算',
-                        'type'=>1
+                        'type'=>1,
+                        'other_id' => $water['people_id'] ?? 0,
                     ]);
 
                     $res[] = $this->dao->model->where('id',$water['id'])->update([

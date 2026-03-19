@@ -343,6 +343,12 @@ class MemberService extends BaseService
                 'source' => SourceEnum::FOLLOW_REVENUE_COMMISSION
             ])->sum("money");
             //合约佣金
+
+            $item["commission_balance"]= $waterService->dao->model->where("member_id",$uid)->where([
+                "other_id"=>$item["id"]
+            ])->where([
+                'source' => SourceEnum::COMMISSION_FEE
+            ])->sum("money");
         }
         return $list;
     }
