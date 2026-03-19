@@ -62,7 +62,7 @@
 					</view>
 					<view class="team-bottom-item">
 						<view class="title">合约佣金</view>
-						<view class="count">{{item.commission_balance || 0}}</view>
+						<view class="count">{{item.team_commission_total || 0}}</view>
 					</view>
 				</view>
 			</view>
