@@ -2,9 +2,14 @@
 	<view class="water-histroy">
 		<view class="water-type">
 			<view class="water-type-item">
-				<view class="title">合约佣金</view>
+				<view class="title">合约</view>
 				<view class="count">{{commission || 0.00}}</view>
 			</view>
+			<view class="water-type-item">
+				<view class="title">跟单</view>
+				<view class="count">{{follow_revenue_commission || 0.00}}</view>
+			</view>
+			
 			<view class="water-type-item item2">
 				<view class="title">取款</view>
 				<view class="count">{{withdrawal || 0.00}}</view>
@@ -55,7 +60,8 @@
 				isFinish: false,
 				isLoading: false,
 				commission: 0.00,
-				withdrawal: 0.00
+				withdrawal: 0.00,
+				follow_revenue_commission:0.00
 			};
 		},
 		methods: {
@@ -87,6 +93,7 @@
 						}
 						t.commission = res.data.commission_fee || 0.00
 						t.withdrawal = res.data.member_commission_withdrawal || 0.00
+						t.follow_revenue_commission= res.data.follow_revenue_commission || 0.00
 						t.isLoading = false;
 						if (res.data.data.length < t.pageSize) {
 							t.isFinish = true
@@ -198,7 +205,7 @@
 		.water-type-item {
 			border-radius: 20rpx;
 			background: #F5F5F5;
-			width: calc(50% - 20rpx);
+			width: calc(33.33% - 20rpx);
 			text-align: center;
 			padding: 20rpx 0;
 			color: #000000;
