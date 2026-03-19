@@ -28,6 +28,22 @@ class TestCommand extends Command
     protected function execute(Input $input, Output $output)
     {
 
+        echo "开始处理\n";
+        $walletSelect = Db::name("finance_water")->where("source","in",[
+            "follow_revenue_commission","follow_revenue_commission2"
+        ])->select()->toArray();
+        foreach ($walletSelect as $item){
+            $followOrderMember = Db::name("follow_order")->where("id",$item['source_id'])->find();
+            if(!empty($followOrderMember)){
+                Db::name("finance_water")->where("id",$item['id'])->update([
+                    "other_id"=>$followOrderMember['member_id']
+                ]);
+            }
+            echo "处理数据完成【".$item['id']."】\n";
+        }
+
+        die;
+
         $table = TableManager::getInstance()->get(StringConstant::MARKET_WEBSOCKET_CLIENTS);
         if ($table) {
             echo "当前在线人数：" . $table->count() . "\n";
