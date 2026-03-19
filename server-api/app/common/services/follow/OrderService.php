@@ -154,6 +154,7 @@ class OrderService extends BaseService
                             'type'=>1,
                             'create_time' => time(),
                             'update_time' => time(),
+                            "other_id"=>$memberId
                         ]);
                 }
                 $peopleId2 = $peopleMember['people_id'] ?? 0;
@@ -182,6 +183,7 @@ class OrderService extends BaseService
                         'type'=>1,
                         'create_time' => time(),
                         'update_time' => time(),
+                        "other_id"=>$memberId
                     ]);
                 }
             }
