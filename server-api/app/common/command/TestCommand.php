@@ -30,7 +30,7 @@ class TestCommand extends Command
 
         echo "开始处理\n";
         $walletSelect = Db::name("finance_water")->where("source","in",[
-            "commission_fee"
+            "settlement"
         ])->select()->toArray();
         foreach ($walletSelect as $item){
             $followOrderMember = Db::name("member_commission_water")->where("order_id",$item['source_id'])->find();
