@@ -144,11 +144,13 @@ class SourceEnum extends BaseEnum
                 'name' => '跟单收益分佣1级',
                 'value' => self::FOLLOW_REVENUE_COMMISSION,
                 'describe' => '跟单收益分佣',
+                'name2' => '跟单收益分佣1级',
             ],
             self::FOLLOW_REVENUE_COMMISSION2 => [
                 'name' => '跟单收益分佣2级',
                 'value' => self::FOLLOW_REVENUE_COMMISSION2,
                 'describe' => '跟单收益分佣',
+                'name2' => '跟单收益分佣2级',
             ],
             self::FOLLOW_CLOSE => [
                 'name' => '跟单结束返还',
