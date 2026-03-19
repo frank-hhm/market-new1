@@ -16,6 +16,7 @@
 							{{item.type.name2 || item.type.name}}
 						</view>
 					</view>
+					<!-- <text class="time" v-if="item.source.value != 'follow' && item.source.value !='follow_close'">{{item.describe ||''}}</text> -->
 					<view class="time">{{item.create_time}}</view>
 				</view>
 				<view class="value" :class="`text-${item.type.color}`">
