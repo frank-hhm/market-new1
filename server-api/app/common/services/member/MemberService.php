@@ -336,7 +336,9 @@ class MemberService extends BaseService
                 ["member_id","=",$item["id"]]
             ])->whereDay('create_time')->sum("money"));
             //跟单佣金
-            $item["follow_commission_total"] = $waterService->dao->model->where("member_id",$item["id"])->where([
+            $item["follow_commission_total"] = $waterService->dao->model->where("member_id",$uid)->where([
+                "other_id"=>$item["id"]
+            ])->where([
                 'source' => SourceEnum::FOLLOW_REVENUE_COMMISSION
             ])->sum("money");
             //合约佣金
