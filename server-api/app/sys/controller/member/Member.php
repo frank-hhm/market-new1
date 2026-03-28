@@ -176,6 +176,8 @@ class Member extends Base
             ['alipay_name',''],
             ['alipay_card',''],
             ['alipay_img',''],
+            ['withdraw_prompt',0],
+            ['withdraw_prompt_text',''],
 
         ]);
         if( $this->service->update($data['id'],$data)){

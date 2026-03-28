@@ -43,17 +43,21 @@ class MemberWithdrawal extends \app\api\controller\Base
             ['type','balance']
         ]);
 
-        $targetDate = strtotime('2026-02-25');
-        $now = time();
-        if ($targetDate >= $now) {
-           $this->error('2月10至2月24号为春节假期，春节假期将暂停出金，2月25号恢复正常出金！');
-        }
+//        $targetDate = strtotime('2026-02-25');
+//        $now = time();
+//        if ($targetDate >= $now) {
+//           $this->error('2月10至2月24号为春节假期，春节假期将暂停出金，2月25号恢复正常出金！');
+//        }
         if($data['type'] === WithdrawalTypeEnum::BALANCE && !$this->service->checkWorkTime()){
             $this->error('不好意思，提现时间周一到周五 早上9点到17点！');
         }
 //        elseif ($data['type'] === WithdrawalTypeEnum::COMMISSION&& !$this->service->checkCommissionTime()){
 //            $this->error('不好意思，今天您不可提现。请在每月的5日、15日或25日提交！');
 //        }
+        //空了给我支付宝提现设置一下限额，支付宝提现单笔不能大于1500
+        if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_alipay' && $data['money'] > 1500){
+            $this->error('支付宝提现单笔不能大于1500！');
+        }
 
         //持仓单
         $MemberTrade = app(MemberOrderService::class)->getMemberTradeInfo($this->uid);

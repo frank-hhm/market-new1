@@ -408,7 +408,7 @@ class Member extends \app\api\controller\Base
         $member['commission_withdrawal_complete'] = app(WaterService::class)->dao->model->where('member_id',$this->uid)
             ->where('pay_type',WithdrawalTypeEnum::COMMISSION)
             ->where('source',SourceEnum::MEMBER_COMMISSION_WITHDRAWAL)
-//            ->where('status',1)
+            //->where('status',1)
             ->sum('money');
         $member['commission_withdrawal'] = app(MemberWithdrawalService::class)->dao->model->where('member_id',$this->uid)
             ->where('status',0)
