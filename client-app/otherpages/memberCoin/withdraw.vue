@@ -80,7 +80,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="common-btn submit-btn" :class="isYes?'':'disabled'" @tap="onSubmit">提交申请</view>
+		<view class="common-btn submit-btn" :class="isYes?'':'disabled'" @tap="onSubmit1">提交申请</view>
 		<view class="tip-wrapper">
 			<view class="tip-head">注意事项</view>
 			<view class="tip-item">1.非港币美元币种是商家合作取款，商家收到由本平台结算的港币美元资金，兑换相应币种转账至您的收款账户。</view>
@@ -117,6 +117,24 @@
 			...mapState("member", ["memberCoin", "member"])
 		},
 		methods: {
+			onSubmit1(){
+				let t = this
+				if(t.member && t.member.withdraw_prompt == 1 && t.member.withdraw_prompt_text){
+					uni.showModal({
+						title: '提示',
+						content: t.member.withdraw_prompt_text,
+						cancelText: '取消',
+						confirmText: '下一步',
+						success: function(res) {
+							if (res.confirm) {
+								t.onSubmit()
+							}
+						}
+					})
+					return false;
+				}
+				t.onSubmit()
+			},
 			onSubmit() {
 				let t = this;
 				if (t.submitLoading === true) {

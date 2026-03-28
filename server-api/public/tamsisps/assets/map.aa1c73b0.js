@@ -1,0 +1,1 @@
+import{aK as o,am as _,as as e,aL as t,aF as c,ar as s,bU as r}from"./index.c6b643ac.js";const p={};function m(u,f){const a=r,n=t;return c(),_(n,{height:"100%"},{default:e(()=>[s(a)]),_:1})}const l=o(p,[["render",m]]);export{l as default};

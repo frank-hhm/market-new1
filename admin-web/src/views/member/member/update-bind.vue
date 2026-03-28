@@ -1,16 +1,6 @@
 <template>
-  <a-modal
-    :title="'编辑绑定信息'"
-    @BeforeOk="onCreateOk"
-    @BeforeCancel="close"
-    width="800px"
-    :top="useSetting().ModalTop"
-    class="modal"
-    v-model:visible="visible"
-    :align-center="false"
-    title-align="start"
-    render-to-body
-  >
+  <a-modal :title="'编辑绑定信息'" @BeforeOk="onCreateOk" @BeforeCancel="close" width="800px" :top="useSetting().ModalTop"
+    class="modal" v-model:visible="visible" :align-center="false" title-align="start" render-to-body>
     <div v-loading="initLoading">
       <a-form :model="createForm" ref="createRef" :rules="createRules">
         <a-row :gutter="20">
@@ -27,86 +17,61 @@
             </a-form-item>
           </a-col> -->
           <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="开户行"
-              field="bank_name"
-            >
-              <a-input
-                v-model="createForm.bank_name"
-                placeholder="请输入"
-              ></a-input>
+            <a-form-item :label-col-flex="labelColFlex" label="开户行" field="bank_name">
+              <a-input v-model="createForm.bank_name" placeholder="请输入"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="银行卡号"
-              field="bank_code"
-            >
-              <a-input
-                v-model="createForm.bank_code"
-                placeholder="请输入"
-              ></a-input>
+            <a-form-item :label-col-flex="labelColFlex" label="银行卡号" field="bank_code">
+              <a-input v-model="createForm.bank_code" placeholder="请输入"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="持卡人"
-              field="bank_real_name"
-            >
-              <a-input
-                v-model="createForm.bank_real_name"
-                placeholder="请输入"
-              ></a-input>
+            <a-form-item :label-col-flex="labelColFlex" label="持卡人" field="bank_real_name">
+              <a-input v-model="createForm.bank_real_name" placeholder="请输入"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="USDT地址"
-              field="usdt_card"
-            >
-              <a-input
-                v-model="createForm.usdt_card"
-                placeholder="请输入USDT地址"
-              ></a-input>
+            <a-form-item :label-col-flex="labelColFlex" label="USDT地址" field="usdt_card">
+              <a-input v-model="createForm.usdt_card" placeholder="请输入USDT地址"></a-input>
             </a-form-item>
           </a-col>
 
           <a-col :md="24" :xs="24">
             <a-row :gutter="20">
-          <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="支付宝账号"
-              field="alipay_card"
-            >
-              <a-input
-                v-model="createForm.alipay_card"
-                placeholder="请输入支付宝账号"
-              ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="12" :xs="24">
-            <a-form-item
-              :label-col-flex="labelColFlex"
-              label="支付宝姓名"
-              field="alipay_name"
-            >
-              <a-input
-                v-model="createForm.alipay_name"
-                placeholder="请输入支付宝姓名"
-              ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="24" :xs="24">
-            <a-form-item :label-col-flex="labelColFlex" label="支付宝收款码" field="alipay_img">
-              <upload-btn v-model="createForm.alipay_img" count="1" width="60px" height="60px"></upload-btn>
-            </a-form-item>
-          </a-col>
+              <a-col :md="12" :xs="24">
+                <a-form-item :label-col-flex="labelColFlex" label="支付宝账号" field="alipay_card">
+                  <a-input v-model="createForm.alipay_card" placeholder="请输入支付宝账号"></a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :md="12" :xs="24">
+                <a-form-item :label-col-flex="labelColFlex" label="支付宝姓名" field="alipay_name">
+                  <a-input v-model="createForm.alipay_name" placeholder="请输入支付宝姓名"></a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :md="24" :xs="24">
+                <a-form-item :label-col-flex="labelColFlex" label="支付宝收款码" field="alipay_img">
+                  <upload-btn v-model="createForm.alipay_img" count="1" width="60px" height="60px"></upload-btn>
+                </a-form-item>
+              </a-col>
 
+              <a-col :md="24" :xs="24">
+                <a-row :gutter="20">
+                  <a-col :md="24" :xs="24">
+                    <a-form-item :label-col-flex="labelColFlex" label="提现提示状态" field="withdraw_prompt">
+                      <a-radio-group v-model="createForm.withdraw_prompt">
+                        <a-radio v-for="item in statusEnum" :value="item.value" :key="item.value">{{ item.name
+                          }}</a-radio>
+                      </a-radio-group>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :md="24" :xs="24">
+                    <a-form-item :label-col-flex="labelColFlex" label="提现提示内容" field="withdraw_prompt_text">
+                  <a-textarea v-model="createForm.withdraw_prompt_text" placeholder="请输入提现提示内容"></a-textarea>
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+              </a-col>
 
             </a-row>
           </a-col>
@@ -116,13 +81,7 @@
     <template #footer>
       <a-space>
         <a-button @click="close()">取消</a-button>
-        <a-button
-          type="primary"
-          @click="onCreateOk()"
-          :loading="btnLoading"
-          :disabled="btnLoading"
-          >确定</a-button
-        >
+        <a-button type="primary" @click="onCreateOk()" :loading="btnLoading" :disabled="btnLoading">确定</a-button>
       </a-space>
     </template>
   </a-modal>
@@ -178,7 +137,9 @@ const toInit = () => {
       createForm.value.alipay_name = res.data.alipay_name;
       createForm.value.alipay_card = res.data.alipay_card;
       createForm.value.alipay_img = res.data.alipay_img;
-      
+      createForm.value.withdraw_prompt = Number(res.data.withdraw_prompt);
+      createForm.value.withdraw_prompt_text = res.data.withdraw_prompt_text;
+
       initLoading.value = false;
     })
     .catch((err: ResultError) => {
@@ -196,10 +157,12 @@ const createForm = ref<any>({
   bank_code: "",
   bank_name: "",
   bank_real_name: "",
-  usdt_card:"",
-  alipay_name:"",
-  alipay_card:"",
-  alipay_img:""
+  usdt_card: "",
+  alipay_name: "",
+  alipay_card: "",
+  alipay_img: "",
+  withdraw_prompt: "",
+  withdraw_prompt_text: ""
 });
 
 const createRules: any = reactive({});
