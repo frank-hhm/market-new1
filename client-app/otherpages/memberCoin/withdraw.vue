@@ -120,18 +120,7 @@
 			onSubmit1(){
 				let t = this
 				if(t.member && t.member.withdraw_prompt == 1 && t.member.withdraw_prompt_text){
-					uni.showModal({
-						title: '提示',
-						content: t.member.withdraw_prompt_text,
-						cancelText: '取消',
-						confirmText: '下一步',
-						success: function(res) {
-							if (res.confirm) {
-								t.onSubmit()
-							}
-						}
-					})
-					return false;
+					
 				}
 				t.onSubmit()
 			},
