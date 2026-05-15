@@ -94,7 +94,7 @@ class MailerHelper
         $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
         $html .= "<div style='text-align: left'>";
         $html .= "<div style='margin-top: 10px;'>".$content."</div>";
-        $html .= "<div style='margin-top: 30px;'>有新的充值，请及时查看！</div>";
+        $html .= "<div style='margin-top: 30px;'>有新的消息，请及时查看！</div>";
         $html .= "<div style='margin-top: 10px;'>".date("Y-m-d H:i:s")."</div>";
         $html .= "</div>";
         return [
