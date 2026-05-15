@@ -99,9 +99,9 @@ class Publics extends \app\api\controller\Base
         $data["member_default_product"] = sysconf('member_default_product|json');
 
         $data['about_content_follow'] = sysconf('about_content_follow');
-
         $data['member_usdt_withdrawal_money'] = sysconf('member_usdt_withdrawal_money');
         $data['member_usdt_withdrawal_status'] = sysconf('member_usdt_withdrawal_status');
+
         $this->success('获取成功',$data);
     }
 
@@ -142,10 +142,10 @@ class Publics extends \app\api\controller\Base
         $data['system_logo'] = sysconf('system_logo');
         $data['system_icon'] = sysconf('system_icon');
         $data['copyright'] = sysconf('copyright');
+        $data['member_usdt_withdrawal_money'] = sysconf('member_usdt_withdrawal_money');
+        $data['member_usdt_withdrawal_status'] = sysconf('member_usdt_withdrawal_status');
         $data['usdt_rate'] = sysconf('usdt_rate');
         $data['usdt_out_rate'] = sysconf('usdt_out_rate');
-
-
         $this->success($data);
     }
 
@@ -201,7 +201,7 @@ class Publics extends \app\api\controller\Base
     /**
      * 发送验证码
      * @force(false)
-     * @method(POST)
+     * @method(GET,POST)
      */
     public function sendCode()
     {
