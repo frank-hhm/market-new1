@@ -59,6 +59,7 @@ class Config extends Base
                 'payment_alipay_private_key',
                 'payment_alipay_app_cert',
                 'payment_alipay_root_cert',
+                'member_recharge_message_email',
             ],
             'other'=>[
                 "kefu_wechat",
@@ -88,6 +89,9 @@ class Config extends Base
                 'agent_withdrawal_rate',
                 'member_withdrawal_rate',
                 'member_usdt_withdrawal_rate',
+                'member_usdt_withdrawal_money',
+                'member_usdt_withdrawal_status',
+
                 "member_alipay_withdrawal_status"
             ],
             "member"=>[

@@ -26,6 +26,7 @@ class MailerHelper
             'register' => self::getCodeTemplate('注冊账号',...$age),
             'again-email' => self::getCodeTemplate('重新绑定邮箱',...$age),
             'subscribe-message' => self::getSubscribeTemplate('订阅消息',...$age),
+            'member-recharge-message' => self::getMemberRechargeMessageTemplate('充值通知',...$age),
             default => [],
         };
     }
@@ -87,4 +88,21 @@ class MailerHelper
             'content'=>$html,
         ];
     }
+    public static function getMemberRechargeMessageTemplate(string $msgTitle = '', string $content = ''): array
+    {
+        $html = "";
+        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
+        $html .= "<div style='text-align: left'>";
+        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
+        $html .= "<div style='margin-top: 30px;'>有新的充值，请及时查看！</div>";
+        $html .= "<div style='margin-top: 10px;'>".date("Y-m-d H:i:s")."</div>";
+        $html .= "</div>";
+        return [
+            'title'=>$msgTitle,
+            'html'=>true,
+            'content'=>$html,
+        ];
+    }
+
+
 }

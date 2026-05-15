@@ -15,14 +15,6 @@
                 </div>
             </a-card>
             <a-card title="用户提现" class="card mt12">
-                <div class="card-form-box">
-                    <a-form-item :label-col-flex="labelColFlex" label="U提现手续费" field="member_usdt_withdrawal_rate">
-                        <a-input-number v-model="configForm.member_usdt_withdrawal_rate" placeholder="比例" allow-clear/>
-                        <template #help>
-                            <span>百分比 * 提现金额 进行计算</span>
-                        </template>
-                    </a-form-item>
-                </div>
                 <div class="mt20 card-form-box">
                     <a-form-item :label-col-flex="labelColFlex" label="其他提现手续费" field="member_withdrawal_rate">
                         <a-input-number v-model="configForm.member_withdrawal_rate" placeholder="比例" allow-clear/>
@@ -34,6 +26,30 @@
                         <a-button type="primary" @click="onSave" :loading="btnLoading" :disabled="btnLoading">保存</a-button>
                     </a-form-item>
                 </div>
+            </a-card>
+            <a-card title="U提现" class="card mt12">
+                <!-- <div class="card-form-box">
+                    <a-form-item :label-col-flex="labelColFlex" label="U提现手续费" field="member_usdt_withdrawal_rate">
+                        <a-input-number v-model="configForm.member_usdt_withdrawal_rate" placeholder="比例" allow-clear/>
+                        <template #help>
+                            <span>百分比 * 提现金额 进行计算</span>
+                        </template>
+                    </a-form-item>
+                </div> -->
+                <div class="card-form-box">
+                    <a-form-item :label-col-flex="labelColFlex" label="U提现手续费" field="member_usdt_withdrawal_money">
+                        <a-input-number v-model="configForm.member_usdt_withdrawal_money" placeholder="U提现手续费" allow-clear/>
+                    </a-form-item>
+                </div>
+                <div class="card-form-box">
+                    <a-form-item :label-col-flex="labelColFlex" label="状态" field="member_usdt_withdrawal_status">
+                        <a-switch v-model="configForm.member_usdt_withdrawal_status" :checked-value="1"
+                            :unchecked-value="0" />
+                    </a-form-item>
+                </div>
+                <a-form-item :label-col-flex="labelColFlex">
+                    <a-button type="primary" @click="onSave" :loading="btnLoading" :disabled="btnLoading">保存</a-button>
+                </a-form-item>
             </a-card>
             <a-card title="支付提现" class="card mt12">
                 <div class="card-form-box">
@@ -71,7 +87,9 @@ const configForm = ref<any>({
     agent_withdrawal_rate:0,
     member_withdrawal_rate:0,
     member_usdt_withdrawal_rate:0,
-    member_alipay_withdrawal_status: 0
+    member_alipay_withdrawal_status: 0,
+    member_usdt_withdrawal_status: 0,
+    member_usdt_withdrawal_money:0
 })
 
 const initLoading = ref<boolean>(false)
@@ -80,9 +98,11 @@ const toInit = () => {
     initLoading.value = true
     getConfigApi('agent').then((res: Result) => {
         configForm.value = res.data
+        configForm.value.member_usdt_withdrawal_money = Number(res.data.member_usdt_withdrawal_money);
         configForm.value.agent_withdrawal_rate = Number(res.data.agent_withdrawal_rate);
         configForm.value.member_withdrawal_rate = Number(res.data.member_withdrawal_rate);
         configForm.value.member_usdt_withdrawal_rate = Number(res.data.member_usdt_withdrawal_rate);
+        configForm.value.member_usdt_withdrawal_status = Number(res.data.member_usdt_withdrawal_status);
         configForm.value.member_alipay_withdrawal_status = Number(res.data.member_alipay_withdrawal_status);
         initLoading.value = false;
     }, (err: ResultError) => {

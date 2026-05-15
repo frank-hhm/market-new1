@@ -20,6 +20,7 @@ use app\common\services\member\MemberCoinService;
 use app\common\services\member\MemberService;
 use app\common\services\PaymentService;
 use think\facade\Db;
+use think\facade\Queue;
 
 /**
  * 用户充值
@@ -205,6 +206,7 @@ class MemberRechargeService extends BaseService
                 'payment_id'=>$data['payment_id'] ?? 0,
                 'voucher_url' => $data['voucher_url'] ?? "",
             ], [$adminName,$modeText]);
+            Queue::push("app\common\jobs\MemberRechargeMessageJob",[], 'MemberRechargeMessageJob');
         });
         return true;
 

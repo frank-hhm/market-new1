@@ -11,19 +11,35 @@
                         </a-input-number>
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex" label="usdt入金汇率" field="usdt_rate">
-                        <a-input-number v-model="configForm.usdt_rate" placeholder="usdt入金汇率" allow-clear :precision="2" />
+                        <a-input-number v-model="configForm.usdt_rate" placeholder="usdt入金汇率" allow-clear
+                            :precision="2">
+                            <template #append>
+                                当前{{systemInfo?.usdt_rate}}
+                            </template>
+                        </a-input-number>
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex" label="usdt出金汇率" field="usdt_out_rate">
-                        <a-input-number v-model="configForm.usdt_out_rate" placeholder="usdt出金汇率" allow-clear :precision="2" />
+                        <a-input-number v-model="configForm.usdt_out_rate" placeholder="usdt出金汇率" allow-clear
+                            :precision="2" >
+                            <template #append>
+                                当前{{systemInfo?.usdt_out_rate}}
+                            </template>
+                        </a-input-number>
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex" label="单笔最低下单金额" field="order_min_price">
-                        <a-input-number v-model="configForm.order_min_price" placeholder="金额" allow-clear :precision="2" />
+                        <a-input-number v-model="configForm.order_min_price" placeholder="金额" allow-clear
+                            :precision="2" />
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex" label="单笔最高下单金额" field="order_max_price">
-                        <a-input-number v-model="configForm.order_max_price" placeholder="金额" allow-clear :precision="2" />
+                        <a-input-number v-model="configForm.order_max_price" placeholder="金额" allow-clear
+                            :precision="2" />
+                    </a-form-item>
+                    <a-form-item :label-col-flex="labelColFlex" label="充值通知接收邮箱" field="member_recharge_message_email">
+                        <a-input v-model="configForm.member_recharge_message_email" placeholder="充值通知接收邮箱" allow-clear/>
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex">
-                        <a-button type="primary" @click="onSave" :loading="btnLoading" :disabled="btnLoading">保存</a-button>
+                        <a-button type="primary" @click="onSave" :loading="btnLoading"
+                            :disabled="btnLoading">保存</a-button>
                     </a-form-item>
                 </div>
             </a-card>
@@ -38,8 +54,10 @@
                     <a-form-item :label-col-flex="labelColFlex" label="支付宝公钥(public)" field="payment_alipay_public_key">
                         <a-textarea v-model="configForm.payment_alipay_public_key" placeholder="请输入支付宝公钥" allow-clear />
                     </a-form-item>
-                    <a-form-item :label-col-flex="labelColFlex" label="支付宝私钥(private)" field="payment_alipay_private_key">
-                        <a-textarea v-model="configForm.payment_alipay_private_key" placeholder="请输入支付宝私钥" allow-clear />
+                    <a-form-item :label-col-flex="labelColFlex" label="支付宝私钥(private)"
+                        field="payment_alipay_private_key">
+                        <a-textarea v-model="configForm.payment_alipay_private_key" placeholder="请输入支付宝私钥"
+                            allow-clear />
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex" label="应用公钥(app_cert)" field="payment_alipay_app_cert">
                         <a-textarea v-model="configForm.payment_alipay_app_cert" placeholder="请输入应用公钥" allow-clear />
@@ -48,7 +66,8 @@
                         <a-textarea v-model="configForm.payment_alipay_root_cert" placeholder="请输入支付宝根证书" allow-clear />
                     </a-form-item>
                     <a-form-item :label-col-flex="labelColFlex">
-                        <a-button type="primary" @click="onSave" :loading="btnLoading" :disabled="btnLoading">保存</a-button>
+                        <a-button type="primary" @click="onSave" :loading="btnLoading"
+                            :disabled="btnLoading">保存</a-button>
                     </a-form-item>
                 </div>
             </a-card>
@@ -60,7 +79,8 @@
 import { getCurrentInstance, onMounted, ref } from "vue";
 import { getConfigApi, saveConfigApi } from "@/api/system/config";
 import { Result, ResultError } from "@/types";
-import { useAppStore } from "@/store";
+import {  useAppStore } from "@/store";
+import { storeToRefs } from "pinia";
 
 const {
     proxy,
@@ -68,6 +88,7 @@ const {
 } = getCurrentInstance() as any;
 
 const labelColFlex = ref<string>("160px");
+const { systemInfo } = storeToRefs(useAppStore());
 
 const configFormRef = ref<HTMLElement>();
 
@@ -82,7 +103,8 @@ const configForm = ref<any>({
     payment_alipay_private_key: "",
     payment_alipay_app_cert: "",
     payment_alipay_root_cert: "",
-    order_ping_time:0
+    order_ping_time: 0,
+    member_recharge_message_email:""
 })
 
 const initLoading = ref<boolean>(false)
@@ -100,6 +122,7 @@ const toInit = () => {
         configForm.value.payment_alipay_public_key = String(res.data.payment_alipay_public_key);
         configForm.value.payment_alipay_private_key = String(res.data.payment_alipay_private_key);
         configForm.value.payment_alipay_root_cert = String(res.data.payment_alipay_root_cert);
+        configForm.value.member_recharge_message_email = String(res.data.member_recharge_message_email);
         initLoading.value = false;
     }, (err: ResultError) => {
         initLoading.value = false;

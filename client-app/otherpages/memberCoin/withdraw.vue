@@ -54,13 +54,15 @@
 					<view class="card-cell-item-right" :class="bank_status == 1?'active':''"></view>
 				</view>
 
-				<view class="card-cell-item" @tap="onSelectBank(2)">
+				<view class="card-cell-item" v-if="member_usdt_withdrawal_status == 1" @tap="onSelectBank(2)">
 					<view class="card-cell-item-left usdt">
 						<view class="icon"></view>
 						<view class="icon-detail">
 							<text class="value">USDT - TRC20</text>
 							<view class="tip">
-								手续费{{member_usdt_withdrawal_rate}}%
+								<!-- 手续费{{member_usdt_withdrawal_rate}}% -->
+								
+								手续费{{member_usdt_withdrawal_money}}U
 							</view>
 						</view>
 					</view>
@@ -106,6 +108,8 @@
 				member_withdrawal_rate: 0,
 				member_usdt_withdrawal_rate: 0,
 				member_alipay_withdrawal_status: 0,
+				member_usdt_withdrawal_money: 0,
+				member_usdt_withdrawal_status: 0,
 				bank_status: 1,
 				submitLoading: false
 			};
@@ -143,6 +147,7 @@
 					})
 					return false;
 				}
+				
 				if (t.bank_status == 3 && !t.member.usdt_bep_card) {
 					uni.showToast({
 						icon: "none",
@@ -172,6 +177,14 @@
 						title: "请输入金额"
 					})
 					return
+				}
+				if (t.bank_status == 2 && t.value <= parseFloat(t.member_usdt_withdrawal_money)) {
+					
+					uni.showToast({
+						icon: "none",
+						title: "提现USDT-TRC20必须大于手续费"
+					})
+					return false;
 				}
 				try {
 
@@ -257,6 +270,8 @@
 				this.member_withdrawal_rate = this.getConfig.member_withdrawal_rate || 0
 				this.member_usdt_withdrawal_rate = this.getConfig.member_usdt_withdrawal_rate || 0
 				this.member_alipay_withdrawal_status = this.getConfig.member_alipay_withdrawal_status || 0
+				this.member_usdt_withdrawal_money = this.getConfig.member_usdt_withdrawal_money || 0
+				this.member_usdt_withdrawal_status = this.getConfig.member_usdt_withdrawal_status || 0
 
 			} catch (e) {
 				//TODO handle the exception

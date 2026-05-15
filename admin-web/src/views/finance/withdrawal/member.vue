@@ -55,7 +55,7 @@
       <a-collapse v-if="countData.length > 0" :default-active-key="[]">
         <a-collapse-item v-for="(item, index) in countData" :key="index" :header="item.title">
           <template v-for="(items, idx) in item.data" :key="idx">
-            <span class="text-grey" :class="idx > 0 ? 'ml20' : ''">{{ items.name }}:</span>
+            <span class="text-grey" :class="Number(idx) > 0 ? 'ml20' : ''">{{ items.name }}:</span>
             <span>{{ items.value || 0 }}</span>
           </template>
         </a-collapse-item>
@@ -101,15 +101,14 @@
           <a-table-column title="到账金额" data-index="amount" :width="160">
             <template #cell="{ record }">
               <div>${{ record.amount }}</div>
-              <div class="flex" v-if="record.pay_type.value !== 'offline_usdt'">
+              <div class="flex" v-if="record.pay_type.value !== 'offline_usdt' && systemInfo?.usdt_out_rate">
                 <div class="text-grey">换算：</div>
                 <div>
                   ￥{{
-                    (
-                      record.amount * Number(systemInfo?.usdt_out_rate || 7)
-                    ).toFixed(2)
+                    ( record.amount * Number(systemInfo?.usdt_out_rate)).toFixed(2)
                   }}
                 </div>
+                {{ systemInfo?.usdt_out_rate }}
               </div>
             </template>
           </a-table-column>

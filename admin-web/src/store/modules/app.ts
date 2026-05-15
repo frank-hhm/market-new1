@@ -3,7 +3,8 @@ import store from "@/store"
 import { getSystemInfoApi } from "@/api/common";
 import { Result, SystemInfoType } from "@/types"
 import { defineStore } from "pinia"
-import { setCacheSystemInfo, getCacheSystemInfo, getCacheTemplateDark,setCacheTemplateDark, getCacheLayout, setCacheLayout } from "@/utils";
+import { setCacheSystemInfo, getCacheSystemInfo, getCacheTemplateDark, setCacheTemplateDark, getCacheLayout, setCacheLayout } from "@/utils";
+import CacheKey from "@/constants/cache-key";
 export const useAppStore = defineStore("app", () => {
 
     const isMapScriptLoad = ref<boolean>(false)
@@ -25,7 +26,12 @@ export const useAppStore = defineStore("app", () => {
         setCacheSystemInfo(data);
         systemInfo.value = data
     }
-
+    window.addEventListener('storage', (event: any) => {
+        if (event.key === CacheKey.SYSTEM_INFO) {
+            const res = JSON.parse(event.newValue);
+            systemInfo.value = res?.data
+        }
+    });
     const setDark = (val: boolean) => {
         isDark.value = val
         if (isDark.value) {
@@ -45,12 +51,12 @@ export const useAppStore = defineStore("app", () => {
 
     const setMobile = (value: boolean) => {
         isMobile.value = value
-        if(isMobile.value){
+        if (isMobile.value) {
             setLayout('layout1')
         }
     }
 
-    return { isDark, setDark, systemInfo, getSystemInfo, isMapScriptLoad, setMapScriptLoad, layout, setLayout,setMobile,isMobile }
+    return { isDark, setDark, systemInfo, getSystemInfo, isMapScriptLoad, setMapScriptLoad, layout, setLayout, setMobile, isMobile }
 })
 
 /** 在 setup 外使用 */

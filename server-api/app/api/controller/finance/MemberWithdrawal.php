@@ -108,26 +108,32 @@ class MemberWithdrawal extends \app\api\controller\Base
         if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_usdt' && empty($this->member['usdt_card'])){
             $this->error('请先绑定usdt地址！');
         }
-
-        $memberWithdrawalFee = sysconf('member_withdrawal_rate');
-        if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_usdt'){
-            $memberWithdrawalFee = sysconf('member_usdt_withdrawal_rate');
+        if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_usdt' && ( !empty(sysconf("member_usdt_withdrawal_money")) &&  $data['money'] <= (float)sysconf("member_usdt_withdrawal_money")) ){
+            $this->error('提现USDT-TRC20必须大于手续费！');
         }
 
-        $num = $data['money'];
-        if ($memberWithdrawalFee) {
-            $fee = round(($num / 100) * $memberWithdrawalFee, 2);
-            $mum = round($num - $fee, 2);
 
-            if ($mum < 0) {
-                $this->error('转出手续费错误！');
+        $fee = 0;
+        $num = $data['money'];
+
+        //usdt
+        if($data['type'] == WithdrawalTypeEnum::BALANCE && $data['pay_type'] == 'offline_usdt'){
+            $fee = (float)sysconf("member_usdt_withdrawal_money");
+            $mum = round($num - $fee, 2);
+        }else{
+            $memberWithdrawalFee = sysconf('member_withdrawal_rate');
+            if ($memberWithdrawalFee) {
+                $fee = round(($num / 100) * $memberWithdrawalFee, 2);
+                $mum = round($num - $fee, 2);
+                if ($mum < 0) {
+                    $this->error('转出手续费错误！');
+                }
+                if ($fee < 0) {
+                    $this->error('转出手续费设置错误！');
+                }
+            } else {
+                $mum = $num;
             }
-            if ($fee < 0) {
-                $this->error('转出手续费设置错误！');
-            }
-        } else {
-            $fee = 0;
-            $mum = $num;
         }
         if($data['type'] === WithdrawalTypeEnum::COMMISSION){
             $fee = 0;
