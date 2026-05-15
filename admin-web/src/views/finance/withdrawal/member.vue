@@ -108,7 +108,6 @@
                     ( record.amount * Number(systemInfo?.usdt_out_rate)).toFixed(2)
                   }}
                 </div>
-                {{ systemInfo?.usdt_out_rate }}
               </div>
             </template>
           </a-table-column>
