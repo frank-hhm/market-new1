@@ -21,7 +21,7 @@
 			<view class="register-title">注册</view>
 			<view class="register-type-main">
 				<view class="register-type-item" :class="type == 'email'?'active':''" @tap="setType('email')">邮箱</view>
-				<view class="register-type-item" :class="type == 'phone'?'active':''" @tap="setType('phone')">手机号</view>
+				<!-- <view class="register-type-item" :class="type == 'phone'?'active':''" @tap="setType('phone')">手机号</view> -->
 			</view>
 			<view class="login-form">
 				<u-form :model="form" ref="uForm" class="mt-30" label-width="30">
