@@ -12,5 +12,6 @@ return [
         'set:member:default'        => app\common\command\SetMemberDefaultCommand::class,
         'delete:log'        => 'app\common\command\DeleteCommand',
         'follow:order'        => app\common\command\FollowOrderCommand::class,
+        'delete:member:job:log'        => app\common\command\DeleteMemberJobLogCommand::class,
     ],
 ];
