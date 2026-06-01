@@ -92,7 +92,7 @@ class Member extends Base
             $this->error('该手机或用户名已存在！');
         }
         $data['invite_code'] = $this->service->getInviteCode();
-        $data['password'] = $this->service->passwordHash($data['pwd']);
+        $data['password'] = $this->service->dao->passwordHash($data['pwd']);
         Db::startTrans();
         if($res = $this->service->create($data)){
             $id = $res->id;
@@ -151,6 +151,12 @@ class Member extends Base
         ])->limit(1)->count();
         if($detail){
             $this->error('该手机已存在！');
+        }
+        if (!empty($data['pwd'])){
+            if ($data["pwd"] !== $data["conf_pwd"]){
+                $this->error('两次密码不一致!');
+            }
+            $data['password'] = $this->service->dao->passwordHash($data['pwd']);
         }
         if( $this->service->update($data['id'],$data)){
             app(MemberService::class)->deleteCacheDetail( $data['id']);
