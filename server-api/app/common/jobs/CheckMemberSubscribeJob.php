@@ -57,6 +57,7 @@ class CheckMemberSubscribeJob
             }
             return true;
         }catch (\Exception $e){
+            dump($e->getMessage());
             return false;
         }
     }
