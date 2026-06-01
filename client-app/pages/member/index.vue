@@ -234,7 +234,7 @@
 				<view class="kefu-list">
 					<view class="kefu-item">
 						<view class="kefu-icon kefu-wechat"></view>
-						<view class="kefu-name">YM号：{{member.kefu_wechat ||""}}</view>
+						<view class="kefu-name">蝙蝠号：{{member.kefu_wechat ||""}}</view>
 						<view class="kefu-copy-icon" @tap="copy(member.kefu_wechat || '')"></view>
 					</view>
 					<view class="kefu-item">
@@ -951,7 +951,7 @@
 			width: 60rpx;
 			height: 60rpx;
 			background-size: 100% 100%;
-			background-image: url("~@/static/images-new1/common/kefu-ym.jpg");
+			background-image: url("~@/static/images-new1/common/kefu.jpg");
 			border-radius: 10rpx;
 		}
 
