@@ -19,7 +19,7 @@ use think\facade\Queue;
 class MarketKLineDataService
 {
 
-    public function createKData($price, $product, $nowTime, $dataTime = 0): void
+    public function createKData($price, $product, $nowTime, $dataTime = 0,$frameData = []): void
     {
         if ($dataTime === 0) {
             $dataTime = strtotime(date('Y-m-d H:i', $nowTime) . ':00');
@@ -28,7 +28,7 @@ class MarketKLineDataService
         $min = date('i');
         //1min
         $type = 1;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
 
         //5min
@@ -36,27 +36,27 @@ class MarketKLineDataService
         $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
         $dataTime = strtotime($minute);
         $type = 5;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
         //15min
         $hour = floor($min / 15) * 15;
         $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
         $dataTime = strtotime($minute);
         $type = 15;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
         //30min
         $hour = floor($min / 30) * 30;
         $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
         $dataTime = strtotime($minute);
         $type = 30;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
         //60min
         $minute = date('Y-m-d H', $nowTime) . ':00:00';
         $dataTime = strtotime($minute);
         $type = 60;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
         //240min
         $hour = date('H');
@@ -64,16 +64,16 @@ class MarketKLineDataService
         $minute = date('Y-m-d H', strtotime(date('Y-m-d ' . $hour . ':00:00', $nowTime))) . ':00:00'; // 构造时间字符串
         $dataTime = strtotime($minute); // 转换为时间戳
         $type = 240;
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
         // 日K线 (1-day)
         $minute = date('Y-m-d', $nowTime) . ' 00:00:00'; // 当天的零点时间
         $dataTime = strtotime($minute); // 转换为时间戳
         $type = 1440; // 1天 = 1440分钟
-        $this->setKData($price, $product, $type, $dataTime);
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
     }
 
-    public function setKData($price, $product, $type, $dataTime)
+    public function setKData($price, $product, $type, $dataTime,$frameData = [])
     {
             $cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::PRODUCT_MARKET_REDIS_DRIVER);
 

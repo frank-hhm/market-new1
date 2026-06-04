@@ -123,3 +123,24 @@ sudo journalctl -u sshd | grep "root"
 sed -i '/xxx.xxx.xxx.xxx/d' /var/log/auth.log
 清除bash记录
 history -r
+
+
+
+#UPDATE m_finance_member_recharge SET voucher_url = REPLACE(voucher_url, '//www.liangdian1.cc/', '//ld789.cc/');
+
+
+#UPDATE m_follow_person SET avatar = REPLACE(avatar, '//www.liangdian1.cc/', '//ld789.cc/');
+
+#UPDATE m_media SET file_domain = REPLACE(file_domain, '//www.liangdian1.cc/', '//ld789.cc/');
+
+#UPDATE m_member SET avatar = REPLACE(avatar, '//www.liangdian1.cc/', '//ld789.cc/');
+
+#UPDATE m_notice SET content = REPLACE(content, '//www.liangdian1.cc/', '//ld789.cc/');
+
+#UPDATE m_system_admin SET avatar = REPLACE(avatar, '//www.liangdian1.cc/', '//ld789.cc/');
+
+--
+-- UPDATE m_system_config
+-- SET sys_value = REPLACE(sys_value, '//www.liangdian1.cc/', '//ld789.cc/');
+
+UPDATE m_payment SET cover = REPLACE(cover, '//www.liangdian1.cc/', '//ld789.cc/');

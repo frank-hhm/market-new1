@@ -25,7 +25,7 @@ return [
             // 单文件日志写入
             'single'         => false,
             // 独立日志级别
-            'apart_level' => ['error', 'fail','info', 'success','command','market','publish'],
+            'apart_level' => ['error', 'fail','info', 'success','command','market','publish','markets'],
             // 最大日志文件数量
             'max_files'      => 120,
             // 使用JSON格式记录

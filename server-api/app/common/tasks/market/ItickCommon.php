@@ -168,7 +168,7 @@ class ItickCommon
                                             $this->messageService->pushMarket($arr[$proCode]['id'],$arr[$proCode],$frameData['data']['t'] ?? $kTime);
 
                                             $this->cacheService->set(CacheKeyConstant::PRODUCT_PRICE.":".$arr[$proCode]['id'],$proPrice,60);
-                                            $this->marketService->createKData($proPrice,$arr[$proCode],$kTime);
+                                            $this->marketService->createKData($proPrice,$arr[$proCode],$kTime,$frameData);
                                         }
                                     }
                                 }
