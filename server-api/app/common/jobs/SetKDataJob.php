@@ -47,7 +47,7 @@ class SetKDataJob
         $decimal = $data['decimal'];
         $kMapData = $data['data'];
         $price = $data['price'];
-        $other =  [];
+        $other = $data['other'] ?? [];
         return $this->setKData($pid, $decimal, $kMapData, $price,$other);
     }
 
