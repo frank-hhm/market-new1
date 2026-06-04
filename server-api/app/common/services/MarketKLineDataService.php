@@ -163,7 +163,8 @@ class MarketKLineDataService
                             'pid' => $kLineMap['pid'],
                             'decimal' => $productDecimal,
                             'price' => sprintf("%." . $productDecimal . "f", $price),
-                            'data' => $kLineMap
+                            'data' => $kLineMap,
+                            'other' => $frameData
                         ];
                         $res = Queue::push("app\common\jobs\SetKDataJob", $queueData, 'SetKDataJob');
                         //app(ConsoleLogService::class)->create('SetKDataJob:'.$res,true);
