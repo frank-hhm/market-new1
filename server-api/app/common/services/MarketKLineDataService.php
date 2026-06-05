@@ -18,7 +18,7 @@ use think\facade\Queue;
  */
 class MarketKLineDataService
 {
-    public function createKData($price, $product, $nowTime, $dataTime = 0, $frameData = []): void
+    public function createKData1($price, $product, $nowTime, $dataTime = 0, $frameData = []): void
     {
         // 定义各周期的秒数映射
         $periodMap = [
@@ -51,7 +51,7 @@ class MarketKLineDataService
         $timestampSec = intval($timestampMs / 1000);
         return intval($timestampSec / $periodSec) * $periodSec;
     }
-    public function createKData1($price, $product, $nowTime, $dataTime = 0,$frameData = []): void
+    public function createKData($price, $product, $nowTime, $dataTime = 0,$frameData = []): void
     {
         if ($dataTime === 0) {
             $dataTime = strtotime(date('Y-m-d H:i', $nowTime) . ':00');
