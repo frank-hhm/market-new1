@@ -18,39 +18,6 @@ use think\facade\Queue;
  */
 class MarketKLineDataService
 {
-    public function createKData1($price, $product, $nowTime, $dataTime = 0, $frameData = []): void
-    {
-        // 定义各周期的秒数映射
-        $periodMap = [
-            1 => 60,      // 1min
-            5 => 300,     // 5min
-            15 => 900,    // 15min
-            30 => 1800,   // 30min
-            60 => 3600,   // 60min
-            240 => 14400, // 240min (4小时)
-            1440 => 86400 // 1day
-        ];
-
-        foreach ($periodMap as $type => $periodSec) {
-            // 如果外部没有强制指定 dataTime，则根据当前时间动态对齐
-            if ($dataTime === 0) {
-                $alignedTime = $this->alignTimestamp($nowTime, $periodSec);
-            } else {
-                $alignedTime = $dataTime;
-            }
-
-            // 调用底层写入方法
-            $this->setKData($price, $product, $type, $alignedTime, $frameData);
-        }
-    }
-    /**
-     * 将任意时间戳对齐到最近的周期起始边界（向下取整）
-     */
-    private function alignTimestamp(int $timestampMs, int $periodSec): int
-    {
-        $timestampSec = intval($timestampMs / 1000);
-        return intval($timestampSec / $periodSec) * $periodSec;
-    }
     public function createKData($price, $product, $nowTime, $dataTime = 0,$frameData = []): void
     {
         if ($dataTime === 0) {

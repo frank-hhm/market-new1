@@ -24,10 +24,70 @@ class TestCommand extends Command
     {
         $this->setName('TestCommand');
     }
+    public function createKData($price, $product, $nowTime, $dataTime = 0,$frameData = []): void
+    {
+        if ($dataTime === 0) {
+            $dataTime = strtotime(date('Y-m-d H:i', $nowTime) . ':00');
+        }
+        //存储k线值
+        $min = date('i');
+        //1min
+        $type = 1;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
 
+
+        //5min
+        $hour = floor($min / 5) * 5;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 5;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+
+        //15min
+        $hour = floor($min / 15) * 15;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 15;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+
+        //30min
+        $hour = floor($min / 30) * 30;
+        $minute = date('Y-m-d H:' . $hour, $nowTime) . ':00';
+        $dataTime = strtotime($minute);
+        $type = 30;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+
+        //60min
+        $minute = date('Y-m-d H', $nowTime) . ':00:00';
+        $dataTime = strtotime($minute);
+        $type = 60;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+
+        //240min
+        $hour = date('H');
+        $hour = floor($hour / 4) * 4; // 计算当前时间所在的4小时间隔
+        $minute = date('Y-m-d H', strtotime(date('Y-m-d ' . $hour . ':00:00', $nowTime))) . ':00:00'; // 构造时间字符串
+        $dataTime = strtotime($minute); // 转换为时间戳
+        $type = 240;
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+
+        // 日K线 (1-day)
+        $minute = date('Y-m-d', $nowTime) . ' 00:00:00'; // 当天的零点时间
+        $dataTime = strtotime($minute); // 转换为时间戳
+        $type = 1440; // 1天 = 1440分钟
+        $this->setKData($price, $product, $type, $dataTime,$frameData);
+    }
+
+    public function setKData($price, $product, $type, $dataTime,$frameData){
+        dump($dataTime);
+
+    }
     protected function execute(Input $input, Output $output)
     {
 
+        $this->createKData(1,1,(int)(1780682400046 / 1000));die;
+        dump(date("y-m-d H:i:s",1780682400));
+        die;
         echo "开始处理\n";
         $walletSelect = Db::name("finance_water")->where("source","in",[
             "commission_fee"
