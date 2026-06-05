@@ -106,7 +106,7 @@ class MarketKLineDataService
 
                 $updateKLineMap['volume'] = $product['volume'] ?? 0;
                 $updateKLineMap['type'] = $issetkline['type'];
-                $updateKLineMap['ktime'] = $issetkline['ktime'];
+//                $updateKLineMap['ktime'] = $issetkline['ktime'];
                 $updateKLineMap['close_price'] = sprintf("%." . $productDecimal . "f", $price);
 
                 if ($issetkline['height_price'] < $price) {
@@ -120,7 +120,9 @@ class MarketKLineDataService
                     $updateKLineMap['low_price'] = sprintf("%." . $productDecimal . "f", $issetkline['low_price']);
                 }
 
-                $cacheService->set($klineCacheKey, $updateKLineMap, $cacheTime + 60 * 2);
+                $cacheService->set($klineCacheKey, array_merge($updateKLineMap,[
+                    ["ktime" => $issetkline['ktime']]
+                ]), $cacheTime + 60 * 2);
 //                $updateKLineMap["volume"] = Db::Raw("volume+" . rand(0,6) / 10);
                 Db::name('market_k_line')->where('id', $updateKLineMap['id'])->update($updateKLineMap);
 
