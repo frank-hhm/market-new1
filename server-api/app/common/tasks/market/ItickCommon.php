@@ -164,12 +164,14 @@ class ItickCommon
                                         $arr[$proCode]['price'] = $proPrice;
                                         $arr[$proCode]["volume"] = $proVol;
 
-                                        if( $this->cacheService->get(CacheKeyConstant::PRODUCT_PRICE.":".$arr[$proCode]['id']) !== $proPrice){
                                             $this->messageService->pushMarket($arr[$proCode]['id'],$arr[$proCode],$frameData['data']['t'] ?? $kTime);
 
                                             $this->cacheService->set(CacheKeyConstant::PRODUCT_PRICE.":".$arr[$proCode]['id'],$proPrice,60);
                                             $this->marketService->createKData($proPrice,$arr[$proCode],$kTime,0,$frameData);
-                                        }
+
+                                            if( $arr[$proCode]['id'] == 49) {
+                                                $this->logService->create(json_encode($frameData, JSON_UNESCAPED_UNICODE), false, "markets");
+                                            }
                                     }
                                 }
                             }else if( isset($frameData['resAc']) && $frameData['resAc'] === 'pong'){

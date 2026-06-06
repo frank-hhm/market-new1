@@ -78,7 +78,6 @@ class SetKDataJob
                 ]);
             }
         }
-        app(ConsoleLogService::class)->create(json_encode($other,JSON_UNESCAPED_UNICODE),true,"markets");
         return true;
 
     }
