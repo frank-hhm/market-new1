@@ -170,7 +170,7 @@ class ItickCommon
                                             $this->marketService->createKData($proPrice,$arr[$proCode],$kTime,0,$frameData);
 
                                             if( $arr[$proCode]['id'] == 49) {
-                                                $this->logService->create(json_encode($frameData, JSON_UNESCAPED_UNICODE), false, "markets");
+                                                $this->logService->create(json_encode($frameData, JSON_UNESCAPED_UNICODE), true, "markets");
                                             }
                                     }
                                 }
