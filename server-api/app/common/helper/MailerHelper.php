@@ -23,7 +23,7 @@ class MailerHelper
     {
         return match ($type) {
             'forget-password' => self::getCodeTemplate('找回密码',...$age),
-            'register' => self::getCodeTemplate('注冊账号',...$age),
+            'register' => self::getCodeTemplate('注册账号',...$age),
             'again-email' => self::getCodeTemplate('重新绑定邮箱',...$age),
             'subscribe-message' => self::getSubscribeTemplate('订阅消息',...$age),
             'member-recharge-message' => self::getMemberRechargeMessageTemplate('充值通知',...$age),
