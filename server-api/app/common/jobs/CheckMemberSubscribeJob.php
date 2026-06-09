@@ -47,7 +47,7 @@ class CheckMemberSubscribeJob
             $subscribeSelect = $memberSubscribeService->dao->model->with(["member"])->where($filter)->select()->toArray();
             $mailService = app(MailerService::class);
             $tempRes = MailerHelper::getTemplate("subscribe-message",$data['message']);
-            !empty($tempRes['html']) && $mailService->setHtml(true);
+            !empty($tempRes['html']) && $mailService->setHtml(false);
             foreach ($subscribeSelect as $item){
                 if (!empty($item["member"]) && !empty($item["member"]['email'])){
                     $mailService->addAddress($item["member"]['email'], $item["member"]['real_name'] ?? $item["member"]['username']);

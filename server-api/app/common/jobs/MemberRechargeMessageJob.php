@@ -40,7 +40,7 @@ class MemberRechargeMessageJob
         $mailService = app(MailerService::class);
         $mailService->addAddress($email, $email);
         $tempRes = MailerHelper::getTemplate("member-recharge-message",$email);
-        !empty($tempRes['html']) && $mailService->setHtml(true);
+        !empty($tempRes['html']) && $mailService->setHtml(false);
         // 发送邮件
         if ($mailService->send($tempRes['title'], $tempRes['content'])) {
             return false;

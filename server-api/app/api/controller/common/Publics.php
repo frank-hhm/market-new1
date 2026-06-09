@@ -180,7 +180,7 @@ class Publics extends \app\api\controller\Base
         $mailService = app(MailerService::class);
         $mailService->addAddress($data['email'], $data['email']);
         $tempRes = MailerHelper::getTemplate($data['type'],$data['email']);
-        !empty($tempRes['html']) && $mailService->setHtml(true);
+        !empty($tempRes['html']) && $mailService->setHtml(false);
         // 发送邮件
         if ($mailService->send($tempRes['title'], $tempRes['content'])) {
             $this->success('发送成功');
@@ -221,7 +221,7 @@ class Publics extends \app\api\controller\Base
             $mailService = app(MailerService::class);
             $mailService->addAddress($params['number'], $params['number']);
             $tempRes = MailerHelper::getTemplate($params['temp'],$params['number']);
-            !empty($tempRes['html']) && $mailService->setHtml(true);
+            !empty($tempRes['html']) && $mailService->setHtml(false);
             // 发送邮件
             if ($mailService->send($tempRes['title'], $tempRes['content'])) {
                 $this->success('发送成功');
