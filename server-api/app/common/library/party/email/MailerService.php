@@ -38,7 +38,7 @@ class MailerService
         $this->mail->SMTPAuth = true;
         $this->mail->Username = $mailUserName; // SMTP 服务器的用户名
         $this->mail->Password = $mailPassword;  // SMTP 服务器的密码
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // 使用 SSL/TLS 加密连接
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // 使用 SSL/TLS 加密连接
         $this->mail->Port = $mailPost; // SMTP 服务器的端口号
         $this->mail->CharSet = 'UTF-8'; // 设置发送的邮件的编码
     }
