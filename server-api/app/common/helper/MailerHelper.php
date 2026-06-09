@@ -59,15 +59,16 @@ class MailerHelper
         $cacheService = app(CacheService::class)->setRedisName(CacheKeyConstant::JWT_REDIS_DRIVER);
         $res = $cacheService->set('verify_code:email:'.$email,$code,$expire);
         $html = "";
-        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
-        $html .= "<div style='text-align: left'>";
-        $html .= "<div style='margin-top: 30px;'>您好，您正在$typeMsg</div>";
-        $html .= "<div style='margin-top: 10px;'>验证码是：<span style='font-weight: bold;'>$code</span></div>";
-        $html .= "<div style='margin-top: 10px;'>验证有效时间为10分钟。请勿向他人提供验证码!</div>";
-        $html .= "</div>";
+//        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
+//        $html .= "<div style='text-align: left'>";
+//        $html .= "<div style='margin-top: 30px;'>您好，您正在$typeMsg</div>";
+//        $html .= "<div style='margin-top: 10px;'>验证码是：<span style='font-weight: bold;'>$code</span></div>";
+//        $html .= "<div style='margin-top: 10px;'>验证有效时间为10分钟。请勿向他人提供验证码!</div>";
+//        $html .= "</div>";
+        $html .= "您好，您正在$typeMsg"."验证码是：$code".",验证有效时间为10分钟。请勿向他人提供验证码!";
         return [
             'title'=>'验证码',
-            'html'=>true,
+//            'html'=>true,
             'content'=>$html,
         ];
     }
@@ -78,28 +79,30 @@ class MailerHelper
     public static function getSubscribeTemplate(string $msgTitle = '', string $content = ''): array
     {
         $html = "";
-        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
-        $html .= "<div style='text-align: left'>";
-        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
-        $html .= "</div>";
+//        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
+//        $html .= "<div style='text-align: left'>";
+//        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
+//        $html .= "</div>";
+        $html .= $content;
         return [
             'title'=>$msgTitle,
-            'html'=>true,
+//            'html'=>true,
             'content'=>$html,
         ];
     }
     public static function getMemberRechargeMessageTemplate(string $msgTitle = '', string $content = ''): array
     {
         $html = "";
-        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
-        $html .= "<div style='text-align: left'>";
-        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
-        $html .= "<div style='margin-top: 30px;'>有新的消息，请及时查看！</div>";
-        $html .= "<div style='margin-top: 10px;'>".date("Y-m-d H:i:s")."</div>";
-        $html .= "</div>";
+//        $html .= "<div style='width: 400px;margin: 0 auto;text-align: center;'>";
+//        $html .= "<div style='text-align: left'>";
+//        $html .= "<div style='margin-top: 10px;'>".$content."</div>";
+//        $html .= "<div style='margin-top: 30px;'>有新的消息，请及时查看！</div>";
+//        $html .= "<div style='margin-top: 10px;'>".date("Y-m-d H:i:s")."</div>";
+//        $html .= "</div>";
+        $html .= "有新的消息，请及时查看！".date("Y-m-d H:i:s");
         return [
             'title'=>$msgTitle,
-            'html'=>true,
+//            'html'=>true,
             'content'=>$html,
         ];
     }
