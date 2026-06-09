@@ -25,7 +25,7 @@ export const BASE_URL= () => {
 export const WS_URL=() => {
 	return (window.location.protocol == "https:"?("wss:" + "//"+ getHost() +'/ws'):("ws:" + "//"+ getHost() +'/ws'));
 }
-export const updateUrl='https://api.liangdian1.cc/api/common.publics/appUpgrade'
+export const updateUrl='https://www.ld789.cc/api/common.publics/appUpgrade'
 
 // //当前环境pro
 // export const BASE_URL='http://www.hclnx.com/'
