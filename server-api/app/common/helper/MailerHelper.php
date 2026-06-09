@@ -67,7 +67,7 @@ class MailerHelper
 //        $html .= "</div>";
         $html .= "您好，您正在$typeMsg"."验证码是：$code".",验证有效时间为10分钟。请勿向他人提供验证码!";
         return [
-            'title'=>'验证码',
+            'title'=>'注册验证码',
 //            'html'=>true,
             'content'=>$html,
         ];
