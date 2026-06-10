@@ -37,14 +37,14 @@ class MemberRechargeMessageJob
         if (empty($email)){
             return  true;
         }
-        $mailService = app(MailerService::class);
-        $mailService->addAddress($email, $email);
-        $tempRes = MailerHelper::getTemplate("member-recharge-message",$email);
-        !empty($tempRes['html']) && $mailService->setHtml(false);
-        // 发送邮件
-        if ($mailService->send($tempRes['title'], $tempRes['content'])) {
-            return false;
-        }
+//        $mailService = app(MailerService::class);
+//        $mailService->addAddress($email, $email);
+//        $tempRes = MailerHelper::getTemplate("member-recharge-message",$email);
+//        !empty($tempRes['html']) && $mailService->setHtml(false);
+//        // 发送邮件
+//        if ($mailService->send($tempRes['title'], $tempRes['content'])) {
+//            return false;
+//        }
         return true;
     }
 }
