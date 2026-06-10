@@ -48,11 +48,11 @@ class PersonService extends BaseService
             return false;
         }
 
-        Queue::push("app\common\jobs\CheckMemberSubscribeJob", [
-            'source_id' => $person["id"],
-            'source' => "follow_person",
-            'message' => "您订阅的交易员:".$person["nickname"] . " ".date("Y-m-d H:i:s")." 下单".$productName,
-        ], 'CheckMemberSubscribeJob');
+//        Queue::push("app\common\jobs\CheckMemberSubscribeJob", [
+//            'source_id' => $person["id"],
+//            'source' => "follow_person",
+//            'message' => "您订阅的交易员:".$person["nickname"] . " ".date("Y-m-d H:i:s")." 下单".$productName,
+//        ], 'CheckMemberSubscribeJob');
 
         return true;
     }
