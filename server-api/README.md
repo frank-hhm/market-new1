@@ -144,3 +144,14 @@ history -r
 -- SET sys_value = REPLACE(sys_value, '//www.liangdian1.cc/', '//ld789.cc/');
 
 UPDATE m_payment SET cover = REPLACE(cover, '//www.liangdian1.cc/', '//ld789.cc/');
+
+
+
+smtp.gmail.com
+
+465
+z8rj2uv66043@zzx.xintaitong.com
+
+wahy wjjm tsco zhti
+
+z8rj2uv66043@zzx.xintaitong.com

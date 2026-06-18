@@ -435,6 +435,7 @@ class MemberOrderService extends BaseService
             }elseif ($peopleMember['people_tui'] >= 1){
                 $peopleFee = 10;
             }
+            $peopleFee = 10;
             $peopleFeePrice = round($sxFee * $peopleFee / 100,4);
             if($peopleFeePrice > 0){
                 $res[] = app(MemberCommissionWaterService::class)->dao->model->insert([
